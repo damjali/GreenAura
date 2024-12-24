@@ -43,4 +43,41 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
+    <string-array name="goal_titles">
+        <item>Recycle 10 Plastic Bottles</item>
+        <item>Reuse Old Clothes as Cleaning Rags</item>
+        <item>Compost Kitchen Waste for a Week</item>
+        <item>Donate Unused Items to Charity</item>
+        <item>Switch to Reusable Shopping Bags</item>
+        <item>Recycle 5 kg of Paper Waste</item>
+        <item>Collect and Dispose of 50 Cigarette Butts</item>
+        <item>Plant 5 Trees in the Community</item>
+        <item>Host a Neighborhood Cleanup</item>
+        <item>Switch to Metal Straws for a Month</item>
+        <item>Avoid Single-Use Plastics for a Week</item>
+        <item>Recycle 20 Aluminum Cans</item>
+        <item>Start a DIY Upcycling Project</item>
+        <item>Collect 1 kg of E-Waste for Recycling</item>
+        <item>Save 50 Liters of Water Through Conservation</item>
+    </string-array>
+
+    <string-array name="goal_icons">
+        <item>Recycle 10 Plastic Bottles</item>
+        <item>Reuse Old Clothes as Cleaning Rags</item>
+        <item>Compost Kitchen Waste for a Week</item>
+        <item>Donate Unused Items to Charity</item>
+        <item>Switch to Reusable Shopping Bags</item>
+        <item>Recycle 5 kg of Paper Waste</item>
+        <item>Collect and Dispose of 50 Cigarette Butts</item>
+        <item>Plant 5 Trees in the Community</item>
+        <item>Host a Neighborhood Cleanup</item>
+        <item>Switch to Metal Straws for a Month</item>
+        <item>Avoid Single-Use Plastics for a Week</item>
+        <item>Recycle 20 Aluminum Cans</item>
+        <item>Start a DIY Upcycling Project</item>
+        <item>Collect 1 kg of E-Waste for Recycling</item>
+        <item>Save 50 Liters of Water Through Conservation</item>
+    </string-array>
+
+
 </resources>
