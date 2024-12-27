@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "533924299849",
+    "project_id": "myapplication-a29d102f",
+    "storage_bucket": "myapplication-a29d102f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533924299849:android:212f73427ce430dd5c2b98",
+        "android_client_info": {
+          "package_name": "com.example.greenaura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGYMUirhcLUZG0m03jTChsFJGPNzBnZXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
