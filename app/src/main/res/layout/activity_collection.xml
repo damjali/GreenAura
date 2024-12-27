@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="left"
+    android:background="#DBECA2"
+    tools:context=".CollectionActivity"
+    tools:layout_editor_absoluteX="-58dp"
+    tools:layout_editor_absoluteY="-244dp">
+
+    <!--fragment container-->
+    <!--A NavHostFragment is a subclass of Fragment, which means it's a modular piece of UI that can be added to an activity.-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:soundEffectsEnabled="true"
+        android:visibility="visible"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph_collection_activity"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/TVCollection1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="125dp"
+        android:fontFamily="@font/braah_one"
+        android:text="Collection"
+        android:textColor="#3D3D3D"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/TVCollection3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/noto_sans_coptic"
+        android:text="Waste collection near you:"
+        android:textColor="#3D3D3D"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="407dp"
+        android:layout_height="567dp"
+        android:layout_marginBottom="14dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CVGW"
+            android:layout_width="385dp"
+            android:layout_height="190dp"
+            android:clickable="true"
+            android:contextClickable="true"
+            android:visibility="visible"
+            app:cardBackgroundColor="#F3ECEC"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            tools:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLGW"
+                android:layout_width="363dp"
+                android:layout_height="166dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/TVGWTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
+                    android:text="General Waste"
+                    android:textAlignment="center"
+                    android:textColor="#3D3D3D"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TVGWTime"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:foregroundGravity="left"
+                    android:gravity="start"
+                    android:textAlignment="viewStart"
+                    android:textColor="#3d3d3d"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TVGWDistance" />
+
+                <TextView
+                    android:id="@+id/TVGWDistance"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textAlignment="viewStart"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TVGWTitle" />
+
+                <TextView
+                    android:id="@+id/TVGWVenue"
+                    android:layout_width="178dp"
+                    android:layout_height="50dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="3"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TVGWTime"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/imageGW"
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginStart="8dp"
+                    android:background="#F3ECEC"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/collection_image1" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CVRW"
+            android:layout_width="385dp"
+            android:layout_height="190dp"
+            android:clickable="true"
+            app:cardBackgroundColor="#F3ECEC"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/CLRW"
+                android:layout_width="363dp"
+                android:layout_height="166dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/TVRWTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Recyclable Waste"
+                    android:textAlignment="center"
+                    android:textColor="#3D3D3D"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.901"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TVRWTime"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:foregroundGravity="left"
+                    android:gravity="start"
+                    android:textColor="#3d3d3d"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TVRWDistance" />
+
+                <TextView
+                    android:id="@+id/TVRWDistance"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/TVRWTitle" />
+
+                <TextView
+                    android:id="@+id/TVRWVenue"
+                    android:layout_width="178dp"
+                    android:layout_height="50dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="3"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/TVRWTime"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/imageRW"
+                    android:layout_width="124dp"
+                    android:layout_height="123dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="14dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.76"
+                    app:srcCompat="@mipmap/collection_image2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/CVEW"
+            android:layout_width="385dp"
+            android:layout_height="190dp"
+            android:visibility="visible"
+            app:cardBackgroundColor="#F3ECEC"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="362dp"
+                android:layout_height="167dp"
+                android:layout_marginBottom="8dp"
+                android:clipToPadding="false"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/TVEWTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:includeFontPadding="false"
+                    android:lineSpacingExtra="4dp"
+                    android:text="Electrical Waste"
+                    android:textAlignment="center"
+                    android:textColor="#3D3D3D"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.901"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/TVEWDistance"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="start"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.993"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/TVEWTitle" />
+
+                <TextView
+                    android:id="@+id/TVEWTime"
+                    android:layout_width="178dp"
+                    android:layout_height="26dp"
+                    android:foregroundGravity="left"
+                    android:gravity="start"
+                    android:textColor="#3d3d3d"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.993"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/TVEWDistance" />
+
+                <TextView
+                    android:id="@+id/TVEWVenue"
+                    android:layout_width="178dp"
+                    android:layout_height="50dp"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="3"
+                    android:textColor="#3D3D3D"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.993"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/TVEWTime"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="124dp"
+                    android:layout_height="124dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@mipmap/ewaste" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_collection_activity"
+    app:startDestination="@id/DestMapsFragment">
+
+    <fragment
+        android:id="@+id/DestMapsFragment"
+        android:name="com.example.greenaura.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps">
+        <action
+            android:id="@+id/action_DestGWMapsFragment_to_DestGWReminderFragment"
+            app:destination="@id/DestGWReminderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DestGWReminderFragment"
+        android:name="com.example.greenaura.GWReminderFragment"
+        android:label="fragment_g_w_reminder"
+        tools:layout="@layout/fragment_g_w_reminder" />
+
+    <activity
+        android:id="@+id/collectionActivity"
+        android:name="com.example.greenaura.CollectionActivity"
+        android:label="activity_collection"
+        tools:layout="@layout/activity_collection"/>
+
+</navigation>
