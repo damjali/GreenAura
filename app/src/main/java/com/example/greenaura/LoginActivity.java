@@ -16,10 +16,13 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    private FirebaseFirestore db;
     private EditText loginEmail, loginPassword;
     private Button loginButton;
     private TextView signupRedirectText;
@@ -29,8 +32,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // initialize views
+        // initialize firebase auth and firestore
         auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        // initialize views
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
@@ -50,9 +56,8 @@ public class LoginActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                        finish();
+                                        String uid = authResult.getUser().getUid(); // get user uid
+                                        fetchUserData(uid); // fetch user data from firestore
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -78,5 +83,34 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignupActivity.class));
             }
         });
+    }
+
+    // fetch user data from firestore
+    private void fetchUserData(String uid) {
+        db.collection("users").document(uid).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // fetch user data and show a toast
+                            String name = documentSnapshot.getString("name");
+                            String email = documentSnapshot.getString("email");
+                            Toast.makeText(LoginActivity.this, "Welcome, " + name + "!", Toast.LENGTH_LONG).show();
+
+                            // navigate to main activity
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            // no data found for this user
+                            Toast.makeText(LoginActivity.this, "No user data found in Firestore", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, "Error fetching user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
