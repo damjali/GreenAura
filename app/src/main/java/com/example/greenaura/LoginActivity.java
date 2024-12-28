@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LoginActivity extends AppCompatActivity {
@@ -56,8 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        String uid = authResult.getUser().getUid(); // get user uid
-                                        fetchUserData(uid); // fetch user data from firestore
+                                        fetchUserData(email); // fetch user data using email
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -85,24 +84,25 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    // fetch user data from firestore
-    private void fetchUserData(String uid) {
-        db.collection("users").document(uid).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+    // fetch user data from firestore using email
+    private void fetchUserData(String email) {
+        db.collection("users")
+                .whereEqualTo("email", email) // query the 'users' collection by email
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            // fetch user data and show a toast
-                            String name = documentSnapshot.getString("name");
-                            String email = documentSnapshot.getString("email");
-                            Toast.makeText(LoginActivity.this, "Welcome, " + name + "!", Toast.LENGTH_LONG).show();
+                    public void onSuccess(QuerySnapshot querySnapshot) {
+                        if (!querySnapshot.isEmpty()) {
+                            // assuming email is unique, fetch the first document
+                            String name = querySnapshot.getDocuments().get(0).getString("name");
+                            Toast.makeText(LoginActivity.this, "Welcome, " + (name != null ? name : "User") + "!", Toast.LENGTH_LONG).show();
 
                             // navigate to main activity
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                        } else {
-                            // no data found for this user
-                            Toast.makeText(LoginActivity.this, "No user data found in Firestore", Toast.LENGTH_LONG).show();
+                          } else {
+                            // no user data found
+                            Toast.makeText(LoginActivity.this, "No user data found for this email", Toast.LENGTH_LONG).show();
                         }
                     }
                 })

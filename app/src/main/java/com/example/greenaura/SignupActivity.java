@@ -60,8 +60,7 @@ public class SignupActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String uid = task.getResult().getUser().getUid(); // get the uid of the new user
-                                saveUserToFirestore(uid, email); // save user data to firestore
+                                saveUserToFirestore(email); // save user data to firestore
                             } else {
                                 Toast.makeText(SignupActivity.this, "Failed to register: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
@@ -81,24 +80,38 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     // save user data to firestore
-    private void saveUserToFirestore(String uid, String email) {
-        Map<String, Object> userData = new HashMap<>();
-        userData.put("email", email);
-        userData.put("createdAt", System.currentTimeMillis());
+    private void saveUserToFirestore(String email) {
+        // fetch the total number of documents in the "users" collection
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<>() {
+            @Override
+            public void onComplete(@NonNull Task<com.google.firebase.firestore.QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    // generate document id based on count
+                    int count = task.getResult().size() + 1;
+                    String documentId = "user_" + String.format("%03d", count); // e.g., "user_001", "user_002"
 
-        db.collection("users").document(uid)
-                .set(userData)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SignupActivity.this, "User has been registered and saved successfully", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(SignupActivity.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("email", email);
+                    userData.put("createdAt", System.currentTimeMillis());
+
+                    db.collection("users").document(documentId)
+                            .set(userData)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(SignupActivity.this, "User has been registered and saved successfully", Toast.LENGTH_LONG).show();
+                                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(SignupActivity.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(SignupActivity.this, "Failed to fetch user count: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 }
