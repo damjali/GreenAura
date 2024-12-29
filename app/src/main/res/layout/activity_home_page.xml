@@ -1,0 +1,191 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F8E6"
+    tools:context=".HomePage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#679F47"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 Aura"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/baseline_android_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Progress Details" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/baseline_android_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Events" />
+
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/baseline_android_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Settings" />
+        </LinearLayout>
+
+        <!-- Discover Event -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Educational Resources"
+            android:textSize="20sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tips and Resources"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textStyle="bold"
+            android:textColor="#000000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Educational Resources"
+                android:textSize="20sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:textColor="#000000" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_resources"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00C29A"
+            android:text="Explore Now"
+            android:textColor="#FFFFFF"
+            android:layout_gravity="center" />
+
+        <!-- Green Facts -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Green Facts"
+            android:textSize="20sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:textColor="#000000" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp">
+
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:elevation="4dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_android_24"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Exciting Events"
+                        android:textSize="16sp"
+                        android:paddingTop="8dp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Discover upcoming events and be a part of ..."
+                        android:textSize="14sp"
+                        android:textColor="#888888" />
+                </LinearLayout>
+
+                <!-- Card 2 -->
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#FFFFFF"
+                    android:padding="8dp"
+                    android:elevation="4dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:src="@drawable/baseline_android_24"
+                        android:scaleType="centerCrop" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Explore More"
+                        android:textSize="16sp"
+                        android:paddingTop="8dp"
+                        android:textColor="#000000" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Find out more about green initiatives ..."
+                        android:textSize="14sp"
+                        android:textColor="#888888" />
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+</ScrollView>
