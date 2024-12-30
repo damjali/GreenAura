@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-20T15:05:55.489558700Z">
+        <DropdownSelection timestamp="2024-12-29T06:07:00.427355800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=RRCX204PPCA" />
@@ -15,7 +15,7 @@
       </SelectionState>
       <SelectionState runConfigName="GreenAura">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-12-27T14:17:35.956905800Z">
+        <DropdownSelection timestamp="2024-12-30T07:43:04.547670200Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=RRCX204PPCA" />

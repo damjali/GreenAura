@@ -3,28 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_collection_activity"
-    app:startDestination="@id/DestMapsFragment">
+    app:startDestination="@id/MapsFragment">
 
     <fragment
-        android:id="@+id/DestMapsFragment"
+        android:id="@+id/MapsFragment"
         android:name="com.example.greenaura.MapsFragment"
-        android:label="fragment_maps"
+        android:label="Maps Fragment"
         tools:layout="@layout/fragment_maps">
         <action
-            android:id="@+id/action_DestGWMapsFragment_to_DestGWReminderFragment"
-            app:destination="@id/DestGWReminderFragment" />
+            android:id="@+id/action_MapsFragment_to_ReminderFragment"
+            app:destination="@id/DestReminderFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/DestGWReminderFragment"
-        android:name="com.example.greenaura.GWReminderFragment"
+        android:id="@+id/DestReminderFragment"
+        android:name="com.example.greenaura.ReminderFragment"
         android:label="fragment_g_w_reminder"
-        tools:layout="@layout/fragment_g_w_reminder" />
+        tools:layout="@layout/fragment_reminder" />
 
     <activity
         android:id="@+id/collectionActivity"
         android:name="com.example.greenaura.CollectionActivity"
         android:label="activity_collection"
-        tools:layout="@layout/activity_collection"/>
+        tools:layout="@layout/activity_collection" />
 
 </navigation>

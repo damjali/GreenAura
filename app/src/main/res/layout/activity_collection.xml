@@ -5,24 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="left"
+    android:layout_gravity="start"
     android:background="#DBECA2"
     tools:context=".CollectionActivity"
     tools:layout_editor_absoluteX="-58dp"
     tools:layout_editor_absoluteY="-244dp">
 
-    <!--fragment container-->
-    <!--A NavHostFragment is a subclass of Fragment, which means it's a modular piece of UI that can be added to an activity.-->
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:soundEffectsEnabled="true"
-        android:visibility="visible"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph_collection_activity"
-        tools:visibility="visible" />
+
+
 
     <TextView
         android:id="@+id/TVCollection1"
@@ -52,13 +42,6 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="invisible" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -79,6 +62,7 @@
             android:layout_height="190dp"
             android:clickable="true"
             android:contextClickable="true"
+            android:focusable="auto"
             android:visibility="visible"
             app:cardBackgroundColor="#F3ECEC"
             app:cardCornerRadius="30dp"
@@ -173,6 +157,7 @@
             android:layout_width="385dp"
             android:layout_height="190dp"
             android:clickable="true"
+            android:focusable="auto"
             app:cardBackgroundColor="#F3ECEC"
             app:cardCornerRadius="30dp"
             app:cardElevation="2dp"
@@ -351,6 +336,20 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
+
     </LinearLayout>
 
+    <!--fragment container-->
+    <!--A NavHostFragment is a subclass of Fragment, which means it's a modular piece of UI that can be added to an activity.-->
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+

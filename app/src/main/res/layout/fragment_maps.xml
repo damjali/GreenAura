@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:visibility="visible">
 
-<!-- Map or Background -->
-
-    <!-- Bottom Sheet -->
-
+    <!-- Map or Background -->
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:context=".MapsFragment"
+        tools:visibility="visible" />
+
+    <!-- Bottom Sheet -->
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/movable_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="#F3ECEC"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        android:visibility="visible"
+        app:cardCornerRadius="20dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        tools:visibility="visible">
 
         <!-- Content inside the bottom sheet -->
         <LinearLayout
@@ -41,8 +49,9 @@ android:layout_height="match_parent">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_sans"
-                android:paddingLeft="15dp"
-                android:paddingTop="15dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
                 android:text="Drive-Thru Recycling Centre Alam Flora (DTRC)"
                 android:textColor="@android:color/black"
                 android:textSize="24sp"
@@ -54,18 +63,18 @@ android:layout_height="match_parent">
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito"
-                android:paddingLeft="15dp"
+                android:paddingLeft="20dp"
                 android:text="Date: 21 December 2024"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/TVTime"
+                android:id="@+id/TVOpeningHour"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito"
-                android:paddingLeft="15dp"
+                android:paddingLeft="20dp"
                 android:text="Time: 5:00 p.m."
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
@@ -76,7 +85,7 @@ android:layout_height="match_parent">
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/nunito"
-                android:paddingLeft="15dp"
+                android:paddingLeft="20dp"
                 android:text="Waste Collection: Recyclable Waste"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
@@ -122,5 +131,6 @@ android:layout_height="match_parent">
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -24,6 +24,10 @@ public class JSONParser { //to extract key value pairs
                     .getJSONObject("location").getString("lat");
             String longitude = object.getJSONObject("geometry")
                     .getJSONObject("location").getString("lng");
+            String vicinity = object.getString("vicinity");
+            String rating = object.getString("rating");
+
+
             // Handle opening hours
             String openingHours = "Opening Hours Not Available";
             try {
@@ -78,11 +82,13 @@ public class JSONParser { //to extract key value pairs
             }
 
 
-            //put only the nearest location
+
             datalist.put("name", name);
             datalist.put("lat", latitude);
             datalist.put("lng", longitude);
             datalist.put("opening_hours", openingHours);
+            datalist.put("vicinity", vicinity);
+            datalist.put("rating", rating);
 
 
         } catch (JSONException e) {
