@@ -24,7 +24,6 @@ public class JSONParser { //to extract key value pairs
                     .getJSONObject("location").getString("lat");
             String longitude = object.getJSONObject("geometry")
                     .getJSONObject("location").getString("lng");
-            String vicinity = object.getString("vicinity");
             String rating = object.getString("rating");
 
 
@@ -87,7 +86,6 @@ public class JSONParser { //to extract key value pairs
             datalist.put("lat", latitude);
             datalist.put("lng", longitude);
             datalist.put("opening_hours", openingHours);
-            datalist.put("vicinity", vicinity);
             datalist.put("rating", rating);
 
 

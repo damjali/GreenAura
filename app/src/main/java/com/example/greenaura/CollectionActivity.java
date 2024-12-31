@@ -42,6 +42,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class CollectionActivity extends AppCompatActivity {
@@ -56,6 +57,10 @@ public class CollectionActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     static List<HashMap<String, String>> nearestLocationList = new ArrayList<>();
 
+    //initialise firestore
+    Firestore firestore = new Firestore();
+
+    MapsFragment mapsFragment = new MapsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,20 +95,33 @@ public class CollectionActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
+
         //Check if permission is granted or not
         if (ActivityCompat.checkSelfPermission(CollectionActivity.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Fetching current location...", Toast.LENGTH_SHORT).show();
             getCurrentLocation(); //get location here
+
         } else { //if not granted, request for permission to user
             ActivityCompat.requestPermissions(CollectionActivity.this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 99);
         }
 
+
+
         CVGW.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 navigateToMapFragment();
+
+                //display first card view content in mapfragment
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mapsFragment.displayLocationDetails(nearestLocationList.get(0));
+                    }
+                });
             }
         });
 
@@ -111,6 +129,13 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 navigateToMapFragment();
+                //display first card view content in mapfragment
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mapsFragment.displayLocationDetails(nearestLocationList.get(1));
+                    }
+                });
             }
         });
 
@@ -118,31 +143,80 @@ public class CollectionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 navigateToMapFragment();
+                //display first card view content in mapfragment
+                view.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mapsFragment.displayLocationDetails(nearestLocationList.get(2));
+                    }
+                });
             }
         });
     }
 
-    //DECLARED METHOD
 
+    //DECLARED METHOD
     // Method to handle navigation after view is created
     public void navigateToMapFragment() {
-        Log.d("Navigation", "CV clicked"); // Log before transaction
+//////////////////////////////
+        Bundle args = new Bundle(); //3 locations //bundle for passing data to fragments(another method:viewmodel)
+        //convert each hashmap into a bundle
+        for(int i=0; i<3; i++) {
+            HashMap<String,String> location = nearestLocationList.get(i);
+            Bundle locationBundle = new Bundle(); //one location
+            for (Map.Entry<String, String> entry : location.entrySet()) { //entryset() return every ker-value pairs
+                locationBundle.putString(entry.getKey(), entry.getValue());
+            }
+            args.putBundle("location_" + (i+1), locationBundle); //add each location bundle to main bundle
+        }
+        //attach main bundle to fragment
+        mapsFragment.setArguments(args);
+///////////////////////////////
+        // Manage fragment navigation using hide() and show()
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, new MapsFragment());
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment); // Hide the current fragment
+        }
+
+        if (fragmentManager.findFragmentByTag("MapsFragment") != null) {
+            // Show the existing MapsFragment if already added
+            fragmentTransaction.show(mapsFragment);
+        } else {
+            // Add the MapsFragment if not already added
+            fragmentTransaction.add(R.id.fragmentContainerView, mapsFragment, "MapsFragment");
+        }
+
+        fragmentTransaction.addToBackStack(null).commit();
+        Log.d("Navigation", "Navigated to MapsFragment without replacing");
         Log.d("Navigation", "Fragment transaction committed"); // Log after transaction
 
     }
 
     //to ensure correct fragment manager is used
     public void navigateToReminderFragment() {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, new ReminderFragment())
-                .addToBackStack(null)
-                .commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragmentContainerView);
+        if (currentFragment != null) {
+            fragmentTransaction.hide(currentFragment); // Hide the current fragment
+        }
+
+        if (fragmentManager.findFragmentByTag("ReminderFragment") != null) {
+            // Show the existing ReminderFragment if already added
+            fragmentTransaction.show(MapsFragment.reminderFragment);
+        } else {
+            // Add the ReminderFragment if not already added
+            fragmentTransaction.add(R.id.fragmentContainerView, MapsFragment.reminderFragment, "ReminderFragment");
+        }
+
+        fragmentTransaction.addToBackStack(null).commit();
+        Log.d("Navigation", "Navigated to ReminderFragment without replacing");
     }
+
 
         //retrieve all location details
     private void getCurrentLocation () {
@@ -173,7 +247,6 @@ public class CollectionActivity extends AppCompatActivity {
                                     + "&keyword=" + category.toLowerCase()
                                     + "&key=" + getResources().getString(R.string.google_maps_key)
                                     + "&sensor=true";
-                            //Log.i("log", url);
                             //nonid to override execute() coz it's already implemented in AsyncTask class
                             //execute()-build in method in AsyncTask: automatically call the following methods
                             //onPreExecute() first(on main UI thread) -> doInBackground(bckgrd thread) -> onPostExecute(main UI thread)
@@ -182,7 +255,7 @@ public class CollectionActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
+    }
 
         //handle user response
         @Override
@@ -310,6 +383,7 @@ public class CollectionActivity extends AppCompatActivity {
                     }
                 }
                 nearestLocationList.add(nearestLocation); //store nearest location to hash map list
+
                 if (nearestLocation != null) {
 
                     String namee = nearestLocation.get("name");
@@ -337,23 +411,21 @@ public class CollectionActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(CollectionActivity.this, "No nearest location found", Toast.LENGTH_SHORT).show();
                 }
-                Log.d("Nearest Location:", nearestLocation.toString());
-                    Log.d("Nearest Location List: ", nearestLocationList.toString());
-            }
-
-
-            public double calculateDistance(double userLat, double userLong,
-                                            double placeLat, double placeLong) {
-                //--------Math
-                final int R = 6371; //earth radius (km)
-                double latDistance = Math.toRadians(placeLat - userLat);
-                double lngDistance = Math.toRadians(placeLong - userLong);
-                double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                        + Math.cos(Math.toRadians(userLat)) * Math.cos(Math.toRadians(placeLat))
-                        * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
-                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                //--------Math
-                return R * c; //km
+                firestore.saveLocation(nearestLocationList);
             }
         }
+
+    public static double calculateDistance(double userLat, double userLong,
+                                    double placeLat, double placeLong) {
+        //--------Math
+        final int R = 6371; //earth radius (km)
+        double latDistance = Math.toRadians(placeLat - userLat);
+        double lngDistance = Math.toRadians(placeLong - userLong);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(userLat)) * Math.cos(Math.toRadians(placeLat))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        //--------Math
+        return R * c; //km
+    }
 }

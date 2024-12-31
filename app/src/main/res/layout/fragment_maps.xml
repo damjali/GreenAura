@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#4CAF50"
+    android:foregroundTint="#4CAF50"
     android:visibility="visible"
     tools:visibility="visible">
 
@@ -57,16 +59,18 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/TVDistance"
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/RatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/nunito"
-                android:paddingLeft="20dp"
-                android:text="Date: 21 December 2024"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+                android:layout_marginLeft="20dp"
+                android:isIndicator="true"
+                android:max="5"
+                android:numStars="5"
+                android:progressTint="#DBECA2"
+                android:secondaryProgressTint="#000000"
+                android:stepSize="0.1" />
 
             <TextView
                 android:id="@+id/TVOpeningHour"

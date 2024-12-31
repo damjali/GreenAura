@@ -58,4 +58,5 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.google.firebase.auth)
     implementation(libs.google.firebase.firestore)
+    //implementation ("com.github.MhmoudAlim:Compose-Ratingbar-library:0.1.0")
 }

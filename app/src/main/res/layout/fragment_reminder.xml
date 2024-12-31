@@ -9,8 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="407dp"
-        android:layout_height="wrap_content"
+        android:layout_width="405dp"
+        android:layout_height="725dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,11 +99,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/TVTime"
                     app:layout_constraintVertical_bias="0.0" />
 
+                <ImageView
+                    android:id="@+id/ivWasteTypeImage"
+                    android:layout_width="124dp"
+                    android:layout_height="124dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
 
-        <!-- CalendarView -->
         <TextView
             android:id="@+id/TVSetReminder"
             android:layout_width="match_parent"
@@ -122,12 +131,20 @@
 
             <CalendarView
                 android:id="@+id/calendar_view"
+                style="@style/CalendarView"
                 android:layout_width="match_parent"
                 android:layout_height="340dp"
                 android:background="#FFFFFF"
+
                 android:dateTextAppearance="@style/TextAppearance.AppCompat.Small"
+                android:focusedMonthDateColor="#DBECA2"
                 android:foregroundTint="#FFFFFF"
-                android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Small" />
+                android:minDate="01/01/2025"
+                android:selectedWeekBackgroundColor="#000000"
+                android:unfocusedMonthDateColor="#DBECA2"
+                android:weekDayTextAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:weekNumberColor="#DBECA2"
+                android:weekSeparatorLineColor="#DBECA2" />
         </androidx.cardview.widget.CardView>
 
         <!-- Set Reminder Button -->
