@@ -1,0 +1,160 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDDDC4"
+    android:padding="16dp">
+
+    <!-- Title: "The Orange Bin" -->
+
+    <TextView
+        android:id="@+id/orangeBinTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:fontFamily="@font/domine_regular"
+        android:text="The"
+        android:textColor="#3D3D3D"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!-- Subtitle -->
+
+    <TextView
+        android:id="@+id/orangeBinTitleColored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/domine_regular"
+        android:text="Orange"
+        android:textColor="#FF7B0A"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/orangeBinTitle" />
+
+    <!--top image-->
+    <TextView
+        android:id="@+id/orangeBinSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:fontFamily="@font/domine_regular"
+        android:text="Bin"
+        android:textColor="#3D3D3D"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orangeBinTitleColored" />
+
+    <ImageView
+        android:id="@+id/floralDecoration"
+        android:layout_width="159dp"
+        android:layout_height="159dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginEnd="39dp"
+        android:src="@drawable/floral_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toEndOf="@+id/orangeBinTitleColored"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Section: What's it For? -->
+    <ImageView
+        android:id="@+id/binImageTop"
+        android:layout_width="463dp"
+        android:layout_height="132dp"
+        android:layout_marginTop="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/orange_bin_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/floralDecoration" />
+
+    <!-- Section: Recycle Right! -->
+    <TextView
+        android:id="@+id/sectionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/italianno"
+        android:text="What's it For?"
+        android:textColor="#3D3D3D"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/binImageTop" />
+
+    <!-- Bottom Image -->
+
+    <TextView
+        android:id="@+id/sectionDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/figtree"
+        android:text="The orange recycling bin is used for recycling plastic and metal items. It helps divert recyclable waste from landfills and supports the production of new products."
+        android:textColor="#3D3D3D"
+        android:textSize="16sp"
+        android:lineSpacingExtra="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sectionTitle" />
+
+    <!-- Page Indicator -->
+
+    <ImageView
+        android:id="@+id/binImageBottom"
+        android:layout_width="190dp"
+        android:layout_height="231dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cans_image"
+        app:layout_constraintEnd_toStartOf="@+id/recycleRightSteps"
+        app:layout_constraintTop_toBottomOf="@+id/sectionDescription" />
+
+    <TextView
+        android:id="@+id/recycleRightTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:fontFamily="@font/italianno"
+        android:text="Recycle Right!"
+        android:textColor="#3D3D3D"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sectionDescription" />
+
+    <TextView
+        android:id="@+id/recycleRightSteps"
+        android:layout_width="258dp"
+        android:layout_height="173dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/figtree"
+        android:lineSpacingExtra="4dp"
+        android:text="1. Clean Your Items\n   • Rinse off any food or drink residue\n2. Remove Labels\n   • Remove labels for easier recycling.\n3. Flatten or Crush Cans\n   • Compress cans or plastic containers to save space in the bin."
+        android:textColor="#3D3D3D"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycleRightTitle" />
+
+    <ImageView
+        android:id="@+id/blueBinPageIndicator2"
+        android:layout_width="113dp"
+        android:layout_height="11dp"
+        android:src="@drawable/orangebin2_dotted_pagenavigator"
+        app:layout_constraintTop_toBottomOf="@id/recycleRightSteps"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="117dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,7 +89,11 @@
                 android:id="@+id/recycler_view_resources"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp" />
+
 
         </LinearLayout>
 

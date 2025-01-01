@@ -12,17 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/background_fragment_brownbin3"
+        android:src="@drawable/background_fragment_orangebin3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/brownBinPageIndicator3"
+        android:id="@+id/orangeBinPageIndicator3"
         android:layout_width="113dp"
         android:layout_height="11dp"
         android:layout_marginStart="117dp"
         android:layout_marginEnd="117dp"
-        android:src="@drawable/brownbin3_dotted_pagenavigator"
+        android:src="@drawable/orangebin3_dotted_pagenavigator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

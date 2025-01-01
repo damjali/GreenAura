@@ -1,15 +1,13 @@
+// HomePage.java
 package com.example.greenaura;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.greenaura.R;
-import com.example.greenaura.Resource;
-import com.example.greenaura.ResourceAdapter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -30,7 +28,7 @@ public class HomePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
         recyclerView = findViewById(R.id.recycler_view_resources);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         resourceList = new ArrayList<>();
         adapter = new ResourceAdapter(this, resourceList);
@@ -39,6 +37,18 @@ public class HomePage extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         fetchResources();
+
+        //pass the Required Data from the Clicked Card to the Activity via Intent.
+        adapter.setOnItemClickListener(resource -> {
+            Intent intent = new Intent(HomePage.this, EducationalResourcesContainerActivity.class);
+            intent.putExtra("ResourceHeader", resource.getResourceHeader());
+            intent.putExtra("ResourceDescription", resource.getResourceDescription());
+            intent.putExtra("ResourcePhoto", resource.getResourcePhoto());
+            intent.putExtra("ResourceLink", resource.getResourceLink());
+            intent.putExtra("ResourcePostDate", resource.getResourcePostDate());
+            intent.putExtra("ResourceUpvote", resource.getResourceUpvote());
+            startActivity(intent);
+        });
     }
 
     private void fetchResources() {
@@ -47,11 +57,14 @@ public class HomePage extends AppCompatActivity {
                 QuerySnapshot snapshot = task.getResult();
                 if (snapshot != null) {
                     for (QueryDocumentSnapshot document : snapshot) {
-                        String title = document.getString("ResourceHeader");
-                        String description = document.getString("ResourceDescription");
-                        String photoUrl = document.getString("ResourcePhoto");
-                        System.out.println(title);
-                        resourceList.add(new Resource(title, description, photoUrl));
+                        String ResourcePhoto = document.getString("ResourcePhoto");
+                        String ResourceHeader = document.getString("ResourceHeader");
+                        String ResourceDescription = document.getString("ResourceDescription");
+                        String ResourcePostDate = document.getString("ResourcePostDate");
+                        String ResourceLink = document.getString("ResourceLink");
+                        String ResourceUpvote = document.getString("ResourceUpvote");
+
+                        resourceList.add(new Resource(ResourceHeader, ResourceDescription, ResourcePhoto, ResourceLink, ResourcePostDate, 0));
                     }
                     adapter.notifyDataSetChanged();
                 }
