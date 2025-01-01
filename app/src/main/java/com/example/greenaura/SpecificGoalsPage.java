@@ -13,7 +13,7 @@ import com.example.greenaura.databinding.ActivitySpecificGoalsPageBinding;
 public class SpecificGoalsPage extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-private ActivitySpecificGoalsPageBinding binding;
+    private ActivitySpecificGoalsPageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +23,7 @@ private ActivitySpecificGoalsPageBinding binding;
         setContentView(binding.getRoot());
 
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_specific_goals_page);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+    }
+}
 
-    }
-    }
 

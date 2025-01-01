@@ -78,6 +78,8 @@
         <item>Collect 1 kg of E-Waste for Recycling</item>
         <item>Save 50 Liters of Water Through Conservation</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

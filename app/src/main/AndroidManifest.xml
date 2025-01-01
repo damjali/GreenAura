@@ -15,17 +15,29 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
-            android:name=".MainRewardsPage"
+            android:name=".RewardDetailsPage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura">
+
+        </activity>
+        <activity
+            android:name=".RedeemRewardsPage"
             android:exported="false"
             android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".MainRewardsPage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".SpecificGoalsPage"
             android:exported="false"
             android:theme="@style/Theme.GreenAura" />
-        <activity
-            android:name=".SpecificGoalsPage1"
-            android:exported="false"
-            android:theme="@style/Theme.GreenAura" /> <!-- Launcher Activity -->
         <activity
             android:name=".GoalsHomePage"
             android:exported="true"

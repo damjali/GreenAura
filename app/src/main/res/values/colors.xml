@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="active_tab_color">#88C768</color>
+    <color name="inactive_tab_color">#C8E6C9</color>
+    <color name="dark_green">#2E7D32</color>
+    <color name="light_green">#C8E6C9</color>
+    <color name="overlay_dark">#80000000</color> <!-- Semi-transparent black for overlay -->
+    <color name="gray">#757575</color>
+    <color name="light">#FFFFFF</color>
+
 </resources>

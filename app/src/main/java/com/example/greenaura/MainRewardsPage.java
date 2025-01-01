@@ -1,23 +1,17 @@
 package com.example.greenaura;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenaura.databinding.ActivityMainRewardsPageBinding;
 
 public class MainRewardsPage extends AppCompatActivity {
 
-    private AppBarConfiguration appBarConfiguration;
     private ActivityMainRewardsPageBinding binding;
 
     @Override
@@ -27,26 +21,49 @@ public class MainRewardsPage extends AppCompatActivity {
         binding = ActivityMainRewardsPageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        // Load the default fragment (Recent Transactions)
+        loadFragment(new FragmentRecentGoalTransactions());
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_rewards_page);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        // Set up click listeners for the buttons
+        binding.recentTransactionsButton.setOnClickListener(view -> {
+            loadFragment(new FragmentRecentGoalTransactions());
+            setActiveTab(view);
+        });
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
+        binding.redeemedButton.setOnClickListener(view -> {
+            loadFragment(new FragmentRedeemedRewards());
+            setActiveTab(view);
+        });
+
+        // Open RedeemRewardPage when Redeem button is clicked
+        binding.redeemButton.setOnClickListener(view -> {
+            // Start the RedeemRewardPage activity
+            Intent intent = new Intent(MainRewardsPage.this, RedeemRewardsPage.class);
+            startActivity(intent);
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main_rewards_page);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
+    private void loadFragment(Fragment fragment) {
+        // Begin the fragment transaction
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace the current fragment in the fragment_container
+        transaction.replace(R.id.fragment_container, fragment);
+
+        // Commit the transaction
+        transaction.commit();
+    }
+
+    private void setActiveTab(View clickedButton) {
+        // Change the background color to indicate the active tab
+        binding.recentTransactionsButton.setBackgroundTintList(
+                getResources().getColorStateList(clickedButton == binding.recentTransactionsButton
+                        ? R.color.active_tab_color
+                        : R.color.inactive_tab_color));
+
+        binding.redeemedButton.setBackgroundTintList(
+                getResources().getColorStateList(clickedButton == binding.redeemedButton
+                        ? R.color.active_tab_color
+                        : R.color.inactive_tab_color));
     }
 }
