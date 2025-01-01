@@ -13,9 +13,11 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewProfile"
-            android:exported="true" />
-        <!-- Login Activity is the entry point -->
+            android:exported="true" /> <!-- Login Activity is the entry point -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">

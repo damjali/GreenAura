@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="#DBECA2"
     android:padding="16dp">
 
+    <!-- Back Button -->
     <TextView
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
@@ -19,8 +19,21 @@
         android:clickable="true"
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
-        android:textColor="#000000" />
+        android:textColor="#436A0D" />
 
+    <!-- Logout Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#436A0D"
+        android:textColor="#FFFFFF" />
+
+    <!-- Title -->
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
@@ -30,8 +43,9 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:textColor="#000000" />
+        android:textColor="#436A0D" />
 
+    <!-- Email -->
     <TextView
         android:id="@+id/user_email"
         android:layout_width="wrap_content"
@@ -42,6 +56,7 @@
         android:layout_marginTop="32dp"
         android:textColor="#000000" />
 
+    <!-- Account Creation Date -->
     <TextView
         android:id="@+id/user_creation_date"
         android:layout_width="wrap_content"
@@ -51,4 +66,16 @@
         android:layout_below="@id/user_email"
         android:layout_marginTop="16dp"
         android:textColor="#000000" />
+
+    <!-- Change Password Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/change_password_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Password"
+        android:layout_below="@id/user_creation_date"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#436A0D"
+        android:textColor="#FFFFFF" />
+
 </RelativeLayout>
