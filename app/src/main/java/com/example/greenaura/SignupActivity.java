@@ -101,6 +101,7 @@ public class SignupActivity extends AppCompatActivity {
                     Map<String, Object> userData = new HashMap<>();
                     userData.put("email", email);
                     userData.put("createdAt", System.currentTimeMillis());
+                    userData.put("UserAuraPoints",1000); //to be changed later, just adding to test logic
 
                     db.collection("users").document(documentId)
                             .set(userData)
