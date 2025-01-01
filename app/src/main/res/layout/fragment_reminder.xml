@@ -160,8 +160,10 @@
                 android:layout_width="363dp"
                 android:layout_height="60dp"
                 android:background="#FFFFFF"
+                android:drawableRight="@android:drawable/arrow_down_float"
                 android:paddingLeft="20dp"
-                android:spinnerMode="dropdown" />
+                android:spinnerMode="dropdown"
+                tools:ignore="SpeakableTextPresentCheck" />
         </androidx.cardview.widget.CardView>
 
         <Button

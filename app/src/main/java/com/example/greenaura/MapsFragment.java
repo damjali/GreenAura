@@ -1,10 +1,7 @@
 package com.example.greenaura;
 
-
 import static com.example.greenaura.CollectionActivity.currentLat;
 import static com.example.greenaura.CollectionActivity.currentLong;
-import com.example.greenaura.databinding.FragmentMapsBinding;
-import static com.example.greenaura.CollectionActivity.nearestLocationList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +49,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     Button btnReminder, btnMap;
     TextView tvLocation, tvOpeningHour, tvWasteType;
     RatingBar ratingBar;
-    FirebaseFirestore db;
     HashMap<String,String> selectedHashMap;
     static ReminderFragment reminderFragment;
 
@@ -64,7 +60,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap; //allow map manipulation
-        Log.d("currentLat", ": " + currentLat + currentLong);
         LatLng userCurLatLng = new LatLng(CollectionActivity.currentLat, CollectionActivity.currentLong);
         MarkerOptions markerOptions = new MarkerOptions()
                 .position(userCurLatLng)
@@ -138,7 +133,6 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Nullable
@@ -156,8 +150,7 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
             //handle fragment ui
             Log.d("Mapsfrag:", "onviewcreated initialising views");
-
-            db = FirebaseFirestore.getInstance();
+            
             btnReminder = view.findViewById(R.id.BtnReminder);
             btnMap = view.findViewById(R.id.BtnMap);
             tvLocation = view.findViewById(R.id.TVLocation);

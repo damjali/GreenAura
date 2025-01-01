@@ -1,5 +1,5 @@
 package com.example.greenaura;
-//permission put in fragment?
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
@@ -57,8 +57,6 @@ public class CollectionActivity extends AppCompatActivity {
     FusedLocationProviderClient fusedLocationProviderClient;
     static List<HashMap<String, String>> nearestLocationList = new ArrayList<>();
 
-    //initialise firestore
-    Firestore firestore = new Firestore();
 
     MapsFragment mapsFragment = new MapsFragment();
 
@@ -390,19 +388,16 @@ public class CollectionActivity extends AppCompatActivity {
                     String openingHours = nearestLocation.get("opening_hours");
 
                     if (category.equals("rubbish")) {
-                        Toast.makeText(CollectionActivity.this, "A waste centre found !", Toast.LENGTH_SHORT).show();
                         GWVenue.setText("Venue: " + namee);
                         GWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                         GWTime.setText(openingHours);
                         GWTitle.setText("General Waste");
                     }else if (category.equals("recycling")) {
-                        Toast.makeText(CollectionActivity.this, "A recycling centre found !", Toast.LENGTH_SHORT).show();
                         RWVenue.setText("Venue: " + namee);
                         RWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                         RWTime.setText(openingHours);
                         RWTitle.setText("Recyclable Waste");
                     } else if (category.equals("electrical_waste")) {
-                        Toast.makeText(CollectionActivity.this, "A e-waste centre found !", Toast.LENGTH_SHORT).show();
                         EWVenue.setText("Venue: " + namee);
                         EWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                         EWTime.setText(openingHours);
@@ -411,7 +406,6 @@ public class CollectionActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(CollectionActivity.this, "No nearest location found", Toast.LENGTH_SHORT).show();
                 }
-                firestore.saveLocation(nearestLocationList);
             }
         }
 
