@@ -37,25 +37,25 @@ public class MainRewardsPage extends AppCompatActivity {
 
         // Open RedeemRewardPage when Redeem button is clicked
         binding.redeemButton.setOnClickListener(view -> {
-            // Start the RedeemRewardPage activity
             Intent intent = new Intent(MainRewardsPage.this, RedeemRewardsPage.class);
             startActivity(intent);
+        });
+
+        // Navigate to NewHomePage when back_arrow is clicked
+        binding.backArrow.setOnClickListener(view -> {
+            Intent intent = new Intent(MainRewardsPage.this, NewHomePage.class);
+            startActivity(intent);
+            finish(); // Optional: Finish current activity to remove it from back stack
         });
     }
 
     private void loadFragment(Fragment fragment) {
-        // Begin the fragment transaction
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        // Replace the current fragment in the fragment_container
         transaction.replace(R.id.fragment_container, fragment);
-
-        // Commit the transaction
         transaction.commit();
     }
 
     private void setActiveTab(View clickedButton) {
-        // Change the background color to indicate the active tab
         binding.recentTransactionsButton.setBackgroundTintList(
                 getResources().getColorStateList(clickedButton == binding.recentTransactionsButton
                         ? R.color.active_tab_color
@@ -65,5 +65,13 @@ public class MainRewardsPage extends AppCompatActivity {
                 getResources().getColorStateList(clickedButton == binding.redeemedButton
                         ? R.color.active_tab_color
                         : R.color.inactive_tab_color));
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Optional: Handle the back button press the same way as back_arrow click
+        Intent intent = new Intent(MainRewardsPage.this, NewHomePage.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -15,11 +15,25 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
+            android:name=".NewHomePage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- Main Activity (Login Activity as entry point) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
+
+        </activity> <!-- Other Activities -->
+        <activity
             android:name=".RewardDetailsPage"
             android:exported="true"
-            android:theme="@style/Theme.GreenAura">
-
-        </activity>
+            android:theme="@style/Theme.GreenAura" />
         <activity
             android:name=".RedeemRewardsPage"
             android:exported="false"
@@ -27,21 +41,10 @@
         <activity
             android:name=".MainRewardsPage"
             android:exported="true"
-            android:theme="@style/Theme.GreenAura" >
-            android:name=".ChangePasswordActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.GreenAura" />
         <activity
             android:name=".ViewProfile"
-            android:exported="true" /> <!-- Login Activity is the entry point -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".SpecificGoalsPage"
             android:exported="false"
@@ -49,32 +52,25 @@
         <activity
             android:name=".GoalsHomePage"
             android:exported="true"
-            android:theme="@style/Theme.GreenAura">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- Other Activities -->
+            android:theme="@style/Theme.GreenAura" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
-        </activity> <!-- Signup Activity -->
+            android:exported="false" />
         <activity
             android:name=".SignupActivity"
-            android:exported="true" /> <!-- Main Activity -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" /> <!-- Collection Activity -->
+            android:exported="true" />
         <activity
             android:name=".CollectionActivity"
-            android:exported="true" /> <!-- Impact Activity -->
+            android:exported="true" />
         <activity
             android:name=".ImpactActivity"
-            android:exported="true" /> <!-- Report Activity -->
+            android:exported="true" />
         <activity
             android:name=".ReportActivity"
-            android:exported="true" />
+            android:exported="true" /> <!-- ChangePasswordActivity -->
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
