@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="8dp"
+    android:layout_marginEnd="8dp"
+    android:elevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/GoalImage"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_android_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:id="@+id/GoalTitle"
+        android:text="100 Aura"
+        android:textStyle="bold"
+        android:textColor="#556B2F" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:id="@+id/GoalDesc"
+        android:text="Visit to Recycling ..."
+        android:textColor="#556B2F"
+        android:textSize="14sp" />
+
+    <!-- New TextView for points -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:id="@+id/GoalPoints"
+        android:text="Aura Points : "
+        android:textStyle="bold"
+        android:textColor="#FF6347"
+        android:textSize="12sp" />
+</LinearLayout>
