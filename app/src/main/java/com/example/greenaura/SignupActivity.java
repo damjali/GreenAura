@@ -33,6 +33,14 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        TextView title = findViewById(R.id.signupTitle);
+        title.animate()
+                .alpha(1)
+                .translationY(0)
+                .setDuration(1000)
+                .setStartDelay(300)
+                .start();
+
         // initialize firebase auth, firestore, and ui elements
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

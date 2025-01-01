@@ -32,6 +32,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        TextView title = findViewById(R.id.loginTitle);
+        title.animate()
+                .alpha(1)
+                .translationY(0)
+                .setDuration(1000)
+                .setStartDelay(300)
+                .start();
+
         // initialize firebase auth and firestore
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

@@ -13,24 +13,33 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
-            android:exported="false">
-
-        </activity>
+            android:name=".ViewProfile"
+            android:exported="true" />
+        <!-- Login Activity is the entry point -->
         <activity
-            android:name=".SignupActivity"
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
+        </activity> <!-- Signup Activity -->
+        <activity
+            android:name=".SignupActivity"
+            android:exported="true" /> <!-- Main Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" /> <!-- Collection Activity -->
+        <activity
+            android:name=".CollectionActivity"
+            android:exported="true" /> <!-- Impact Activity -->
+        <activity
+            android:name=".ImpactActivity"
+            android:exported="true" /> <!-- Report Activity -->
+        <activity
+            android:name=".ReportActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
