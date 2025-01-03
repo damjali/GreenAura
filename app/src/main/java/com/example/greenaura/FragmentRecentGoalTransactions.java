@@ -1,64 +1,111 @@
 package com.example.greenaura;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FragmentRecentGoalTransactions#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.text.SimpleDateFormat;
+
 public class FragmentRecentGoalTransactions extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public FragmentRecentGoalTransactions() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentRecentGoalTransactions.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FragmentRecentGoalTransactions newInstance(String param1, String param2) {
-        FragmentRecentGoalTransactions fragment = new FragmentRecentGoalTransactions();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        db = FirebaseFirestore.getInstance(); // Initialize Firestore
+        auth = FirebaseAuth.getInstance(); // Initialize FirebaseAuth
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recent_goal_transactions, container, false);
+        View view = inflater.inflate(R.layout.fragment_recent_goal_transactions, container, false);
+
+        LinearLayout parentLayout = view.findViewById(R.id.parentLayout);
+
+        // Get the current user's email
+        String userEmail = auth.getCurrentUser() != null ? auth.getCurrentUser().getEmail() : null;
+
+        if (userEmail == null) {
+            // Handle case where user is not logged in
+            return view;
+        }
+
+        // Fetch user ID based on email
+        db.collection("users")
+                .whereEqualTo("email", userEmail)
+                .get()
+                .addOnCompleteListener(userTask -> {
+                    if (userTask.isSuccessful() && !userTask.getResult().isEmpty()) {
+                        QuerySnapshot userQuerySnapshot = userTask.getResult();
+                        String userId = userQuerySnapshot.getDocuments().get(0).getId();
+
+                        // Reference to the user's redeemGoals collection
+                        CollectionReference redeemGoalsRef = db.collection("users")
+                                .document(userId)
+                                .collection("redeemGoals");
+
+                        // Fetch goals with specific conditions
+                        redeemGoalsRef.whereEqualTo("GoalAcceptedStatus", "accepted")
+                                .whereEqualTo("GoalRewardRedeemStatus", "completed")
+                                .get()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            // Inflate the layout dynamically for each goal
+                                            View goalItem = inflater.inflate(R.layout.recent_goals_items, parentLayout, false);
+
+                                            // Populate data
+                                            TextView goalTitle = goalItem.findViewById(R.id.GoalTitle);
+                                            TextView goalClaimDate = goalItem.findViewById(R.id.GoalClaimDate);
+                                            TextView goalAuraPoints = goalItem.findViewById(R.id.GoalAuraPointsAdded);
+
+                                            goalTitle.setText(document.getString("GoalTitle"));
+
+                                            // Handle CreatedAt field
+                                            Object createdAt = document.get("CreatedAt");
+                                            if (createdAt instanceof com.google.firebase.Timestamp) {
+                                                com.google.firebase.Timestamp timestamp = (com.google.firebase.Timestamp) createdAt;
+                                                goalClaimDate.setText(new SimpleDateFormat("dd MMMM yyyy").format(timestamp.toDate()));
+                                            } else if (createdAt instanceof String) {
+                                                goalClaimDate.setText((String) createdAt); // Handle if it's a String
+                                            } else if (createdAt instanceof Number) {
+                                                // Handle numeric timestamp
+                                                long timestampMillis = ((Number) createdAt).longValue();
+                                                goalClaimDate.setText(new SimpleDateFormat("dd MMMM yyyy").format(new java.util.Date(timestampMillis)));
+                                            } else {
+                                                goalClaimDate.setText("No Date Available"); // Default fallback
+                                            }
+
+                                            // Set Aura Points
+                                            goalAuraPoints.setText("+" + document.getString("GoalAuraPoints"));
+
+                                            // Add the inflated view to the parent layout
+                                            parentLayout.addView(goalItem);
+                                        }
+                                    } else {
+                                        // Handle errors here
+                                    }
+                                });
+                    } else {
+                        // Handle case where user ID is not found
+                    }
+                });
+
+        return view;
     }
 }

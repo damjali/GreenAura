@@ -19,7 +19,7 @@ public class CollectionActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CollectionActivity.this, MainActivity.class));
+                startActivity(new Intent(CollectionActivity.this, NewHomePage.class));
                 finish(); // Close this activity
             }
         });

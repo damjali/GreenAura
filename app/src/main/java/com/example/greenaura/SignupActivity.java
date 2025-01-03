@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -88,39 +89,30 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     // save user data to firestore
+    // save user data to firestore
     private void saveUserToFirestore(String email) {
-        // fetch the total number of documents in the "users" collection
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<>() {
-            @Override
-            public void onComplete(@NonNull Task<com.google.firebase.firestore.QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    // generate document id based on count
-                    int count = task.getResult().size() + 1;
-                    String documentId = "user_" + String.format("%03d", count); // e.g., "user_001", "user_002"
+        // create a new user document with auto-generated ID
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("email", email);
+        userData.put("createdAt", System.currentTimeMillis());
+        userData.put("UserAuraPoints", "1000"); // Change this to a string, e.g., "1000"
 
-                    Map<String, Object> userData = new HashMap<>();
-                    userData.put("email", email);
-                    userData.put("createdAt", System.currentTimeMillis());
-                    userData.put("UserAuraPoints",1000); //to be changed later, just adding to test logic
-
-                    db.collection("users").document(documentId)
-                            .set(userData)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(SignupActivity.this, "User has been registered and saved successfully", Toast.LENGTH_LONG).show();
-                                        startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                                        finish();
-                                    } else {
-                                        Toast.makeText(SignupActivity.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                            });
-                } else {
-                    Toast.makeText(SignupActivity.this, "Failed to fetch user count: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        // Add the user to the "users" collection with a randomly generated document ID
+        db.collection("users")
+                .add(userData) // Firestore auto-generates the document ID
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignupActivity.this, "User has been registered and saved successfully", Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                            finish();
+                        } else {
+                            Toast.makeText(SignupActivity.this, "Failed to save user data: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
+
+
 }

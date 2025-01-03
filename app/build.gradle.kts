@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
     alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.example.greenaura"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.greenaura"
@@ -34,6 +35,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 }
 
 dependencies {
@@ -53,6 +57,7 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.cardview)
     implementation(libs.recyclerview)
+    implementation(libs.core.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -61,5 +66,10 @@ dependencies {
     implementation ("com.google.firebase:firebase-auth:21.1.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0") // or the latest version
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("com.squareup.okio:okio:3.4.0")
+
 
 }

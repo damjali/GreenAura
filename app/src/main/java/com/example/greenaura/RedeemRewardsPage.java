@@ -2,16 +2,19 @@ package com.example.greenaura;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.greenaura.databinding.ActivityRedeemRewardsPageBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -19,6 +22,15 @@ public class RedeemRewardsPage extends AppCompatActivity {
 
     private ActivityRedeemRewardsPageBinding binding;
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Fetch and display updated Aura Points whenever the activity is resumed
+        fetchAndDisplayUserAuraPoints();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,10 @@ public class RedeemRewardsPage extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        // Fetch the user's Aura Points and update the TextView
+        fetchAndDisplayUserAuraPoints();
 
         // Fetch vouchers from Firestore
         fetchVouchers();
@@ -38,6 +54,39 @@ public class RedeemRewardsPage extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+    }
+
+    private void fetchAndDisplayUserAuraPoints() {
+        // Get the currently authenticated user's email
+        String userEmail = auth.getCurrentUser().getEmail();
+        if (userEmail == null) {
+            Toast.makeText(this, "User not authenticated.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Normalize the email to lowercase
+        String normalizedEmail = userEmail.toLowerCase();
+
+        // Fetch user data from Firestore
+        db.collection("users")
+                .whereEqualTo("email", normalizedEmail)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        Log.d("Firestore", "User found in Firestore.");
+                        String currentAuraPoints = queryDocumentSnapshots.getDocuments().get(0).getString("UserAuraPoints");
+
+                        // Update the TextView with the current Aura Points
+                        binding.points.setText(currentAuraPoints); // Update points TextView
+                    } else {
+                        Log.e("Firestore", "No user found with email: " + normalizedEmail);
+                        Toast.makeText(this, "User data not found.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Firestore", "Error fetching user data: " + e.getMessage());
+                    Toast.makeText(this, "Failed to fetch user data.", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void fetchVouchers() {

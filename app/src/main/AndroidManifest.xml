@@ -15,20 +15,29 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
+            android:name=".EventMainPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".MainEventPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".EcoChatBot"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
             android:name=".NewHomePage"
             android:exported="true"
-            android:theme="@style/Theme.GreenAura" >
+            android:theme="@style/Theme.GreenAura" /> <!-- Main Activity (Login Activity as entry point) -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- Main Activity (Login Activity as entry point) -->
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
-
         </activity> <!-- Other Activities -->
         <activity
             android:name=".RewardDetailsPage"

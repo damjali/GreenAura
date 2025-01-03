@@ -2,6 +2,7 @@ package com.example.greenaura;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -32,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         TextView title = findViewById(R.id.loginTitle);
         title.animate()
                 .alpha(1)
@@ -44,11 +47,27 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        db.collection("users").get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for (DocumentSnapshot doc : queryDocumentSnapshots) {
+                String email = doc.getString("email");
+                if (email != null) {
+                    db.collection("users").document(doc.getId())
+                            .update("email", email.toLowerCase())
+                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "Updated email to lowercase for document: " + doc.getId()))
+                            .addOnFailureListener(e -> Log.e("Firestore", "Failed to update email: " + e.getMessage()));
+                }
+            }
+        });
+
+
         // initialize views
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signupRedirectText);
+
+        loginEmail.setText("testingemail@gmail.com");
+        loginPassword.setText("password123");
 
         // handle login button click
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = loginEmail.getText().toString().trim();
                 String pass = loginPassword.getText().toString().trim();
+
 
                 if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if (!pass.isEmpty()) {
@@ -106,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Welcome, " + (name != null ? name : "User") + "!", Toast.LENGTH_LONG).show();
 
                             // navigate to main activity
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, NewHomePage.class));
                             finish();
                           } else {
                             // no user data found

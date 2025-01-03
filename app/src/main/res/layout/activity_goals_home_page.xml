@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D8EAB8"
+    android:background="#D5E7B4"
     android:padding="16dp">
 
     <LinearLayout
@@ -14,23 +14,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/buttonBackButton"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_arrow_back_24"
-                android:contentDescription="Back" />
+                android:contentDescription="Back"
+                android:src="@drawable/baseline_arrow_back_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Set Goals!"
+                android:textColor="#556B2F"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="#556B2F" />
+                android:textStyle="bold" />
         </LinearLayout>
 
         <!-- Goal Progress -->
@@ -39,26 +40,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Your Goal Progress"
-            android:textSize="16sp"
             android:textColor="#556B2F"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <ProgressBar
+            android:id="@+id/progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="24dp"
             android:layout_marginTop="8dp"
-            android:progress="87"
-            android:progressTint="#556B2F"
             android:backgroundTint="#E0E0E0"
-            style="?android:attr/progressBarStyleHorizontal" />
+            android:progress="0"
+            android:progressTint="#556B2F" />
 
         <TextView
+            android:id="@+id/progressText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="13% more towards your goal"
-            android:textSize="14sp"
-            android:textColor="#556B2F" />
+            android:text="0% more towards your goal"
+            android:textColor="#556B2F"
+            android:textSize="14sp" />
 
         <!-- Completed Goals Section -->
         <TextView
@@ -66,23 +69,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Completed Goal(s)"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#556B2F" />
+            android:textColor="#556B2F"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:scrollbars="none">
-            
+
             <LinearLayout
                 android:id="@+id/LinearlayoutContainerCompleted"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:orientation="horizontal">
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"></LinearLayout>
 
 
         </HorizontalScrollView>
@@ -93,18 +94,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Add more goals to boost your Aura Points!"
+            android:textColor="#556B2F"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#556B2F" />
+            android:textStyle="italic" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Basic"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#556B2F" />
+            android:textColor="#556B2F"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -113,11 +114,10 @@
             android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/LinearlayoutContainerBasic"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
 
         </HorizontalScrollView>
 
@@ -126,9 +126,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Advanced"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#556B2F" />
+            android:textColor="#556B2F"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -137,11 +137,10 @@
             android:scrollbars="none">
 
             <LinearLayout
-                android:layout_width="wrap_content"
                 android:id="@+id/LinearlayoutContainerAdvanced"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
 
         </HorizontalScrollView>
     </LinearLayout>

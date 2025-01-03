@@ -23,7 +23,7 @@ public class ReportActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ReportActivity.this, MainActivity.class));
+                startActivity(new Intent(ReportActivity.this, NewHomePage.class));
                 finish(); // Close this activity
             }
         });

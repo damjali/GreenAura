@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="130dp"
+    android:layout_height="260dp"
+
+    android:layout_margin="8dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/cornered_corners_linearlayout"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/goal_card_background"
+        android:backgroundTint="#FCF5FD"
+        android:clickable="true"
+        android:elevation="5dp"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Event Image -->
+        <ImageView
+            android:id="@+id/eventImage"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_android_24" />
+
+        <!-- Event Title -->
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:text="Eco-Run Marathon"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Empty space that pushes the event date to the bottom -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <!-- Event Date at the bottom -->
+        <TextView
+            android:id="@+id/eventDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:ellipsize="end"
+            android:text="16 March"
+            android:textColor="#FF6347"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
