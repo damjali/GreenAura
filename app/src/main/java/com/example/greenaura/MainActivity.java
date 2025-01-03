@@ -1,5 +1,6 @@
 package com.example.greenaura;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -18,6 +19,8 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseHelper.getFirestore();
@@ -25,14 +28,29 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+
+        findViewById(R.id.widget1).setOnClickListener(v -> {
+            startActivity(new Intent(this, CollectionActivity.class));
         });
+
+        findViewById(R.id.widget2).setOnClickListener(v -> {
+            startActivity(new Intent(this, ImpactActivity.class));
+        });
+
+        findViewById(R.id.widget3).setOnClickListener(v -> {
+            startActivity(new Intent(this, ReportActivity.class));
+        });
+
+        findViewById(R.id.widget4).setOnClickListener(v -> {
+            startActivity(new Intent(this, ViewProfile.class));
+        });
+
 
         db = FirebaseFirestore.getInstance();
 
@@ -59,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attach();
     }
+
 
     // Adapter to manage fragments in ViewPager2
     private static class FragmentAdapter extends FragmentStateAdapter {

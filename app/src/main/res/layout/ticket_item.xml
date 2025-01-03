@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/ticket_background"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Logo and Text -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:orientation="vertical">
+
+        <!-- Logo and Title -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@mipmap/grablogo_round"
+                android:contentDescription="FamilyMart Logo"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="FamilyMart"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="#005BAC" />
+        </LinearLayout>
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RM5 FamilyMart eVoucher"
+            android:textSize="14sp"
+            android:textColor="#333333"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <!-- Points Section -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100\nAura"
+        android:textSize="16sp"
+        android:textColor="#AAAAAA"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingRight="10dp"
+        android:layout_gravity="center_vertical" />
+</LinearLayout>

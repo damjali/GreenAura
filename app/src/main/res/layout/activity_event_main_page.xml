@@ -1,0 +1,122 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D7E9B7"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Back Button and Title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/BackArrow"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Back"
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <!-- Event Title -->
+            <TextView
+                android:id="@+id/EventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eco-Run Marathon"
+                android:textColor="#2C6B2F"
+                android:textSize="24sp"
+                android:paddingLeft="10dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+
+        <!-- Event Image -->
+        <ImageView
+            android:id="@+id/EventImage"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginBottom="16dp"
+            android:paddingTop="30dp"
+            android:src="@drawable/baseline_default_image"
+            android:scaleType="centerCrop"
+            android:contentDescription="Event Image" />
+
+        <!-- Event Description -->
+        <TextView
+            android:id="@+id/EventDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let's join the Eco Run @ Eco Day Kuala Langat! Runner's Entitlement: 1. Ultron® Micro-dry Jersey 2. Eco-friendly Wooden Finisher Medal (Strictly for finishers only) 3. Race Bib 4. E-Certificate 5. Light Refreshment 6. Personal Accident Insurance"
+            android:textColor="#2C6B2F"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="10dp" />
+
+        <!-- Event Date -->
+        <TextView
+            android:id="@+id/EventDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="Event Date: 16 March"
+            android:textColor="#2C6B2F"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Event Venue -->
+        <TextView
+            android:id="@+id/EventVenue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Venue: The Arc Show Gallery, Bandar Rimbayu, Kuala Langat"
+            android:textColor="#2C6B2F"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Event Link -->
+        <TextView
+            android:id="@+id/EventLink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event Link: Eco-Run Marathon"
+            android:textColor="#2C6B2F"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:onClick="openEventLink" />
+
+        <!-- Event Pax -->
+        <TextView
+            android:id="@+id/EventPax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Participants: 150"
+            android:textColor="#2C6B2F"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Register Button -->
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Learn More"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2C6B2F"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"
+        tools:ignore="CoarseFineLocation" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -15,26 +17,75 @@
         android:theme="@style/Theme.GreenAura"
         tools:targetApi="31">
         <activity
-            android:name=".EducationalResourcesContainerActivity"
-            android:exported="false" />
+            android:name=".EcoChatBotActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
         <activity
-            android:name=".HomePage"
+            android:name=".EventMainPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".MainEventPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".EcoChatBot"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".NewHomePage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" /> <!-- Main Activity (Login Activity as entry point) -->
+        <activity
+            android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity> <!-- Other Activities -->
+        <activity
+            android:name=".RewardDetailsPage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".RedeemRewardsPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".MainRewardsPage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".ViewProfile"
+            android:exported="true" />
+        <activity
+            android:name=".SpecificGoalsPage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".GoalsHomePage"
+            android:exported="true"
+            android:theme="@style/Theme.GreenAura" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
             android:exported="true" />
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <activity
+            android:name=".CollectionActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ImpactActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ReportActivity"
+            android:exported="true" /> <!-- ChangePasswordActivity -->
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:exported="false" />
     </application>
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>
