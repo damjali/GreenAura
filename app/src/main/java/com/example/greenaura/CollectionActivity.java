@@ -53,7 +53,7 @@ public class CollectionActivity extends AppCompatActivity {
     //User current lat & long
     static double currentLat = 0, currentLong = 0;
     //Prepare the place category list
-    String[] placeCategory = {"rubbish", "recycling", "electrical_waste"};
+    String[] placeCategory = {"rubbish", "recycling", "electric_waste"};
     FusedLocationProviderClient fusedLocationProviderClient;
     static List<HashMap<String, String>> nearestLocationList = new ArrayList<>();
 
@@ -397,7 +397,7 @@ public class CollectionActivity extends AppCompatActivity {
                         RWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                         RWTime.setText(openingHours);
                         RWTitle.setText("Recyclable Waste");
-                    } else if (category.equals("electrical_waste")) {
+                    } else if (category.equals("electric_waste")) {
                         EWVenue.setText("Venue: " + namee);
                         EWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                         EWTime.setText(openingHours);

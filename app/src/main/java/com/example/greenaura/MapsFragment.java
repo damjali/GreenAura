@@ -16,6 +16,10 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +35,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -60,17 +65,35 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap; //allow map manipulation
+
         LatLng userCurLatLng = new LatLng(CollectionActivity.currentLat, CollectionActivity.currentLong);
-        MarkerOptions markerOptions = new MarkerOptions()
+        LatLng selectedLatLng = new LatLng(Double.parseDouble(selectedHashMap.get("lat")), Double.parseDouble(selectedHashMap.get("lng")));
+
+        map.setBuildingsEnabled(true);
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        // Set the default marker color to #DBECA2
+        BitmapDescriptor customMarker = BitmapDescriptorFactory.defaultMarker(70f);
+
+        MarkerOptions markerUser = new MarkerOptions()
                 .position(userCurLatLng)
                 .title("My Current Location")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                .icon(customMarker);
+
+        MarkerOptions markerSelectedLocation = new MarkerOptions()
+                .position(selectedLatLng)
+                .title(selectedHashMap.get("name"));
 
         map.moveCamera(CameraUpdateFactory.newLatLng(userCurLatLng));
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(userCurLatLng, 15));
-        map.addMarker(markerOptions);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(userCurLatLng, 13));
+
+        map.addMarker(markerUser);
+        map.addMarker(markerSelectedLocation);
+
         Log.d("MapsFragment", "onMapReady: Map is ready");
     }
+
+
 
 
     public void displayLocationDetails(HashMap<String, String> location) {
@@ -199,11 +222,12 @@ public class MapsFragment extends Fragment implements OnMapReadyCallback {
 
         private void openInGoogleMapsApp () {
             Log.d("Now open map app:", "yes");
-            double latitude = CollectionActivity.currentLat;
-            double longitude = CollectionActivity.currentLong;
-            String label = tvLocation.getText().toString();
+            double latitude = Double.parseDouble(selectedHashMap.get("lat"));
+            double longitude = Double.parseDouble(selectedHashMap.get("lng"));
+            String label = selectedHashMap.get("name");
             //Location URI
             @SuppressLint("DefaultLocale") String uri = String.format("geo:%f,%f?q=%f,%f(%s)", latitude, longitude, latitude, longitude, label); //label=name location
+
             //Intent to launch Map App
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
             mapIntent.setPackage("com.google.android.apps.maps");
