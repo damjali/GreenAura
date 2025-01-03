@@ -41,7 +41,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -51,25 +50,26 @@ dependencies {
     implementation(libs.cardview)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
-    implementation(libs.firebase.firestore)
     implementation(libs.gridlayout)
     implementation(libs.firebase.database)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.cardview)
     implementation(libs.recyclerview)
     implementation(libs.core.ktx)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation ("com.google.firebase:firebase-firestore:24.3.0")  // Ensure Firestore dependency is added
-    implementation ("com.google.android.gms:play-services-base:18.2.0")  // Google Play Services Base
-    implementation ("com.google.firebase:firebase-auth:21.1.0")
-    implementation ("com.github.bumptech.glide:glide:4.12.0") // or the latest version
-    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation ("com.squareup.okio:okio:3.4.0")
 
-
+    // Explicit versions for dependencies
+    implementation("com.google.firebase:firebase-firestore:24.3.0")
+    implementation("com.google.android.gms:play-services-base:18.2.0")
+    implementation("com.google.firebase:firebase-auth:21.1.0")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okio:okio:3.4.0")
+    implementation("com.google.android.material:material:1.3.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
 }

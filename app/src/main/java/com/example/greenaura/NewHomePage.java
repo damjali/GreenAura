@@ -86,7 +86,7 @@ public class NewHomePage extends AppCompatActivity {
 
         // Handle widget clicks (same as before)
         findViewById(R.id.EcoReportWidget).setOnClickListener(v -> {
-            startActivity(new Intent(this, ReportActivity.class));
+            startActivity(new Intent(this, Report_System.class));
         });
 
         findViewById(R.id.EcoGoalsWidget).setOnClickListener(v -> {
@@ -102,5 +102,6 @@ public class NewHomePage extends AppCompatActivity {
             Intent intent = new Intent(NewHomePage.this, MainRewardsPage.class);
             startActivity(intent);
         });
+
     }
 }

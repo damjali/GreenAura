@@ -78,14 +78,9 @@
                 android:contentDescription="Promotional Banner"
                 android:clickable="true"
                 android:focusable="true" />
-
-
         </LinearLayout>
 
         <!-- Category Icons Section -->
-
-        <!-- Featured Items Section -->
-
         <GridLayout
             android:id="@+id/category_section"
             android:layout_width="wrap_content"
@@ -132,7 +127,7 @@
                 android:src="@drawable/eco_collection_widget_icon" />
         </GridLayout>
 
-
+        <!-- Eco Events Section -->
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -158,21 +153,46 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/category_section">
 
+            <LinearLayout
+                android:id="@+id/EventsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="@drawable/cornered_corners_linearlayout"> <!-- Apply rounded background here if necessary -->
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- EcoChatBot Section -->
         <LinearLayout
-            android:id="@+id/EventsLinearLayout"
+            android:id="@+id/ecoChatBotContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="@drawable/cornered_corners_linearlayout"> <!-- Apply rounded background here if necessary -->
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/horizontalscrollview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/ecoChatBot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:adjustViewBounds="true"
+                android:layout_marginBottom="30dp"
+                android:clickable="true"
+                android:contentDescription="Eco Chat Bot"
+                android:focusable="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ecochatbot" />
         </LinearLayout>
-    </HorizontalScrollView>
 
-
-
-    <TextView
+        <!-- Tips And Resources Section -->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -195,7 +215,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalscrollview">
+            app:layout_constraintTop_toBottomOf="@+id/ecoChatBotContainer">
 
         </LinearLayout>
 

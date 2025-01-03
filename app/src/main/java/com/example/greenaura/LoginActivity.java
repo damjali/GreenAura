@@ -122,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot querySnapshot) {
                         if (!querySnapshot.isEmpty()) {
                             // assuming email is unique, fetch the first document
-                            String name = querySnapshot.getDocuments().get(0).getString("name");
-                            Toast.makeText(LoginActivity.this, "Welcome, " + (name != null ? name : "User") + "!", Toast.LENGTH_LONG).show();
+                            String name = querySnapshot.getDocuments().get(0).getString("email");
+                            Toast.makeText(LoginActivity.this, "Welcome, " + (name != null ? name : email) + "!", Toast.LENGTH_LONG).show();
 
                             // navigate to main activity
                             startActivity(new Intent(LoginActivity.this, NewHomePage.class));
