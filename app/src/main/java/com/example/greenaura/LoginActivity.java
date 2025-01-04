@@ -122,13 +122,19 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot querySnapshot) {
                         if (!querySnapshot.isEmpty()) {
                             // assuming email is unique, fetch the first document
-                            String name = querySnapshot.getDocuments().get(0).getString("email");
-                            Toast.makeText(LoginActivity.this, "Welcome, " + (name != null ? name : email) + "!", Toast.LENGTH_LONG).show();
+                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                            String username = document.getString("username");
 
-                            // navigate to main activity
+                            // Determine the welcome message
+                            String welcomeMessage = "Welcome, " + (username != null && !username.isEmpty() ? username : email) + "!";
+
+                            // Show the toast
+                            Toast.makeText(LoginActivity.this, welcomeMessage, Toast.LENGTH_LONG).show();
+
+                            // Navigate to main activity
                             startActivity(new Intent(LoginActivity.this, NewHomePage.class));
                             finish();
-                          } else {
+                        } else {
                             // no user data found
                             Toast.makeText(LoginActivity.this, "No user data found for this email", Toast.LENGTH_LONG).show();
                         }
@@ -141,4 +147,5 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

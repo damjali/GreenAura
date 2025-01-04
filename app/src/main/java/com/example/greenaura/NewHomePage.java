@@ -62,17 +62,12 @@ public class NewHomePage extends AppCompatActivity {
                                 eventDateTextView.setText(eventDate);
 
                                 // Add the event view to the layout
-
-
-                                // Ensure that the event view is clickable
                                 eventView.setClickable(true);  // Make sure the view is clickable
                                 eventView.setFocusable(true);  // Allow focus for accessibility
-
 
                                 // Handle click on the event view
                                 eventView.setOnClickListener(v -> {
                                     // Pass event data to EventMainPage
-                                    System.out.println("saya kene tekan");
                                     Intent intent = new Intent(NewHomePage.this, EventMainPage.class);
                                     intent.putExtra("eventId", eventId); // Pass event ID
                                     startActivity(intent);
@@ -107,5 +102,11 @@ public class NewHomePage extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Handle click on the profile icon to open ProfileActivity
+        findViewById(R.id.icon_search).setOnClickListener(v -> {
+            Intent intent = new Intent(NewHomePage.this, ProfilePage.class);  // Replace with your actual profile activity
+            startActivity(intent);
+        });
     }
+
 }
