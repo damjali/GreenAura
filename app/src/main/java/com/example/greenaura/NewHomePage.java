@@ -89,6 +89,10 @@ public class NewHomePage extends AppCompatActivity {
             startActivity(new Intent(this, Report_System.class));
         });
 
+        findViewById(R.id.ecoChatBot).setOnClickListener(v -> {
+            startActivity(new Intent(this, EcoChatBotActivity.class));
+        });
+
         findViewById(R.id.EcoGoalsWidget).setOnClickListener(v -> {
             startActivity(new Intent(NewHomePage.this, GoalsHomePage.class));
         });

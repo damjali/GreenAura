@@ -36,7 +36,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="48dp"
             android:text="Report Waste Issue"
-            android:textColor="#000000"
+            android:textColor="#1E1E1E"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +49,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="4dp"
             android:text="Your details will remain confidential."
-            android:textColor="#757575"
+            android:textColor="#555555"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TVTitleReportSystem" />
@@ -61,7 +61,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text="Type of Incident"
-            android:textColor="#000000"
+            android:textColor="#1E1E1E"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text="Incident Location"
-            android:textColor="#000000"
+            android:textColor="#1E1E1E"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -100,6 +100,7 @@
             android:layout_marginEnd="24dp"
             android:hint="Enter location"
             android:padding="12dp"
+            android:textColor="#1E1E1E"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +142,7 @@
                 android:hint="Select Date"
                 android:inputType="date"
                 android:padding="12dp"
+                android:textColor="#1E1E1E"
                 android:textStyle="bold" />
 
             <View
@@ -155,6 +157,7 @@
                 android:hint="Select Time"
                 android:inputType="time"
                 android:padding="12dp"
+                android:textColor="#1E1E1E"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -165,7 +168,7 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:text="Description"
-            android:textColor="#000000"
+            android:textColor="#1E1E1E"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -182,6 +185,7 @@
             android:hint="Provide a brief description of the incident"
             android:inputType="textMultiLine"
             android:padding="12dp"
+            android:textColor="#1E1E1E"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -194,7 +198,7 @@
             android:layout_marginStart="44dp"
             android:layout_marginTop="28dp"
             android:text="Upload Photos/Videos"
-            android:textColor="#000000"
+            android:textColor="#1E1E1E"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -245,6 +249,3 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-
-
-
