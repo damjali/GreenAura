@@ -5,6 +5,7 @@
     <string name="google_maps_key">AIzaSyBQZKl2IekO9l2ZmuNb-ZzdKwBMX3vI3MQ</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string-array name="reminder_options">
+        <item>Right now</item>
         <item>On the day</item>
         <item>1 day before</item>
         <item>2 days before</item>
