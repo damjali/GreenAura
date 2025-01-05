@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "700941476578",
+    "firebase_url": "https://green-aura-b6e67-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "green-aura-b6e67",
+    "storage_bucket": "green-aura-b6e67.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700941476578:android:3cb4bcd7a6916de98a74bb",
+        "android_client_info": {
+          "package_name": "com.example.greenaura"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG9p0o87Zuvhc11sKdURJkUYzq-Ih_Gcc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
