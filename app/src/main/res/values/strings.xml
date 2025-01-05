@@ -78,6 +78,18 @@
         <item>Save 50 Liters of Water Through Conservation</item>
     </string-array>
 
+    <string name="title_activity_maps">MapsActivity</string>
+
+    <string-array name="reminder_options">
+        <item>On the day</item>
+        <item>1 day before</item>
+        <item>2 days before</item>
+        <item>3 days before</item>
+        <item>1 week before</item>
+    </string-array>
+
+    <string name="google_maps_key">AIzaSyBQZKl2IekO9l2ZmuNb-ZzdKwBMX3vI3MQ</string>
+
     <string-array name="goal_icons">
         <item>Recycle 10 Plastic Bottles</item>
         <item>Reuse Old Clothes as Cleaning Rags</item>
