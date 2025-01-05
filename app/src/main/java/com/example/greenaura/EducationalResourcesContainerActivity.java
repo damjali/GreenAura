@@ -7,15 +7,11 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.auth.FirebaseAuth;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -25,197 +21,146 @@ import java.util.Map;
 
 public class EducationalResourcesContainerActivity extends AppCompatActivity {
 
-    private boolean isUpvoted = false; // Track upvote state
+    private boolean isUpvoted = false;
     private FirebaseFirestore db;
-    private String ResourceID;
-    private int CurrentUpvotes;
+    private String resourceID;
     private String currentUserID;
+    private int currentUpvotes;
+    private TextView upvoteCountText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_educational_resources_container);
 
+        // Initialize Firebase Firestore
         db = FirebaseFirestore.getInstance();
-        // Get the current Firebase user
+
+        // Get authenticated user
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            // Get the email of the authenticated user
-            String userEmail = user.getEmail();
-
-            if (userEmail != null) {
-                // Search Firestore users collection for a document with the same email
-                db.collection("users")
-                        .whereEqualTo("email", userEmail)
-                        .get()
-                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                            if (!queryDocumentSnapshots.isEmpty()) {
-                                // Get the user document and extract the userID
-                                DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                                currentUserID = document.getId(); // Assuming the document ID is the userID
-
-                                Log.d("UserInfo", "User UID from Firestore: " + currentUserID);
-                                // Proceed with logic that depends on currentUserID
-                            } else {
-                                Log.e("FirestoreError", "No user found with the given email.");
-                                // Handle case where no user is found
-                            }
-                        })
-                        .addOnFailureListener(e -> {
-                            Log.e("FirestoreError", "Error fetching user: ", e);
-                        });
-            } else {
-                Log.e("AuthError", "Authenticated user email is null.");
-            }
-        } else {
-            Log.e("AuthError", "User is not authenticated.");
-            // Optionally redirect to a login screen
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish(); // Close the current activity
+        if (user == null) {
+            Toast.makeText(this, "Please log in to access resources.", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
         }
+
+        // Retrieve current user email and fetch user ID from Firestore
+        String userEmail = user.getEmail();
+        if (userEmail != null) {
+            db.collection("users")
+                    .whereEqualTo("email", userEmail)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (!queryDocumentSnapshots.isEmpty()) {
+                            currentUserID = queryDocumentSnapshots.getDocuments().get(0).getId();
+                            Log.d("UserInfo", "Current User ID: " + currentUserID);
+                        } else {
+                            Log.e("FirestoreError", "User not found in Firestore.");
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.e("FirestoreError", "Error fetching user ID.", e));
+        }
+
+        // Initialize UI components
         ImageView resourceImage = findViewById(R.id.resource_image);
         TextView resourceHeader = findViewById(R.id.resource_header);
         TextView resourceDescription = findViewById(R.id.resource_description);
         TextView resourcePostDate = findViewById(R.id.resource_post_date);
         TextView resourceLink = findViewById(R.id.ReadMore);
         ImageView upvoteButton = findViewById(R.id.upvoteButton);
+        ImageView backBtn = findViewById(R.id.backBtn);
+        upvoteCountText = findViewById(R.id.resource_upvote_count); // Text view for upvote count
 
+        // Retrieve data from intent
+        resourceID = getIntent().getStringExtra("ResourceId");
+        String resourcePhoto = getIntent().getStringExtra("ResourcePhoto");
+        String resourceHeaderText = getIntent().getStringExtra("ResourceHeader");
+        String resourceDescriptionText = getIntent().getStringExtra("ResourceDescription");
+        String resourcePostDateText = getIntent().getStringExtra("ResourcePostDate");
+        String resourceLinkUrl = getIntent().getStringExtra("ResourceLink");
 
-        // Get data from intent
-        String ResourceID = getIntent().getStringExtra("ResourceId");
-        String ResourcePhoto = getIntent().getStringExtra("ResourcePhoto");
-        String ResourceHeader = getIntent().getStringExtra("ResourceHeader");
-        String ResourceDescription = getIntent().getStringExtra("ResourceDescription");
-        String ResourcePostDate = getIntent().getStringExtra("ResourcePostDate");
-        String ResourceLink = getIntent().getStringExtra("ResourceLink");
-        //int CurrentUpvotes = getIntent().getIntExtra("ResourceUpvote", 0);
+        // Set data to UI
+        resourceHeader.setText(resourceHeaderText != null ? resourceHeaderText : "Default Header");
+        resourceDescription.setText(resourceDescriptionText != null ? resourceDescriptionText : "No description available.");
+        resourcePostDate.setText(resourcePostDateText != null ? resourcePostDateText : "Default Date");
+        if (resourcePhoto != null && !resourcePhoto.isEmpty()) {
+            Glide.with(this).load(resourcePhoto).into(resourceImage);
+        } else {
+            resourceImage.setImageResource(R.drawable.baseline_android_24); // Set a default image
+        }
 
-        // Set data to views
-        resourceHeader.setText((ResourceHeader != null && !ResourceHeader.isEmpty()) ? ResourceHeader : "Default Header");
-        resourceDescription.setText((ResourceDescription != null && !ResourceDescription.isEmpty()) ? ResourceDescription : "No description available.");
-        resourcePostDate.setText((ResourcePostDate!= null && !ResourcePostDate.isEmpty()) ? ResourcePostDate : "Default Date");
-        Glide.with(this).load(ResourcePhoto).into(resourceImage);
-
-
-        // Set click listener
+        // "Read More" button functionality
         resourceLink.setOnClickListener(v -> {
-            if (ResourceLink != null && !ResourceLink.isEmpty()) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(ResourceLink));
+            if (resourceLinkUrl != null && !resourceLinkUrl.isEmpty()) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(resourceLinkUrl));
                 startActivity(browserIntent);
             } else {
-                // Optional: Show a message if the link is not available
-                Toast.makeText(this, "No link available", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "No link available.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Check if the user has already upvoted
-        DocumentReference resourceRef = db.collection("Educational Resources").document(ResourceID);
+        // Back button functionality
+        backBtn.setOnClickListener(v -> finish());
+
+        // Upvote button functionality
+        DocumentReference resourceRef = db.collection("Educational Resources").document(resourceID);
         resourceRef.get().addOnSuccessListener(documentSnapshot -> {
             if (documentSnapshot.exists()) {
+                currentUpvotes = documentSnapshot.getLong("ResourceUpvote") != null ?
+                        documentSnapshot.getLong("ResourceUpvote").intValue() : 0;
+                upvoteCountText.setText(String.valueOf(currentUpvotes)); // Display the current upvote count
+
                 Map<String, Object> userUpvotes = (Map<String, Object>) documentSnapshot.get("UserUpvotes");
-                if (userUpvotes != null && userUpvotes.containsKey(currentUserID)) {
-                    // User has already upvoted
+                isUpvoted = userUpvotes != null && userUpvotes.containsKey(currentUserID);
+
+                // Check SharedPreferences to restore the upvote state
+                if (getSharedPreferences("UpvotePrefs", MODE_PRIVATE).getBoolean(resourceID, false)) {
                     isUpvoted = true;
-                    upvoteButton.setImageResource(R.drawable.ic_upvote_filled); // Set to filled icon
-                } else {
-                    // User has not upvoted
-                    isUpvoted = false;
-                    upvoteButton.setImageResource(R.drawable.ic_upvote); // Set to outline icon
                 }
+
+                upvoteButton.setImageResource(isUpvoted ? R.drawable.ic_upvote_filled : R.drawable.ic_upvote);
             }
         });
 
-        // Set up the upvote button click listener
         upvoteButton.setOnClickListener(v -> {
-            if (!isUpvoted) {
-                // Increment upvote count and mark user as upvoted
+            if (isUpvoted) {
+                // Remove upvote
                 db.runTransaction(transaction -> {
                     DocumentSnapshot snapshot = transaction.get(resourceRef);
-                    if (snapshot.exists()) {
-                        Long currentUpvotes = snapshot.getLong("ResourceUpvote");
-                        if (currentUpvotes != null) {
-                            // Increment upvotes safely
-                            transaction.update(resourceRef, "ResourceUpvote", currentUpvotes + 1);
-                            transaction.set(resourceRef.collection("UserUpvotes").document(currentUserID), true);
-                            return null; // Return null as we're only updating
-                        }
+                    Long currentCount = snapshot.getLong("ResourceUpvote");
+                    if (currentCount != null && currentCount > 0) {
+                        transaction.update(resourceRef, "ResourceUpvote", currentCount - 1);
+                        transaction.update(resourceRef, "UserUpvotes." + currentUserID, null);
                     }
                     return null;
                 }).addOnSuccessListener(aVoid -> {
-                    // Update UI
-                    upvoteButton.setImageResource(R.drawable.ic_upvote_filled); // Change icon to filled
-                    isUpvoted = true;
-                    CurrentUpvotes++; // Update local count
-                    Toast.makeText(this, "Upvoted!", Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to upvote", Toast.LENGTH_SHORT).show();
-                });
-            } else {
-                // Undo the upvote safely, ensuring it doesn't go negative
-                db.runTransaction(transaction -> {
-                    DocumentSnapshot snapshot = transaction.get(resourceRef);
-                    if (snapshot.exists()) {
-                        Long currentUpvotes = snapshot.getLong("ResourceUpvote");
-                        if (currentUpvotes != null && currentUpvotes > 0) {
-                            // Decrement upvotes safely
-                            transaction.update(resourceRef, "ResourceUpvote", currentUpvotes - 1);
-                            transaction.delete(resourceRef.collection("UserUpvotes").document(currentUserID));
-                            return null; // Return null as we're only updating
-                        }
-                    }
-                    return null;
-                }).addOnSuccessListener(aVoid -> {
-                    // Update UI
-                    upvoteButton.setImageResource(R.drawable.ic_upvote); // Change icon to outline
                     isUpvoted = false;
-                    Toast.makeText(this, "Upvote removed!", Toast.LENGTH_SHORT).show();
-
-                    // Re-fetch the upvote state to ensure synchronization
-                    resourceRef.get().addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            Map<String, Object> userUpvotes = (Map<String, Object>) documentSnapshot.get("UserUpvotes");
-                            isUpvoted = userUpvotes != null && userUpvotes.containsKey(currentUserID);
-                        }
-                    });
-                }).addOnFailureListener(e -> {
-                    Toast.makeText(this, "Failed to undo upvote", Toast.LENGTH_SHORT).show();
-                });
+                    upvoteButton.setImageResource(R.drawable.ic_upvote);
+                    currentUpvotes--; // Update the local count
+                    upvoteCountText.setText(String.valueOf(currentUpvotes)); // Update the displayed count
+                    // Save the state in SharedPreferences
+                    getSharedPreferences("UpvotePrefs", MODE_PRIVATE).edit().putBoolean(resourceID, false).apply();
+                    Toast.makeText(this, "Upvote removed.", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> Log.e("FirestoreError", "Failed to remove upvote.", e));
+            } else {
+                // Add upvote
+                db.runTransaction(transaction -> {
+                    DocumentSnapshot snapshot = transaction.get(resourceRef);
+                    Long currentCount = snapshot.getLong("ResourceUpvote");
+                    transaction.update(resourceRef, "ResourceUpvote", (currentCount != null ? currentCount : 0) + 1);
+                    transaction.update(resourceRef, "UserUpvotes." + currentUserID, true);
+                    return null;
+                }).addOnSuccessListener(aVoid -> {
+                    isUpvoted = true;
+                    upvoteButton.setImageResource(R.drawable.ic_upvote_filled);
+                    currentUpvotes++; // Update the local count
+                    upvoteCountText.setText(String.valueOf(currentUpvotes)); // Update the displayed count
+                    // Save the state in SharedPreferences
+                    getSharedPreferences("UpvotePrefs", MODE_PRIVATE).edit().putBoolean(resourceID, true).apply();
+                    Toast.makeText(this, "Upvoted!", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> Log.e("FirestoreError", "Failed to add upvote.", e));
             }
         });
-
-
-
-        // Set up the upvote button click listener
-//        upvoteButton.setOnClickListener(v -> {
-//            if (!isUpvoted) {
-//            // Increment upvote count in Firebase
-//            db.collection("Educational Resources").document(ResourceID)
-//                    .update("ResourceUpvote", CurrentUpvotes + 1)
-//                    .addOnSuccessListener(aVoid -> {
-//                        // Update UI
-//                        upvoteButton.setImageResource(R.drawable.ic_upvote_filled); // Change icon to filled
-//                        isUpvoted = true;
-//                        Toast.makeText(this, "Upvoted!", Toast.LENGTH_SHORT).show();
-//                    })
-//                    .addOnFailureListener(e -> {
-//                        Toast.makeText(this, "Failed to upvote", Toast.LENGTH_SHORT).show();
-//                    });
-//        } else {
-//            Toast.makeText(this, "Already upvoted", Toast.LENGTH_SHORT).show();
-//        }
-//    });
-
-        //Set up back button
-        ImageView backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(v -> {
-            // Create an Intent to navigate back to the HomePage
-            Intent intent = new Intent(EducationalResourcesContainerActivity.this, NewHomePage.class);
-            startActivity(intent);
-        });
-
-
     }
 }
