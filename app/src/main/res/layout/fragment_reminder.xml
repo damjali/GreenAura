@@ -23,7 +23,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/CVGW"
             android:layout_width="385dp"
-            android:layout_height="190dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:contextClickable="true"
             android:visibility="visible"
@@ -124,6 +124,14 @@
             android:textStyle="bold" />
 
         <!-- Dropdown for Reminder Options -->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:paddingLeft="30dp"
+            android:text="Select a Date" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,7 +141,7 @@
                 android:id="@+id/calendar_view"
                 style="@style/CalendarView"
                 android:layout_width="match_parent"
-                android:layout_height="340dp"
+                android:layout_height="315dp"
                 android:background="#FFFFFF"
 
                 android:dateTextAppearance="@style/TextAppearance.AppCompat.Small"
@@ -149,10 +157,18 @@
 
         <!-- Set Reminder Button -->
 
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="30dp"
+            android:text="Schedule a Reminder Notification" />
+
         <androidx.cardview.widget.CardView
             android:layout_width="363dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             app:cardCornerRadius="30dp">
 
             <Spinner
@@ -174,7 +190,7 @@
             android:backgroundTint="#436A0D"
             android:fontFamily="@font/noto_sans_coptic"
             android:text="Save"
-            android:textColor="#FFFFFF"
+            android:textColor="#DBECA2"
             android:textSize="24sp"
             android:textStyle="bold" />
 

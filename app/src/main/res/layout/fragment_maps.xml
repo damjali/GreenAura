@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#F3ECEC"
         android:visibility="visible"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         tools:visibility="visible">
 

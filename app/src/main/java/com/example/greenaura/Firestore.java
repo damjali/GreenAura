@@ -1,14 +1,18 @@
 package com.example.greenaura;
 
 import android.annotation.SuppressLint;
+import android.icu.util.Calendar;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class Firestore {
 
@@ -40,6 +44,26 @@ public class Firestore {
     public void saveReminder_User_Location_Time(HashMap<String,String> userReminderOption) {
         System.out.println("date: " + userReminderOption.get("reminderDate")) ;
         System.out.println("time: " + userReminderOption.get("reminderTime"));
+
+        String reminderDate = userReminderOption.get("reminderDate");
+        String reminderTime = userReminderOption.get("reminderTime");
+
+        //Parse reminderDate into Calendar object
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+        try {
+            Date date = dateFormat.parse(reminderDate);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+
+            //Adjust time based on reminderTIme
+            if ("1 day before".equals(reminderTime)) {
+                calendar.add(Calendar.DAY_OF_MONTH, -1);
+            }
+
+            long reminderTimestamp = calendar.getTimeInMillis();
+
+            userReminderOption.put("reminderTimestamp", String.valueOf(reminderTimestamp));
             db.collection("Reminders") //the id given so messy?
                     .add(userReminderOption) //add hashmap
                     .addOnSuccessListener(documentReference -> {
@@ -48,9 +72,13 @@ public class Firestore {
                     }).addOnFailureListener(e -> {
                         Log.w("Firestore", "Error saving reminder", e);
                     });
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
-
-
 
 
 
