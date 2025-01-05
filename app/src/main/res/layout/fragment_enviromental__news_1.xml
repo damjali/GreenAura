@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="424dp">
+
+            <ImageView
+                android:id="@+id/newsImage"
+                android:layout_width="match_parent"
+                android:layout_height="412dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/globalcoreal" />
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="1dp"
+                android:background="@drawable/backbutton"
+                android:contentDescription="Back Button"
+                android:padding="8dp" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:text="Global carbon emissions hit a new high in 2024, with scientists urging swift action to avoid breaching the 1.5°C warming target."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/According"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="According to new research by the Global Carbon Project science team, global carbon emissions from fossil fuels have hit a record high in 2024."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/the2024"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="The 2024 Global Carbon Budget projects fossil carbon dioxide (CO2) emissions of 37.4 billion tons, up 0.8% from 2023."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/despite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Despite the urgent need to cut emissions to slow climate change, the researchers say there is still “no sign” that the world has reached a peak in fossil CO2 emissions."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <!-- Article Section -->
+        <TextView
+            android:id="@+id/globalfossil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_regular"
+            android:lineSpacingExtra="2dp"
+            android:text="Global fossil carbon emissions hit a record high in 2024 at 37.4 billion tons, up 0.8% from 2023, with no signs of peaking. Combined emissions, including land-use changes, total 41.6 billion tons, pushing CO2 levels further, as urgent reductions remain unmet to curb global warming."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/over"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Over the last 10 years, fossil CO2 emissions have risen while land-use change CO2 emissions have declined on average – leaving overall emissions roughly level over that period."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/thisyear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="This year, both fossil and land-use change CO2 emissions are set to rise, with drought conditions exacerbating emissions from deforestation and forest degradation fires during the El Niño climate event of 2023-2024"
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/withover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="With over 40 billion tons released each year at present, the level of CO2 in the atmosphere continues to rise – driving increasingly dangerous global warming."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <!-- Read More Section -->
+        <TextView
+            android:id="@+id/readMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Read More"
+            android:textColor="#3578FF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

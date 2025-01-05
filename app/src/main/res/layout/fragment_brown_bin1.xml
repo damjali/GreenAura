@@ -1,0 +1,79 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8EFE8"
+    android:padding="16dp">
+
+    <!-- Page Indicator -->
+    <ImageView
+        android:id="@+id/brownBinPageIndicator1"
+        android:layout_width="113dp"
+        android:layout_height="11dp"
+        android:layout_marginStart="117dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/brownbin1_dotted_pagenavigator"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:contentDescription="Back Button"
+        android:src="@drawable/ic_arrow_back_green"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp" />
+
+    <!-- Image -->
+    <ImageView
+        android:id="@+id/brownBinImage"
+        android:layout_width="356dp"
+        android:layout_height="361dp"
+        android:layout_marginStart="81dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="81dp"
+        android:contentDescription="Brown Bin Image"
+        android:src="@drawable/brown_bin_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brownBinSubtitle1" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/brownBinTitle1"
+        android:layout_width="245dp"
+        android:layout_height="264dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/domine_medium"
+        android:gravity="center|start"
+        android:text="From Bottles to Better: Brown Bin How-To"
+        android:textAlignment="viewStart"
+        android:textColor="#3D3D3D"
+        android:textSize="41sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Subtitle -->
+    <TextView
+        android:id="@+id/brownBinSubtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:text="The Brown Bin Guide"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/brownBinTitle1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

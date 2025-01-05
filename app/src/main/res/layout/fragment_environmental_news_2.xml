@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <!-- Subtitle Section -->
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="424dp">
+
+            <ImageView
+                android:id="@+id/wildfiresImage"
+                android:layout_width="422dp"
+                android:layout_height="417dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/wildfiresreal" />
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="1dp"
+                android:background="@drawable/backbutton"
+                android:contentDescription="Back Button"
+                android:padding="8dp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/Theblaze"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:text="The blaze kills one park's employee and prompts air quality alerts. Meanwhile California wildfire semi-contained."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/firecrews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Fire crews in the United States are working to contain large blazes in the northeastern states of New York and New Jersey, where heavy, smoke-filled air has prompted health warnings in several areas."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/theJennings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text=" The Jennings Creek wildfire has already torched 1,200 hectares (3,000 acres) across the two states, killed a New York parks employee and threatened dozens of structures, officials reported on Monday."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+
+
+        <!-- Article Section -->
+        <TextView
+            android:id="@+id/spanning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:lineSpacingExtra="2dp"
+            android:text="The blaze, spanning 12sq km (4.7sq miles) is only 10 percent contained, according to New Jersey’s Forest Fire Service."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:lineSpacingExtra="2dp"
+            android:text="____________"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/working"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="@font/figtree_bold"
+            android:lineSpacingExtra="2dp"
+            android:text="Working Day and Night"
+            android:textAlignment="viewStart"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/firefighter"
+                android:layout_width="150dp"
+                android:layout_height="280dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/firefighter" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/inthenew"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/figtree_bold"
+                    android:lineSpacingExtra="2dp"
+                    android:text="In the New Jersey city of West Milford, veterans postponed their annual Veterans Day ceremony to focus on the firefighting effort."
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/manyof"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="16dp"
+                    android:fontFamily="@font/figtree_bold"
+                    android:lineSpacingExtra="2dp"
+                    android:text="Many of those personnel currently engaged with the fires are veterans themselves, and right now, we need to keep them in our thoughts as they spend many hours, day and night, doing all they can in order to protect our great communities in that area,” said Rudy Hass, the local head of the group Veterans of Foreign Wars."
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <!-- Read More Section -->
+        <TextView
+            android:id="@+id/readMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Read More"
+            android:textColor="#3578FF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>

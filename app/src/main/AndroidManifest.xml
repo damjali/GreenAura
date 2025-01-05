@@ -28,6 +28,30 @@
             android:exported="false"
             android:theme="@style/Theme.GreenAura" />
         <activity
+            android:name=".RecyclingGuideContainerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".EducationalResourcesContainerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".Environmental_News_1"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".Environmental_News_2"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".Environmental_News_3"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".Environment_News_4"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
             android:name=".EcoChatBotActivity"
             android:exported="false"
             android:theme="@style/Theme.GreenAura" />

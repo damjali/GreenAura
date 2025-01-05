@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="424dp">
+
+            <ImageView
+                android:id="@+id/newsImage"
+                android:layout_width="422dp"
+                android:layout_height="417dp"
+                android:layout_margin="0dp"
+                android:padding="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sealevels" />
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="1dp"
+                android:background="@drawable/backbutton"
+                android:contentDescription="Back Button"
+                android:padding="8dp" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="The United Nations Secretary-General António Guterres has said that big polluters have a clear responsibility to cut emissions – or risk a worldwide catastrophe."
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/According"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="“The Pacific is today the most vulnerable area of the world,” he told the BBC at the Pacific Island Forum Leaders Meeting in Tonga. “There is an enormous injustice in relation to the Pacific and it’s the reason I am here.”"
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/the2024"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="“The small islands don’t contribute to climate change but everything that happens because of climate change is multiplied here.”"
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/despite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="But eventually the 'surging seas are coming for us all,' he warned in a speech at the forum, as the UN releases two separate reports on rising sea levels and how they threaten Pacific island nations."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <!-- Article Section -->
+        <TextView
+            android:id="@+id/globalfossil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:lineSpacingExtra="2dp"
+            android:text="The UN Climate Action Team released a report called 'Surging Seas in a Warming World' showing that global average sea levels are rising at rates unprecedented in the past 3,000 years."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/ocean"
+            android:layout_width="422dp"
+            android:layout_height="100dp"
+            android:layout_margin="0dp"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ocean" />
+
+        <TextView
+            android:id="@+id/according"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="According to the report, the levels have risen an average of 9.4cm (3.7in) in the past 30 years but in the tropical Pacific, that figure was as high as 15cm."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/its"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="'It is important for leaders, especially like Australia and Aotearoa, to come and witness these things for themselves, but also witness the resilience of our people,' Mr Sikulu said."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <!-- Read More Section -->
+        <TextView
+            android:id="@+id/readMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Read More"
+            android:textColor="#3578FF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>
