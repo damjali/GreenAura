@@ -71,7 +71,7 @@ public class ProfilePage extends AppCompatActivity {
         lastNameField = findViewById(R.id.last_name);
         usernameField = findViewById(R.id.username);
         phoneNumberField = findViewById(R.id.phone_number);
-        emailField = findViewById(R.id.email); // TextView to make it uneditable
+        emailField = findViewById(R.id.email);
         birthDateField = findViewById(R.id.birth_date_input);
         joinedDateView = findViewById(R.id.joined_date);
         genderSpinner = findViewById(R.id.gender_spinner);
@@ -114,7 +114,11 @@ public class ProfilePage extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 ProfilePage.this,
-                (view, selectedYear, selectedMonth, selectedDay) -> birthDateField.setText(selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    Log.d(TAG, "Selected Birth Date: " + selectedDate);
+                    birthDateField.setText(selectedDate);
+                },
                 year, month, day
         );
         datePickerDialog.show();
@@ -123,7 +127,8 @@ public class ProfilePage extends AppCompatActivity {
     private void fetchAndPopulateUserData() {
         if (firebaseAuth.getCurrentUser() != null) {
             String userEmail = firebaseAuth.getCurrentUser().getEmail();
-            emailField.setText(userEmail); // Display email in the email field
+            emailField.setText(userEmail);
+            Log.d(TAG, "Fetching user data for email: " + userEmail);
 
             firestore.collection("users")
                     .whereEqualTo("email", userEmail)
@@ -131,10 +136,11 @@ public class ProfilePage extends AppCompatActivity {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                             DocumentReference userDocRef = task.getResult().getDocuments().get(0).getReference();
+                            Log.d(TAG, "User document found. Reference: " + userDocRef.getPath());
 
                             userDocRef.get().addOnSuccessListener(documentSnapshot -> {
                                 if (documentSnapshot.exists()) {
-                                    // Populate user fields
+                                    Log.d(TAG, "User data snapshot exists. Populating fields.");
                                     firstNameField.setText(documentSnapshot.getString("first_name"));
                                     lastNameField.setText(documentSnapshot.getString("last_name"));
                                     usernameField.setText(documentSnapshot.getString("username"));
@@ -160,10 +166,16 @@ public class ProfilePage extends AppCompatActivity {
                                     } else {
                                         profileImageView.setImageResource(R.drawable.baseline_default_image);
                                     }
+                                } else {
+                                    Log.d(TAG, "User snapshot does not exist.");
                                 }
                             });
+                        } else {
+                            Log.e(TAG, "Failed to fetch user document: " + task.getException());
                         }
                     });
+        } else {
+            Log.e(TAG, "No authenticated user found.");
         }
     }
 
@@ -178,6 +190,7 @@ public class ProfilePage extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
+            Log.d(TAG, "Image selected: " + imageUri);
             uploadImageToImgBB(imageUri);
         }
     }
@@ -186,7 +199,6 @@ public class ProfilePage extends AppCompatActivity {
         Retrofit retrofit = RetrofitClient.getClient();
         ImgBBApi imgBBApi = retrofit.create(ImgBBApi.class);
 
-        // Convert the image URI to MultipartBody.Part
         try {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
             byte[] bytes = IOUtils.toByteArray(inputStream);
@@ -201,49 +213,36 @@ public class ProfilePage extends AppCompatActivity {
                             String jsonResponse = response.body().string();
                             Log.d(TAG, "ImgBB Response: " + jsonResponse);
 
-                            // Parse the response to get the image URL
                             String imageUrl = extractImageUrlFromResponse(jsonResponse);
                             uploadedImageUrl = imageUrl;
 
-                            // Update the profile image in the UI
+                            // Immediately update the profile image view with the new image URL
                             Glide.with(ProfilePage.this).load(uploadedImageUrl).into(profileImageView);
-
-                            // Show success toast
                             Toast.makeText(ProfilePage.this, "Photo uploaded successfully!", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             Log.e(TAG, "Error parsing ImgBB response: " + e.getMessage());
-                            Toast.makeText(ProfilePage.this, "Failed to parse image upload response.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Log.e(TAG, "ImgBB upload failed: " + response.message());
-                        Toast.makeText(ProfilePage.this, "Image upload failed. Please try again.", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
                     Log.e(TAG, "Image upload error: " + t.getMessage());
-                    Toast.makeText(ProfilePage.this, "Failed to upload image. Check your connection.", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (Exception e) {
             Log.e(TAG, "Error reading image URI: " + e.getMessage());
-            Toast.makeText(ProfilePage.this, "Error processing image file.", Toast.LENGTH_SHORT).show();
         }
     }
 
+
     private String extractImageUrlFromResponse(String responseBody) {
-        // Create an instance of Gson
         Gson gson = new Gson();
-
-        // Parse the JSON response
         JsonObject jsonResponse = gson.fromJson(responseBody, JsonObject.class);
-
-        // Extract the "data" object and the "url" field from it
         JsonObject data = jsonResponse.getAsJsonObject("data");
-        String imageUrl = data.get("url").getAsString();
-
-        return imageUrl; // Return the image URL
+        return data.get("url").getAsString();
     }
 
     private void updateUserData() {
@@ -269,11 +268,9 @@ public class ProfilePage extends AppCompatActivity {
                                 Toast.makeText(ProfilePage.this, "Profile updated successfully!", Toast.LENGTH_SHORT).show();
                             }).addOnFailureListener(e -> {
                                 Log.e(TAG, "Error updating user data: " + e.getMessage());
-                                Toast.makeText(ProfilePage.this, "Failed to save profile. Please try again.", Toast.LENGTH_SHORT).show();
                             });
                         } else {
-                            Log.e(TAG, "Failed to fetch user document: " + task.getException());
-                            Toast.makeText(ProfilePage.this, "Error fetching user data.", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Failed to fetch user document.");
                         }
                     });
         }
