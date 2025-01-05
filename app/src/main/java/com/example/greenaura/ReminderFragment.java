@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -139,10 +140,10 @@ public class ReminderFragment extends Fragment {
                 //create hash map to be saved into firestore (okay)
                 Toast.makeText(requireContext(), "selected "+selectedReminderDate+" "+selectedReminderTime, Toast.LENGTH_SHORT).show();
                 HashMap<String,String> reminderData = new HashMap<>();
-                reminderData.put("selectedLocation", getArguments().getString("name"));
-                reminderData.put("reminderDate", selectedReminderDate); //null?
-                reminderData.put("reminderTime", selectedReminderTime); //null?
-                reminderData.put("user", "user_0012"); //sayyid
+                reminderData.put("selectedLocation", getArguments().getString("name")); //good
+                reminderData.put("reminderDate", selectedReminderDate); //have value, but firestore null same as time
+                reminderData.put("reminderTime", selectedReminderTime); //have value
+                reminderData.put("user", "user_00244242"); //get email, then userid
 
                 // Save the reminder data to Firestore
                 firestore.saveReminder_User_Location_Time(reminderData); // Assuming this method saves to Firestore
@@ -198,25 +199,40 @@ public class ReminderFragment extends Fragment {
                 .show();
     }
 
-    /*
-    private void scheduleNotification(long reminderTimestamp, String locationDetails) {
-        Context context = MapsFragment.reminderFragment.getContext();
-        if (context == null) return;
+    //retrieve timestamp and schedule notification
+    public void scheduleNotification(long reminderTimestamp, String locationDetails) {
+        Context context = MapsFragment.reminderFragment.getContext();//important coz of selectedLocation
+        if (context == null) //not null
+            return;
 
+
+        //When alarm triggered, Intent broadcast/send signal to ReminderBroadcastReceiver
         Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
         intent.putExtra("locationDetails", locationDetails);
 
+
+
+
+        //Create PendingIntent with unique ID (for alarm manager to execute intent at the specific time)
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                (int) reminderTimestamp, // Unique ID
+                (int) reminderTimestamp, // use remindertimestamp as a unique ID
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
 
+        //
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTimestamp, pendingIntent);
             Log.d("Notification", "Notification scheduled for: " + new Date(reminderTimestamp));
         }
-    } */
+    }
+
+    public void checkNotificationPermission() {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (!notificationManager.areNotificationsEnabled()) {
+            Toast.makeText(getContext(), "Please enable notifications for this app in settings!", Toast.LENGTH_LONG).show();
+        }
+    }
 }
