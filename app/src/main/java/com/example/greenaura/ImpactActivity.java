@@ -23,7 +23,7 @@ public class ImpactActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ImpactActivity.this, MainActivity.class));
+                startActivity(new Intent(ImpactActivity.this, NewHomePage.class));
                 finish(); // Close this activity
             }
         });

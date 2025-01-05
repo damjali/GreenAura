@@ -132,12 +132,13 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginBottom="16dp"
             android:text="ECO Events"
             android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/horizontalscrollview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"></TextView>
 
         <HorizontalScrollView
@@ -201,13 +202,13 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/TipsAndResourcesLinearLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.912"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"></TextView>
 
         <LinearLayout
             android:id="@+id/TipsAndResourcesLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="60dp"
             android:layout_marginRight="20dp"
@@ -217,6 +218,89 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ecoChatBotContainer">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_resources"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp" />
+
+        </LinearLayout>
+
+        <!-- Recycling Guides Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Recycling Guides"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/RecyclingGuideLinearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+        <LinearLayout
+            android:id="@+id/RecyclingGuideLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:background="#7DD857"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/TipsAndResourcesLinearLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_guides_resources"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp" />
+
+        </LinearLayout>
+
+        <!-- Environmental News Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Environmental News"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/EnvironmentalNewsLinearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="parent"></TextView>
+
+        <LinearLayout
+            android:id="@+id/EnvironmentalNewsLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="20dp"
+            android:background="#7DD857"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/RecyclingGuideLinearLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewEnvironmentalNews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:orientation="horizontal" /> <!-- Make sure RecyclerView is horizontal -->
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

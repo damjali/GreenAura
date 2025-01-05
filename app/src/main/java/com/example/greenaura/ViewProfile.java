@@ -34,7 +34,7 @@ public class ViewProfile extends AppCompatActivity {
 
         // back button click listener
         backButton.setOnClickListener(v -> {
-            startActivity(new Intent(ViewProfile.this, MainActivity.class));
+            startActivity(new Intent(ViewProfile.this, NewHomePage.class));
             finish();
         });
 

@@ -1,20 +1,42 @@
 package com.example.greenaura;
 
+import java.util.Map;
+
 public class Resource {
+    private String ResourceId;
     private String ResourceHeader;
     private String ResourceDescription;
     private String ResourcePhoto;
     private String ResourceLink;
     private String ResourcePostDate;
     private int ResourceUpvote;
+    private Map<String, Boolean> UserUpvotes;
 
-    public Resource(String title, String description, String photoUrl, String link, String date, int likes) {
+    public Resource(String resourceId, String title, String description, String photoUrl, String link, String date, int likes, Map<String, Boolean> userUpvotes) {
         this.ResourceHeader = title;
         this.ResourceDescription = description;
         this.ResourcePhoto = photoUrl;
         this.ResourceLink = link;
         this.ResourcePostDate = date;
         this.ResourceUpvote = likes;
+        this.ResourceId = resourceId;
+        this.UserUpvotes = userUpvotes;
+    }
+
+    public Map<String, Boolean> getUserUpvotes() {
+        return UserUpvotes;
+    }
+
+    public void setUserUpvotes(Map<String, Boolean> userUpvotes) {
+        UserUpvotes = userUpvotes;
+    }
+
+    public String getResourceId() {
+        return ResourceId;
+    }
+
+    public void setResourceId(String resourceId) {
+        ResourceId = resourceId;
     }
 
     public int getResourceUpvote() {

@@ -13,7 +13,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomePage extends AppCompatActivity {
 
@@ -27,7 +29,7 @@ public class HomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        recyclerView = findViewById(R.id.recycler_view_resources);
+        recyclerView = findViewById(R.id.recycler_view_resources2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         resourceList = new ArrayList<>();
@@ -41,6 +43,7 @@ public class HomePage extends AppCompatActivity {
         //pass the Required Data from the Clicked Card to the Activity via Intent.
         adapter.setOnItemClickListener(resource -> {
             Intent intent = new Intent(HomePage.this, EducationalResourcesContainerActivity.class);
+            intent.putExtra("ResourceId", resource.getResourceId());
             intent.putExtra("ResourceHeader", resource.getResourceHeader());
             intent.putExtra("ResourceDescription", resource.getResourceDescription());
             intent.putExtra("ResourcePhoto", resource.getResourcePhoto());
@@ -57,14 +60,18 @@ public class HomePage extends AppCompatActivity {
                 QuerySnapshot snapshot = task.getResult();
                 if (snapshot != null) {
                     for (QueryDocumentSnapshot document : snapshot) {
+                        String ResourceId = document.getId(); // Get the document ID
                         String ResourcePhoto = document.getString("ResourcePhoto");
                         String ResourceHeader = document.getString("ResourceHeader");
                         String ResourceDescription = document.getString("ResourceDescription");
                         String ResourcePostDate = document.getString("ResourcePostDate");
                         String ResourceLink = document.getString("ResourceLink");
-                        String ResourceUpvote = document.getString("ResourceUpvote");
-
-                        resourceList.add(new Resource(ResourceHeader, ResourceDescription, ResourcePhoto, ResourceLink, ResourcePostDate, 0));
+                        Integer ResourceUpvote = document.getLong("ResourceUpvote").intValue();
+                        Map<String, Boolean> UserUpvotes = (Map<String, Boolean>) document.get("UserUpvotes");
+                        if (UserUpvotes == null) {
+                            UserUpvotes = new HashMap<>(); // Initialize with an empty map
+                        }
+                        resourceList.add(new Resource(ResourceId, ResourceHeader, ResourceDescription, ResourcePhoto, ResourceLink, ResourcePostDate, ResourceUpvote, UserUpvotes));
                     }
                     adapter.notifyDataSetChanged();
                 }

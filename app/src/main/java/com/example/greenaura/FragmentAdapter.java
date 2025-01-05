@@ -37,6 +37,16 @@ public class FragmentAdapter extends FragmentStateAdapter {
                 default:
                     return new BrownBinFragment3(); // Third page
             }
+        } else if ("OrangeBin".equals(binType)) {
+            // Return Orange Bin fragments
+            switch (position) {
+                case 0:
+                    return new OrangeBinFragment1(); // First page
+                case 1:
+                    return new OrangeBinFragment2(); // Second page
+                default:
+                    return new OrangeBinFragment3(); // Third page
+            }
         }
         // Default case (if no binType matches)
         return new Fragment(); // Return an empty fragment

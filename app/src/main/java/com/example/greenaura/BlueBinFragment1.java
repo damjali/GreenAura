@@ -1,5 +1,6 @@
 package com.example.greenaura;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -56,9 +57,11 @@ public class BlueBinFragment1 extends Fragment {
         backButton.setOnClickListener(v -> {
             // Log for debugging
             Log.d("BlueBinFragment1", "Back button clicked");
+            Intent intent = new Intent(requireContext(), NewHomePage.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // Clear the back stack
+            startActivity(intent);
+            requireActivity().finish();
 
-            // Navigate back to the previous fragment
-            requireActivity().getSupportFragmentManager().popBackStack();
         });
 
         return view;

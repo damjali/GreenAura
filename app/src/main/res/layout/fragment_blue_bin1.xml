@@ -29,6 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
+        android:clickable="true"
         android:layout_marginStart="16dp" />
 
     <!-- Image -->
