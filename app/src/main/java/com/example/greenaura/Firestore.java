@@ -67,20 +67,31 @@ public class Firestore {
                     .add(userReminderOption)
                     .addOnSuccessListener(documentReference -> {
                         Log.d("Firestore", "Reminder saved");
+
+
+                        //okay
+
+
                         // After saving reminder, retrieve the timestamp and schedule notification
-                        String userId = userReminderOption.get("userId"); // Ensure userId is in the options
+                        String userId = userReminderOption.get("user"); // use user to get timestamp
+                        Toast.makeText(MapsFragment.reminderFragment.getContext(), "userId: "+userId, Toast.LENGTH_SHORT).show();
+
                         getReminderTimestampFromFirestore(userId, new OnTimestampRetrievedListener() {
-                            @Override
-                            public void onTimestampRetrieved(long timestamp) {
+                            @Override //pass timestamp back to caller
+                            public void onTimestampRetrieved(long timestamp) { //scheduleNotification here
+                                //okay   Toast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
                                 MapsFragment.reminderFragment.scheduleNotification(timestamp, userReminderOption.get("selectedLocation"));
-                            }
+                            } //here, it schedule notification once receiving timestamp
 
                             @Override
                             public void onError(String errorMessage) {
                                 Log.e("Firestore", errorMessage);
+                                Toast.makeText(MapsFragment.reminderFragment.getContext(), "Fail to get timestamp from firestore", Toast.LENGTH_SHORT).show();
                             }
                         });
-                        // Show confirmation dialog after saving reminder
+
+
+                        // Show confirmation dialog after saving reminder (okay)
                         MapsFragment.reminderFragment.showConfirmationDialog();
                     })
                     .addOnFailureListener(e -> {
@@ -113,20 +124,23 @@ public class Firestore {
     }
 
 
+    //good, okay
     // Retrieve reminder timestamp from Firestore using userId
     public void getReminderTimestampFromFirestore(String userId, OnTimestampRetrievedListener listener) {
         db.collection("Reminders")
-                .whereEqualTo("userId", userId)
+                .whereEqualTo("user", userId)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (!queryDocumentSnapshots.isEmpty()) {
+                    if (!queryDocumentSnapshots.isEmpty()) { //have documents
                         DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
-                        Object reminderTimestamp = document.get("reminderTimestamp");
+                        Object reminderTimestamp = document.get("reminderTimestamp"); //retrieve from 1st document
                         if (reminderTimestamp != null) {
-                            long timestamp = (long) reminderTimestamp;
-                            listener.onTimestampRetrieved(timestamp);
+                            long timestamp = Long.parseLong(reminderTimestamp.toString()); //done
+                            //  Toast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
+                            listener.onTimestampRetrieved(timestamp); //pass timestamp retrieved from firestore back to listener(in this case, to saveReminder_User_Location_Time method)
                         } else {
                             listener.onError("No reminder timestamp found.");
+                            Toast.makeText(MapsFragment.reminderFragment.getContext(), "No reminder timestamp found.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         listener.onError("User not found.");
@@ -137,8 +151,13 @@ public class Firestore {
 
 
     // Listener interface to pass the result back to the calling activity/fragment
-    public interface OnTimestampRetrievedListener {
+    public interface
+    OnTimestampRetrievedListener {
         void onTimestampRetrieved(long timestamp);
         void onError(String errorMessage);
     }
+
+
+
+
 }

@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
@@ -131,6 +132,7 @@ public class ReminderFragment extends Fragment {
 
 
 
+
         //////////////////////////////////////////////////////////////////////////////////
 
         //button to save into firestore (okay)
@@ -138,7 +140,7 @@ public class ReminderFragment extends Fragment {
             // Check if both date and time are selected
             if (selectedReminderDate != null && !selectedReminderDate.isEmpty() && selectedReminderTime != null && !selectedReminderTime.isEmpty()) {
                 //create hash map to be saved into firestore (okay)
-                Toast.makeText(requireContext(), "selected "+selectedReminderDate+" "+selectedReminderTime, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Selected "+selectedReminderDate+" "+selectedReminderTime, Toast.LENGTH_SHORT).show();
                 HashMap<String,String> reminderData = new HashMap<>();
                 reminderData.put("selectedLocation", getArguments().getString("name")); //good
                 reminderData.put("reminderDate", selectedReminderDate); //have value, but firestore null same as time
@@ -200,11 +202,13 @@ public class ReminderFragment extends Fragment {
     }
 
     //retrieve timestamp and schedule notification
+    @SuppressLint("ScheduleExactAlarm")
     public void scheduleNotification(long reminderTimestamp, String locationDetails) {
         Context context = MapsFragment.reminderFragment.getContext();//important coz of selectedLocation
         if (context == null) //not null
             return;
 
+        //okay
 
         //When alarm triggered, Intent broadcast/send signal to ReminderBroadcastReceiver
         Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
@@ -216,15 +220,15 @@ public class ReminderFragment extends Fragment {
         //Create PendingIntent with unique ID (for alarm manager to execute intent at the specific time)
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 context,
-                (int) reminderTimestamp, // use remindertimestamp as a unique ID
+                (int) reminderTimestamp, // use reminderTimestamp as a unique ID
                 intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE // Include FLAG_IMMUTABLE
         );
 
         //
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTimestamp, pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTimestamp, pendingIntent);//ensure alarm fires at the exact time
             Log.d("Notification", "Notification scheduled for: " + new Date(reminderTimestamp));
         }
     }
