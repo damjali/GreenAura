@@ -113,6 +113,12 @@ public class EducationalResourcesContainerActivity extends AppCompatActivity {
 
                 Map<String, Object> userUpvotes = (Map<String, Object>) documentSnapshot.get("UserUpvotes");
                 isUpvoted = userUpvotes != null && userUpvotes.containsKey(currentUserID);
+
+                // Check SharedPreferences to restore the upvote state
+                if (getSharedPreferences("UpvotePrefs", MODE_PRIVATE).getBoolean(resourceID, false)) {
+                    isUpvoted = true;
+                }
+
                 upvoteButton.setImageResource(isUpvoted ? R.drawable.ic_upvote_filled : R.drawable.ic_upvote);
             }
         });
@@ -133,6 +139,8 @@ public class EducationalResourcesContainerActivity extends AppCompatActivity {
                     upvoteButton.setImageResource(R.drawable.ic_upvote);
                     currentUpvotes--; // Update the local count
                     upvoteCountText.setText(String.valueOf(currentUpvotes)); // Update the displayed count
+                    // Save the state in SharedPreferences
+                    getSharedPreferences("UpvotePrefs", MODE_PRIVATE).edit().putBoolean(resourceID, false).apply();
                     Toast.makeText(this, "Upvote removed.", Toast.LENGTH_SHORT).show();
                 }).addOnFailureListener(e -> Log.e("FirestoreError", "Failed to remove upvote.", e));
             } else {
@@ -148,6 +156,8 @@ public class EducationalResourcesContainerActivity extends AppCompatActivity {
                     upvoteButton.setImageResource(R.drawable.ic_upvote_filled);
                     currentUpvotes++; // Update the local count
                     upvoteCountText.setText(String.valueOf(currentUpvotes)); // Update the displayed count
+                    // Save the state in SharedPreferences
+                    getSharedPreferences("UpvotePrefs", MODE_PRIVATE).edit().putBoolean(resourceID, true).apply();
                     Toast.makeText(this, "Upvoted!", Toast.LENGTH_SHORT).show();
                 }).addOnFailureListener(e -> Log.e("FirestoreError", "Failed to add upvote.", e));
             }
