@@ -12,6 +12,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -142,7 +143,7 @@ public class ReminderFragment extends Fragment {
                 reminderData.put("selectedLocation", getArguments().getString("name")); //good
                 reminderData.put("reminderDate", selectedReminderDate); //have value, but firestore null same as time
                 reminderData.put("reminderTime", selectedReminderTime); //have value
-                reminderData.put("user", "user_0012"); //get email, then userid
+                reminderData.put("user", "user_00244242"); //get email, then userid
 
                 // Save the reminder data to Firestore
                 firestore.saveReminder_User_Location_Time(reminderData); // Assuming this method saves to Firestore
@@ -201,7 +202,9 @@ public class ReminderFragment extends Fragment {
     //retrieve timestamp and schedule notification
     public void scheduleNotification(long reminderTimestamp, String locationDetails) {
         Context context = MapsFragment.reminderFragment.getContext();//important coz of selectedLocation
-        if (context == null) return;
+        if (context == null) //not null
+            return;
+
 
         //When alarm triggered, Intent broadcast/send signal to ReminderBroadcastReceiver
         Intent intent = new Intent(context, ReminderBroadcastReceiver.class);
@@ -223,6 +226,13 @@ public class ReminderFragment extends Fragment {
         if (alarmManager != null) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTimestamp, pendingIntent);
             Log.d("Notification", "Notification scheduled for: " + new Date(reminderTimestamp));
+        }
+    }
+
+    public void checkNotificationPermission() {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        if (!notificationManager.areNotificationsEnabled()) {
+            Toast.makeText(getContext(), "Please enable notifications for this app in settings!", Toast.LENGTH_LONG).show();
         }
     }
 }
