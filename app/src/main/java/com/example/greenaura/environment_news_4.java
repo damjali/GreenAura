@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Environment_News_4 extends AppCompatActivity {
+public class environment_news_4 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
