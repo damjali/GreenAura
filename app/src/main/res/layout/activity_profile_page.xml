@@ -202,6 +202,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
+                <!-- Change Password Button -->
+                <Button
+                    android:id="@+id/change_password_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:padding="10dp"
+                    android:text="Change Password"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#FFFFFF" />
+
+                <!-- Logout Button -->
                 <Button
                     android:id="@+id/logout_button"
                     android:layout_width="0dp"
@@ -209,9 +222,11 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:padding="10dp"
+                    android:layout_marginLeft="5dp"
                     android:text="Logout"
                     android:textColor="#FFFFFF" />
             </LinearLayout>
+
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -103,6 +104,22 @@ public class ProfilePage extends AppCompatActivity {
 
         findViewById(R.id.logout_button).setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
+        });
+
+        findViewById(R.id.change_password_button).setOnClickListener(v -> {
+            String email = emailField.getText().toString().trim();
+
+            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                firebaseAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "A password reset email has been sent to: " + email, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e(TAG, "Error sending password reset email: ", task.getException());
+                                Toast.makeText(this, "Unable to send reset email. Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
         });
     }
 

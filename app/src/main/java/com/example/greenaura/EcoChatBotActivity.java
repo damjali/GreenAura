@@ -2,14 +2,17 @@ package com.example.greenaura;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.greenaura.ChatApi;
-import com.example.greenaura.R;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,9 +20,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class EcoChatBotActivity extends AppCompatActivity {
     private RecyclerView chatRecyclerView;
     private ChatAdapter chatAdapter;
     private List<Message> messageList;
+    private ImageView imageview;
 
     private Retrofit retrofit;
     private ChatApi chatApi;
@@ -42,7 +43,7 @@ public class EcoChatBotActivity extends AppCompatActivity {
         inputMessage = findViewById(R.id.chat_input);
         sendButton = findViewById(R.id.send_button);
         chatRecyclerView = findViewById(R.id.chat_recycler_view);
-
+        imageview = findViewById(R.id.groupphoto);
         messageList = new ArrayList<>();
         chatAdapter = new ChatAdapter(messageList);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -59,10 +60,15 @@ public class EcoChatBotActivity extends AppCompatActivity {
             String message = inputMessage.getText().toString();
             if (!message.isEmpty()) {
                 addMessageToChat(new Message(message, false));
-                sendMessageToBot(message);
+                handleCustomResponse(message);
                 inputMessage.setText("");
             }
         });
+
+        // Set up the input type to handle URL suggestions and display keyboard hints for links
+        inputMessage.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        inputMessage.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_URI);
+        inputMessage.setHint("Type a message or paste a link...");
     }
 
     private void addMessageToChat(Message message) {
@@ -71,13 +77,28 @@ public class EcoChatBotActivity extends AppCompatActivity {
         chatRecyclerView.scrollToPosition(messageList.size() - 1);
     }
 
+    private void handleCustomResponse(String userMessage) {
+        if (userMessage.equalsIgnoreCase("Who created this app?")) {
+            String customResponse = "GreenAura was created by five young and intelligent individuals committed to making the world a greener place. With passion and teamwork, they aim to drive sustainable change.\n\n" +
+                    "A special thanks to Dr. Hazim, our beloved Mobile Application Development Lecturer, for inspiring us. We hope he awards us full marks for our effort!\n\n" +
+                    "Here's a photo of the team striving for a better future";
+
+            addMessageToChat(new Message(customResponse, true));
+
+            // Show the ImageView
+            imageview.setVisibility(View.VISIBLE);
+        } else {
+            sendMessageToBot(userMessage);
+        }
+    }
+
+
     private void sendMessageToBot(String message) {
-        // Add the EcoBot system prompt before the user's message
         String systemPrompt = "You are EcoBot, an eco-enthusiast chatbot dedicated to promoting sustainability, recycling, and environmental conservation. " +
                 "You provide thoughtful, creative, and actionable advice on eco-friendly practices, recycling strategies, and ways to protect the Earth. " +
                 "Your responses should be engaging, practical, and informative, catering to users who are passionate about creating a greener world. " +
                 "Stay optimistic and inspiring, offering solutions that are both realistic and impactful, while encouraging users to adopt sustainable habits in their daily lives. " +
-                "Keep your tone friendly and supportive, emphasizing the importance of collective action for a better planet.";
+                "Keep your tone friendly and supportive, emphasizing the importance of collective action for a better planet. Please don’t elaborate too much; make it simple and concise.";
 
         String promptWithMessage = systemPrompt + "\n\nUser: " + message;
 
@@ -97,6 +118,4 @@ public class EcoChatBotActivity extends AppCompatActivity {
             }
         });
     }
-
 }
-

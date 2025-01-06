@@ -39,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:paddingRight="50dp"
                 android:lineSpacingExtra="8sp"
                 android:shadowColor="#000000"
                 android:text="GreenAura"
@@ -47,12 +48,6 @@
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/icon_notifications"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/baseline_add_alert_24"
-                android:contentDescription="Notifications Icon" />
         </LinearLayout>
 
         <!-- Promotional Banner -->
