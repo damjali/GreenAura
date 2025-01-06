@@ -18,10 +18,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private static final String TAG = "LoginActivity";
 
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -34,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         TextView title = findViewById(R.id.loginTitle);
         title.animate()
                 .alpha(1)
@@ -43,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 .setStartDelay(300)
                 .start();
 
-        // initialize firebase auth and firestore
+        // initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
@@ -53,12 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (email != null) {
                     db.collection("users").document(doc.getId())
                             .update("email", email.toLowerCase())
-                            .addOnSuccessListener(aVoid -> Log.d("Firestore", "Updated email to lowercase for document: " + doc.getId()))
-                            .addOnFailureListener(e -> Log.e("Firestore", "Failed to update email: " + e.getMessage()));
+                            .addOnSuccessListener(aVoid -> Log.d(TAG, "Updated email to lowercase for document: " + doc.getId()))
+                            .addOnFailureListener(e -> Log.e(TAG, "Failed to update email: " + e.getMessage()));
                 }
             }
         });
-
 
         // initialize views
         loginEmail = findViewById(R.id.login_email);
@@ -70,82 +70,69 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword.setText("password123");
 
         // handle login button click
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = loginEmail.getText().toString().trim();
-                String pass = loginPassword.getText().toString().trim();
+        loginButton.setOnClickListener(v -> {
+            String email = loginEmail.getText().toString().trim();
+            String pass = loginPassword.getText().toString().trim();
 
-
-                if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    if (!pass.isEmpty()) {
-                        // login with firebase authentication
-                        auth.signInWithEmailAndPassword(email, pass)
-                                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                    @Override
-                                    public void onSuccess(AuthResult authResult) {
-                                        fetchUserData(email); // fetch user data using email
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                    } else {
-                        loginPassword.setError("Password is required");
-                    }
-                } else if (email.isEmpty()) {
-                    loginEmail.setError("Email is required");
+            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (!pass.isEmpty()) {
+                    // login with Firebase authentication
+                    auth.signInWithEmailAndPassword(email, pass)
+                            .addOnSuccessListener(authResult -> fetchUserData(email))
+                            .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Login Failed: " + e.getMessage(), Toast.LENGTH_LONG).show());
                 } else {
-                    loginEmail.setError("Please enter a valid email");
+                    loginPassword.setError("Password is required");
                 }
+            } else if (email.isEmpty()) {
+                loginEmail.setError("Email is required");
+            } else {
+                loginEmail.setError("Please enter a valid email");
             }
         });
 
         // handle sign-up redirect text click
-        signupRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+        signupRedirectText.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignupActivity.class)));
+
+        findViewById(R.id.forgotPasswordText).setOnClickListener(v -> {
+            String email = loginEmail.getText().toString().trim();
+
+            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                auth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(this, "A password reset email has been sent to: " + email, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Log.e(TAG, "Error sending password reset email: ", task.getException());
+                                Toast.makeText(this, "Unable to send reset email. Please try again later.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else if (email.isEmpty()) {
+                loginEmail.setError("Please enter your email");
+            } else {
+                loginEmail.setError("Please enter a valid email");
             }
         });
     }
 
-    // fetch user data from firestore using email
+    // fetch user data from Firestore using email
     private void fetchUserData(String email) {
         db.collection("users")
-                .whereEqualTo("email", email) // query the 'users' collection by email
+                .whereEqualTo("email", email)
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot querySnapshot) {
-                        if (!querySnapshot.isEmpty()) {
-                            // assuming email is unique, fetch the first document
-                            DocumentSnapshot document = querySnapshot.getDocuments().get(0);
-                            String username = document.getString("username");
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                        String username = document.getString("username");
 
-                            // Determine the welcome message
-                            String welcomeMessage = "Welcome, " + (username != null && !username.isEmpty() ? username : email) + "!";
+                        String welcomeMessage = "Welcome, " + (username != null && !username.isEmpty() ? username : email) + "!";
 
-                            // Show the toast
-                            Toast.makeText(LoginActivity.this, welcomeMessage, Toast.LENGTH_LONG).show();
-
-                            // Navigate to main activity
-                            startActivity(new Intent(LoginActivity.this, NewHomePage.class));
-                            finish();
-                        } else {
-                            // no user data found
-                            Toast.makeText(LoginActivity.this, "No user data found for this email", Toast.LENGTH_LONG).show();
-                        }
+                        Toast.makeText(LoginActivity.this, welcomeMessage, Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this, NewHomePage.class));
+                        finish();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "No user data found for this email", Toast.LENGTH_LONG).show();
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Error fetching user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, "Error fetching user data: " + e.getMessage(), Toast.LENGTH_LONG).show());
     }
-
 }

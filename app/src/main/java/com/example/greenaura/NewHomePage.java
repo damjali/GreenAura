@@ -95,12 +95,17 @@ public class NewHomePage extends AppCompatActivity {
             startActivity(new Intent(this, Report_System.class));
         });
 
+
         findViewById(R.id.EcoGoalsWidget).setOnClickListener(v -> {
             startActivity(new Intent(NewHomePage.this, GoalsHomePage.class));
         });
 
         findViewById(R.id.EcoCollectionWidget).setOnClickListener(v -> {
             startActivity(new Intent(this, CollectionActivity.class));
+        });
+
+        findViewById(R.id.ecoChatBot).setOnClickListener(v -> {
+            startActivity(new Intent(this, EcoChatBotActivity.class));
         });
 
         // Handle click on the banner image
@@ -151,6 +156,7 @@ public class NewHomePage extends AppCompatActivity {
 
                                 // Inflate the event widget layout
                                 View eventView = getLayoutInflater().inflate(R.layout.event_item, null);
+
 
                                 // Set event data
                                 ImageView eventImageView = eventView.findViewById(R.id.eventImage);

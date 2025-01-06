@@ -95,8 +95,8 @@
 
                 <TextView
                     android:id="@+id/TVGWTime"
-                    android:layout_width="178dp"
-                    android:layout_height="26dp"
+                    android:layout_width="185dp"
+                    android:layout_height="26sp"
                     android:foregroundGravity="left"
                     android:gravity="start"
                     android:textAlignment="viewStart"
@@ -109,7 +109,7 @@
 
                 <TextView
                     android:id="@+id/TVGWDistance"
-                    android:layout_width="178dp"
+                    android:layout_width="185dp"
                     android:layout_height="26dp"
                     android:layout_marginTop="8dp"
                     android:gravity="start"
@@ -123,8 +123,8 @@
 
                 <TextView
                     android:id="@+id/TVGWVenue"
-                    android:layout_width="178dp"
-                    android:layout_height="50dp"
+                    android:layout_width="185dp"
+                    android:layout_height="55dp"
                     android:ellipsize="end"
                     android:gravity="start"
                     android:maxLines="3"
@@ -189,8 +189,8 @@
 
                 <TextView
                     android:id="@+id/TVRWTime"
-                    android:layout_width="178dp"
-                    android:layout_height="26dp"
+                    android:layout_width="185dp"
+                    android:layout_height="26sp"
                     android:foregroundGravity="left"
                     android:gravity="start"
                     android:textColor="#3d3d3d"
@@ -202,7 +202,7 @@
 
                 <TextView
                     android:id="@+id/TVRWDistance"
-                    android:layout_width="178dp"
+                    android:layout_width="185dp"
                     android:layout_height="26dp"
                     android:layout_marginTop="8dp"
                     android:gravity="start"
@@ -215,8 +215,8 @@
 
                 <TextView
                     android:id="@+id/TVRWVenue"
-                    android:layout_width="178dp"
-                    android:layout_height="50dp"
+                    android:layout_width="185dp"
+                    android:layout_height="55dp"
                     android:ellipsize="end"
                     android:gravity="start"
                     android:maxLines="3"
@@ -281,7 +281,7 @@
 
                 <TextView
                     android:id="@+id/TVEWDistance"
-                    android:layout_width="178dp"
+                    android:layout_width="185dp"
                     android:layout_height="26dp"
                     android:layout_marginTop="8dp"
                     android:gravity="start"
@@ -294,8 +294,8 @@
 
                 <TextView
                     android:id="@+id/TVEWTime"
-                    android:layout_width="178dp"
-                    android:layout_height="26dp"
+                    android:layout_width="185dp"
+                    android:layout_height="26sp"
                     android:foregroundGravity="left"
                     android:gravity="start"
                     android:textColor="#3d3d3d"
@@ -307,11 +307,11 @@
 
                 <TextView
                     android:id="@+id/TVEWVenue"
-                    android:layout_width="178dp"
-                    android:layout_height="50dp"
+                    android:layout_width="185dp"
+                    android:layout_height="55dp"
                     android:ellipsize="end"
                     android:gravity="start"
-                    android:maxLines="3"
+                    android:maxLines="4"
                     android:textColor="#3D3D3D"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"

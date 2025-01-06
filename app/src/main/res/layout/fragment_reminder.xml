@@ -57,7 +57,7 @@
 
                 <TextView
                     android:id="@+id/TVTime"
-                    android:layout_width="178dp"
+                    android:layout_width="185dp"
                     android:layout_height="26dp"
                     android:foregroundGravity="left"
                     android:gravity="start"
@@ -71,7 +71,7 @@
 
                 <TextView
                     android:id="@+id/TVDistanceReminder"
-                    android:layout_width="178dp"
+                    android:layout_width="185dp"
                     android:layout_height="26dp"
                     android:layout_marginTop="8dp"
                     android:gravity="start"
@@ -85,11 +85,11 @@
 
                 <TextView
                     android:id="@+id/TVVenue"
-                    android:layout_width="178dp"
-                    android:layout_height="50dp"
+                    android:layout_width="185dp"
+                    android:layout_height="55dp"
                     android:ellipsize="end"
                     android:gravity="start"
-                    android:maxLines="3"
+                    android:maxLines="4"
                     android:textColor="#3D3D3D"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"

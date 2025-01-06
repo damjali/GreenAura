@@ -44,7 +44,10 @@
                 android:textStyle="bold"
                 android:textColor="#2E7D32"
                 android:gravity="center"
-                android:layout_marginBottom="24dp" />
+                android:alpha="0"
+                android:translationY="-50dp"
+                android:layout_marginBottom="24dp"
+                />
 
             <!-- Email Input -->
             <com.google.android.material.textfield.TextInputLayout
@@ -93,6 +96,20 @@
                 android:textSize="16sp"
                 android:backgroundTint="@color/dark_green"
                 app:cornerRadius="8dp" />
+
+            <TextView
+                android:id="@+id/forgotPasswordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:text="Forgot password?"
+                android:textColor="#436A0D"
+                android:textSize="12sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground" />
 
             <!-- Signup Redirect -->
             <TextView

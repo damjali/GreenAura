@@ -74,12 +74,13 @@ public class Firestore {
 
                         // After saving reminder, retrieve the timestamp and schedule notification
                         String userId = userReminderOption.get("user"); // use user to get timestamp
+                        //okay
                         Toast.makeText(MapsFragment.reminderFragment.getContext(), "userId: "+userId, Toast.LENGTH_SHORT).show();
 
                         getReminderTimestampFromFirestore(userId, new OnTimestampRetrievedListener() {
                             @Override //pass timestamp back to caller
                             public void onTimestampRetrieved(long timestamp) { //scheduleNotification here
-                                //okay   Toast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
+                                //done   Toast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
                                 MapsFragment.reminderFragment.scheduleNotification(timestamp, userReminderOption.get("selectedLocation"));
                             } //here, it schedule notification once receiving timestamp
 
@@ -89,7 +90,6 @@ public class Firestore {
                                 Toast.makeText(MapsFragment.reminderFragment.getContext(), "Fail to get timestamp from firestore", Toast.LENGTH_SHORT).show();
                             }
                         });
-
 
                         // Show confirmation dialog after saving reminder (okay)
                         MapsFragment.reminderFragment.showConfirmationDialog();
@@ -136,7 +136,7 @@ public class Firestore {
                         Object reminderTimestamp = document.get("reminderTimestamp"); //retrieve from 1st document
                         if (reminderTimestamp != null) {
                             long timestamp = Long.parseLong(reminderTimestamp.toString()); //done
-                            //  Toast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
+                            //doneToast.makeText(MapsFragment.reminderFragment.getContext(), "Timestamp retrieved: " + timestamp, Toast.LENGTH_SHORT).show();
                             listener.onTimestampRetrieved(timestamp); //pass timestamp retrieved from firestore back to listener(in this case, to saveReminder_User_Location_Time method)
                         } else {
                             listener.onError("No reminder timestamp found.");

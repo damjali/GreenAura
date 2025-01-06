@@ -228,8 +228,8 @@ public class ReminderFragment extends Fragment {
         //
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         if (alarmManager != null) {
+            //this code having problem
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTimestamp, pendingIntent);//ensure alarm fires at the exact time
-            Log.d("Notification", "Notification scheduled for: " + new Date(reminderTimestamp));
         }
     }
 

@@ -43,6 +43,8 @@
                 android:textStyle="bold"
                 android:textColor="#2E7D32"
                 android:gravity="center"
+                android:alpha="0"
+                android:translationY="-50dp"
                 android:layout_marginBottom="24dp" />
 
             <!-- Email Input -->

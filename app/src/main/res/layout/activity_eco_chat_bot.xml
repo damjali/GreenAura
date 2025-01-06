@@ -1,47 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FDFDFD"
+    android:backgroundTint="#FDFDFD">
 
-    <!-- Chat history -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chat_recycler_view"
+    <!-- Main Vertical Layout -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FCF5FD"
-        android:backgroundTint="#FFFFFF"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        android:orientation="vertical">
 
-    <!-- Message input and send button -->
-    <LinearLayout
-        android:id="@+id/chat_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#FCF5FD"
-        android:backgroundTint="#FFFFFF"
-        android:padding="8dp"
-        android:layout_gravity="bottom">
-
-        <EditText
-            android:id="@+id/chat_input"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+        <!-- Chat history -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:hint="Type your message..."
-            android:inputType="textMultiLine"
-            android:padding="12dp"
-            android:background="@drawable/rounded_editext" />
+            android:background="#FCF5FD"
+            android:clipToPadding="false"
+            android:padding="8dp" />
 
-        <Button
-            android:id="@+id/send_button"
-            android:layout_width="wrap_content"
+        <!-- ImageView under RecyclerView -->
+        <ImageView
+            android:id="@+id/groupphoto"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_margin="8dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:srcCompat="@drawable/groupphoto" />
+
+        <!-- Message input and send button -->
+        <LinearLayout
+            android:id="@+id/chat_input_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:padding="10dp"
-            android:text="Send" />
-    </LinearLayout>
+            android:background="#FCF5FD"
+            android:padding="8dp"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/chat_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_editext"
+                android:hint="Type your message..."
+                android:imeOptions="actionDone"
+                android:inputType="textMultiLine"
+                android:padding="12dp" />
+
+            <Button
+                android:id="@+id/send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:padding="10dp"
+                android:text="Send" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
