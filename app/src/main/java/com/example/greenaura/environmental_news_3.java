@@ -3,13 +3,12 @@ package com.example.greenaura;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class environmental_news_3 extends AppCompatActivity {
+public class Environmental_News_3 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
