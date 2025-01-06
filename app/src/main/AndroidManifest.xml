@@ -6,6 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
@@ -43,6 +48,14 @@
 
         <activity
             android:name=".ProfilePage"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".Report_System"
+            android:exported="false"
+            android:theme="@style/Theme.GreenAura" />
+        <activity
+            android:name=".report_status_real"
             android:exported="false"
             android:theme="@style/Theme.GreenAura" />
         <activity

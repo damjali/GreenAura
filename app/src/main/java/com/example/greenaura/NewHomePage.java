@@ -69,9 +69,9 @@ public class NewHomePage extends AppCompatActivity {
 
         // Initialize the news list
         newsList.add(new EnvironmentalNews("https://i.ibb.co/4VfSFXY/image.png", Environmental_News_1.class));
-        newsList.add(new EnvironmentalNews("https://i.ibb.co/RHSMYz5/image.png", Environmental_News_2.class));
-        newsList.add(new EnvironmentalNews("https://i.ibb.co/tsmPrgx/image.png", Environmental_News_3.class));
-        newsList.add(new EnvironmentalNews("https://i.ibb.co/3MNYh68/image.png", Environment_News_4.class));
+        newsList.add(new EnvironmentalNews("https://i.ibb.co/RHSMYz5/image.png", environmental_news_2.class));
+        newsList.add(new EnvironmentalNews("https://i.ibb.co/tsmPrgx/image.png", environmental_news_3.class));
+        newsList.add(new EnvironmentalNews("https://i.ibb.co/3MNYh68/image.png", environment_news_4.class));
 
         // Set item click listener for recycling guides
         recyclingGuideAdapter.setOnItemClickListener(guide -> {
@@ -106,6 +106,11 @@ public class NewHomePage extends AppCompatActivity {
         // Handle click on the banner image
         findViewById(R.id.banner_image).setOnClickListener(view -> {
             Intent intent = new Intent(NewHomePage.this, MainRewardsPage.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.ecoChatBot).setOnClickListener(view -> {
+            Intent intent = new Intent(NewHomePage.this, EcoChatBotActivity.class);
             startActivity(intent);
         });
 

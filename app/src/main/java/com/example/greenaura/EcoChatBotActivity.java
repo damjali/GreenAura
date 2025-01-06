@@ -23,7 +23,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EcoChatBotActivity extends AppCompatActivity {
+public class
+EcoChatBotActivity extends AppCompatActivity {
 
     private EditText inputMessage;
     private Button sendButton;
