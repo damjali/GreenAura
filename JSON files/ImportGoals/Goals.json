@@ -1,0 +1,182 @@
+{
+  "goals_001": {
+    "GoalTitle": "Plant A Tree",
+    "GoalDescription": "Take a picture of you planting a tree and post it to gain marks!",
+    "GoalAuraPoints": 100,
+    "GoalImage": "https://link-to-image.com/image1.jpg"
+  },
+  "goals_002": {
+    "GoalTitle": "Clean the Beach",
+    "GoalDescription": "Pick up trash from the beach to earn points!",
+    "GoalAuraPoints": 150,
+    "GoalImage": "https://link-to-image.com/image2.jpg"
+  },
+  "goals_003": {
+    "GoalTitle": "Recycling Champion",
+    "GoalDescription": "Collect and recycle at least 10 bottles to earn aura points.",
+    "GoalAuraPoints": 50,
+    "GoalImage": "https://link-to-image.com/image3.jpg"
+  },
+  "goals_004": {
+    "GoalTitle": "Zero Waste",
+    "GoalDescription": "Use reusable bags for shopping for a week.",
+    "GoalAuraPoints": 80,
+    "GoalImage": "https://link-to-image.com/image4.jpg"
+  },
+  "goals_005": {
+    "GoalTitle": "Save Water",
+    "GoalDescription": "Turn off the faucet while brushing your teeth for a week.",
+    "GoalAuraPoints": 40,
+    "GoalImage": "https://link-to-image.com/image5.jpg"
+  },
+  "goals_006": {
+    "GoalTitle": "Ride a Bike",
+    "GoalDescription": "Ride your bike for 5 miles to reduce your carbon footprint.",
+    "GoalAuraPoints": 70,
+    "GoalImage": "https://link-to-image.com/image6.jpg"
+  },
+  "goals_007": {
+    "GoalTitle": "Plastic-Free Week",
+    "GoalDescription": "Avoid using plastic for one week and track your progress.",
+    "GoalAuraPoints": 120,
+    "GoalImage": "https://link-to-image.com/image7.jpg"
+  },
+  "goals_008": {
+    "GoalTitle": "Composting Beginner",
+    "GoalDescription": "Start composting organic waste for a week.",
+    "GoalAuraPoints": 90,
+    "GoalImage": "https://link-to-image.com/image8.jpg"
+  },
+  "goals_009": {
+    "GoalTitle": "Public Transport Pro",
+    "GoalDescription": "Use public transportation for a week to reduce pollution.",
+    "GoalAuraPoints": 100,
+    "GoalImage": "https://link-to-image.com/image9.jpg"
+  },
+  "goals_010": {
+    "GoalTitle": "Plant a Garden",
+    "GoalDescription": "Plant at least 5 plants in your garden this season.",
+    "GoalAuraPoints": 110,
+    "GoalImage": "https://link-to-image.com/image10.jpg"
+  },
+  "goals_011": {
+    "GoalTitle": "Reduce Paper Waste",
+    "GoalDescription": "Switch to digital notes instead of using paper.",
+    "GoalAuraPoints": 60,
+    "GoalImage": "https://link-to-image.com/image11.jpg"
+  },
+  "goals_012": {
+    "GoalTitle": "Solar Power Enthusiast",
+    "GoalDescription": "Install solar-powered lights at home for a month.",
+    "GoalAuraPoints": 130,
+    "GoalImage": "https://link-to-image.com/image12.jpg"
+  },
+  "goals_013": {
+    "GoalTitle": "Support Local Farmers",
+    "GoalDescription": "Buy your groceries from a local farmer’s market.",
+    "GoalAuraPoints": 85,
+    "GoalImage": "https://link-to-image.com/image13.jpg"
+  },
+  "goals_014": {
+    "GoalTitle": "Eco-Friendly Fashion",
+    "GoalDescription": "Wear second-hand clothing or eco-friendly fabrics for a month.",
+    "GoalAuraPoints": 75,
+    "GoalImage": "https://link-to-image.com/image14.jpg"
+  },
+  "goals_015": {
+    "GoalTitle": "Bike to Work",
+    "GoalDescription": "Bike to work for a week instead of driving.",
+    "GoalAuraPoints": 95,
+    "GoalImage": "https://link-to-image.com/image15.jpg"
+  },
+  "goals_016": {
+    "GoalTitle": "Volunteer for Cleanups",
+    "GoalDescription": "Volunteer for a local community cleanup event.",
+    "GoalAuraPoints": 140,
+    "GoalImage": "https://link-to-image.com/image16.jpg"
+  },
+  "goals_017": {
+    "GoalTitle": "DIY Projects",
+    "GoalDescription": "Complete a DIY project using recycled materials.",
+    "GoalAuraPoints": 50,
+    "GoalImage": "https://link-to-image.com/image17.jpg"
+  },
+  "goals_018": {
+    "GoalTitle": "Plant a Tree (in a Park)",
+    "GoalDescription": "Plant a tree in your local park.",
+    "GoalAuraPoints": 120,
+    "GoalImage": "https://link-to-image.com/image18.jpg"
+  },
+  "goals_019": {
+    "GoalTitle": "Minimalist Living",
+    "GoalDescription": "Declutter your home and donate items you no longer need.",
+    "GoalAuraPoints": 100,
+    "GoalImage": "https://link-to-image.com/image19.jpg"
+  },
+  "goals_020": {
+    "GoalTitle": "Carpooling",
+    "GoalDescription": "Carpool to work with friends or colleagues for a week.",
+    "GoalAuraPoints": 80,
+    "GoalImage": "https://link-to-image.com/image20.jpg"
+  },
+  "goals_021": {
+    "GoalTitle": "Reusable Water Bottle",
+    "GoalDescription": "Use a reusable water bottle for a month instead of plastic bottles.",
+    "GoalAuraPoints": 60,
+    "GoalImage": "https://link-to-image.com/image21.jpg"
+  },
+  "goals_022": {
+    "GoalTitle": "Upcycle Your Clothes",
+    "GoalDescription": "Upcycle old clothes into something new.",
+    "GoalAuraPoints": 70,
+    "GoalImage": "https://link-to-image.com/image22.jpg"
+  },
+  "goals_023": {
+    "GoalTitle": "Join an Environmental Club",
+    "GoalDescription": "Join an environmental group or club at school or work.",
+    "GoalAuraPoints": 50,
+    "GoalImage": "https://link-to-image.com/image23.jpg"
+  },
+  "goals_024": {
+    "GoalTitle": "Donate Old Items",
+    "GoalDescription": "Donate unused items to a local charity.",
+    "GoalAuraPoints": 65,
+    "GoalImage": "https://link-to-image.com/image24.jpg"
+  },
+  "goals_025": {
+    "GoalTitle": "Eco-Friendly Cleaning",
+    "GoalDescription": "Switch to eco-friendly cleaning products for your home.",
+    "GoalAuraPoints": 90,
+    "GoalImage": "https://link-to-image.com/image25.jpg"
+  },
+  "goals_026": {
+    "GoalTitle": "Start a Community Garden",
+    "GoalDescription": "Start a community garden in your neighborhood.",
+    "GoalAuraPoints": 120,
+    "GoalImage": "https://link-to-image.com/image26.jpg"
+  },
+  "goals_027": {
+    "GoalTitle": "Use Less Energy",
+    "GoalDescription": "Unplug appliances when not in use for a month.",
+    "GoalAuraPoints": 80,
+    "GoalImage": "https://link-to-image.com/image27.jpg"
+  },
+  "goals_028": {
+    "GoalTitle": "DIY Composting Bin",
+    "GoalDescription": "Build a composting bin for your home garden.",
+    "GoalAuraPoints": 100,
+    "GoalImage": "https://link-to-image.com/image28.jpg"
+  },
+  "goals_029": {
+    "GoalTitle": "Eco-Friendly Travel",
+    "GoalDescription": "Travel using public transport or bike instead of driving.",
+    "GoalAuraPoints": 140,
+    "GoalImage": "https://link-to-image.com/image29.jpg"
+  },
+  "goals_030": {
+    "GoalTitle": "Sustainable Shopping",
+    "GoalDescription": "Shop from sustainable and eco-friendly brands for a month.",
+    "GoalAuraPoints": 110,
+    "GoalImage": "https://link-to-image.com/image30.jpg"
+  }
+}

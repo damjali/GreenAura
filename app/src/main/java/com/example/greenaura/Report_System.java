@@ -2,6 +2,7 @@ package com.example.greenaura;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -27,11 +28,17 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -49,15 +56,17 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 3;
-    private static final String IMG_BB_API_KEY = "eef430f29f9d86e8ffcf4c7d88e5ca63";  // Replace with your ImgBB API key
+    private static final String IMG_BB_API_KEY = "eef430f29f9d86e8ffcf4c7d88e5ca63";
 
     private Button btnSubmit, btnUploadImage;
-    private EditText etDate, etTime, etDescription;
+    private EditText etDate, etTime, etDescription, tVWhere;
     private Spinner spinnerType;
     private ImageView ivUpload;
     private Uri selectedFileUri;
     private FusedLocationProviderClient fusedLocationClient;
-    private EditText tVWhere;
+
+    private String userEmail;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,68 +84,66 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         spinnerType = findViewById(R.id.spinnerType);
         ivUpload = findViewById(R.id.ivUpload);
 
-        // Check and request permissions on app launch
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[] {
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, STORAGE_PERMISSION_REQUEST_CODE);
-        }
+        findViewById(R.id.backButton).setOnClickListener(v -> startActivity(new Intent(this, NewHomePage.class)));
 
-        // Initialize Spinner (Dropdown)
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.pollution_types, android.R.layout.simple_spinner_item);
+        fetchUserEmailAndId();
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.pollution_types, R.layout.spinner_layout);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
         spinnerType.setOnItemSelectedListener(this);
 
-        // Date Picker
         etDate.setOnClickListener(v -> showDatePickerDialog());
-
-        // Time Picker
         etTime.setOnClickListener(v -> showTimePickerDialog());
-
-        // Fetch Location
         tVWhere.setOnClickListener(v -> fetchLocation());
-
-        // Image Upload
         btnUploadImage.setOnClickListener(v -> openImagePicker());
-
-        // Submit Report
         btnSubmit.setOnClickListener(v -> submitReport());
     }
 
-    // Date Picker Dialog
+    private void fetchUserEmailAndId() {
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            userEmail = currentUser.getEmail();
+            FirebaseFirestore.getInstance().collection("users")
+                    .whereEqualTo("email", userEmail)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                userId = document.getId();
+                                break;
+                            }
+                        } else {
+                            Log.e("Firestore", "No matching user found");
+                            Toast.makeText(this, "User not found in database.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT,
                 (view, year1, month1, dayOfMonth1) -> etDate.setText(String.format("%d-%02d-%02d", year1, month1 + 1, dayOfMonth1)),
-                year, month, dayOfMonth
-        );
+                year, month, dayOfMonth);
         datePickerDialog.show();
     }
 
-    // Time Picker Dialog
     private void showTimePickerDialog() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(
-                this,
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 (view, hourOfDay, minute1) -> etTime.setText(String.format("%02d:%02d", hourOfDay, minute1)),
-                hour, minute, true
-        );
+                hour, minute, true);
         timePickerDialog.show();
     }
 
-    // Fetch Location
     private void fetchLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
@@ -151,15 +158,31 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
                 });
     }
 
-    // Open Image Picker
     private void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_REQUEST_CODE);
+        } else {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        }
     }
 
-    // Submit Report
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            selectedFileUri = data.getData();
+            ivUpload.setImageURI(selectedFileUri);
+        }
+    }
+
     private void submitReport() {
+        if (userId == null || userEmail == null) {
+            Toast.makeText(this, "User ID or Email is not available.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String selectedType = spinnerType.getSelectedItem().toString();
         String incidentLocation = tVWhere.getText().toString().trim();
         String date = etDate.getText().toString().trim();
@@ -167,7 +190,7 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         String description = etDescription.getText().toString().trim();
 
         if (selectedType.isEmpty() || incidentLocation.isEmpty() || date.isEmpty() || time.isEmpty() || description.isEmpty()) {
-            Toast.makeText(Report_System.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -178,136 +201,150 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
 
         uploadImageToImgBB(imageUrl -> {
             if (imageUrl != null) {
-                Toast.makeText(Report_System.this, "Image uploaded successfully!", Toast.LENGTH_SHORT).show();
+                FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+                Map<String, Object> reportData = new HashMap<>();
+                reportData.put("UserID", userId);
+                reportData.put("ReportType", selectedType);
+                reportData.put("ReportLocation", incidentLocation);
+                reportData.put("ReportStatus", "pending");
+                reportData.put("ReportDescription", description);
+                reportData.put("ReportDate", date + " " + time);
+                reportData.put("ReportAttachment", imageUrl);
+                reportData.put("ReportTimestamp", System.currentTimeMillis());
+
+                firestore.collection("ReportSubmitted")
+                        .add(reportData)
+                        .addOnSuccessListener(documentReference -> {
+                            String reportId = documentReference.getId();
+                            firestore.collection("ReportSubmitted")
+                                    .document(reportId)
+                                    .update("ReportID", reportId)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("REPORT DATA1", userId);
+                                        Log.d("REPORT DATA2", selectedType);
+                                        Log.d("REPORT DATA3", incidentLocation);
+                                        Log.d("REPORT DATA4", description);
+                                        Log.d("REPORT DATA5", date);
+                                        Log.d("REPORT DATA6", time);
+                                        Log.d("REPORT DATA7", imageUrl);
+
+
+                                        Toast.makeText(this, "Report submitted successfully!", Toast.LENGTH_SHORT).show();
+
+                                        // Start the report_status_real activity and pass reportId
+                                        Intent intent = new Intent(Report_System.this, report_status_real.class);
+                                        intent.putExtra("ReportID", reportId);
+                                        startActivity(intent);
+                                        Log.d("Here?","here2");
+                                        finish(); // Optional: Close the current activity
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("Firestore", "Failed to update ReportID", e);
+                                        Toast.makeText(this, "Failed to update report ID.", Toast.LENGTH_SHORT).show();
+                                    });
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e("Firestore", "Failed to submit report", e);
+                            Toast.makeText(this, "Failed to submit report.", Toast.LENGTH_SHORT).show();
+                        });
             } else {
-                Toast.makeText(Report_System.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Image upload failed.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Handle Activity Result for Image Picking
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedFileUri = data.getData();
-
-            Glide.with(this)
-                    .load(selectedFileUri)
-                    .into(ivUpload);
-        } else {
-            Toast.makeText(this, "Failed to pick an image.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Upload Image to ImgBB
     private void uploadImageToImgBB(ImgBBCallback callback) {
         if (selectedFileUri == null) {
-            Log.e("ImgBB", "No image selected!");
+            callback.onUploadComplete(null);
             return;
         }
 
-        String filePath = getRealPathFromURI(selectedFileUri);
-        if (filePath == null) {
-            Log.e("ImgBB", "Failed to get file path from URI");
-            return;
-        }
+        try {
+            String filePath = getRealPathFromURI(selectedFileUri);
+            File file = new File(filePath);
 
-        File file = new File(filePath);
-        Log.d("ImgBB", "File size: " + file.length());  // Log the file size
+            OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
+            clientBuilder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
-        MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.imgbb.com/1/")
+                    .client(clientBuilder.build())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        // Create OkHttpClient with logging
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .build();
+            ImgBBApi imgBBApi = retrofit.create(ImgBBApi.class);
 
-        // Create Retrofit instance
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.imgbb.com/")
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+            RequestBody apiKey = RequestBody.create(MediaType.parse("text/plain"), IMG_BB_API_KEY);
 
-        // Create ImgBB API instance
-        ImgBBApi api = retrofit.create(ImgBBApi.class);
-
-        // Make the upload request
-        Call<ResponseBody> call = api.uploadImage(IMG_BB_API_KEY, part);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        String responseString = response.body().string();
-                        Log.d("ImgBB", "Response: " + responseString); // Log the full response
-                        JSONObject jsonResponse = new JSONObject(responseString);
-                        JSONObject data = jsonResponse.getJSONObject("data");
-                        String uploadedImageUrl = data.getString("url");
-
-                        callback.onUploadCompleted(uploadedImageUrl);
-                    } catch (Exception e) {
-                        Log.e("ImgBB", "Error parsing response: " + e.getMessage());
-                        callback.onUploadCompleted(null);
+            Call<ResponseBody> call = imgBBApi.uploadImage(apiKey, part);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        try {
+                            String responseString = response.body().string();
+                            JSONObject responseObject = new JSONObject(responseString);
+                            String imageUrl = responseObject.getJSONObject("data").getString("url");
+                            callback.onUploadComplete(imageUrl);
+                        } catch (Exception e) {
+                            Log.e("ImgBB", "Error parsing response", e);
+                            callback.onUploadComplete(null);
+                        }
+                    } else {
+                        callback.onUploadComplete(null);
                     }
-                } else {
-                    Log.e("ImgBB", "Upload failed: " + response.message());
-                    callback.onUploadCompleted(null);
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("ImgBB", "Error: " + t.getMessage());
-                callback.onUploadCompleted(null);
-            }
-        });
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    Log.e("ImgBB", "Upload failed", t);
+                    callback.onUploadComplete(null);
+                }
+            });
+        } catch (Exception e) {
+            Log.e("ImgBB", "Failed to upload image", e);
+            callback.onUploadComplete(null);
+        }
     }
 
-    // Get Real Path from URI
     private String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
-        try (Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                return cursor.getString(columnIndex);
-            }
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, projection, null, null, null);
+        if (cursor != null) {
+            int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            String path = cursor.getString(columnIndex);
+            cursor.close();
+            return path;
         }
         return null;
     }
 
-    // Spinner Item Selected
-    @Override
-    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {}
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parentView) {}
-
-    // Permission Result Handling
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == STORAGE_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Storage permission granted. You can now upload images.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Storage permission is required to upload images.", Toast.LENGTH_SHORT).show();
-            }
-        } else if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                fetchLocation();
-            } else {
-                Toast.makeText(this, "Location permission is required.", Toast.LENGTH_SHORT).show();
-            }
-        }
+    private interface ImgBBCallback {
+        void onUploadComplete(String imageUrl);
     }
 
-    private interface ImgBBCallback {
-        void onUploadCompleted(String imageUrl);
+    private interface ImgBBApi {
+        @retrofit2.http.Multipart
+        @retrofit2.http.POST("upload")
+        Call<ResponseBody> uploadImage(
+                @retrofit2.http.Part("key") RequestBody apiKey,
+                @retrofit2.http.Part MultipartBody.Part image
+        );
+    }
+
+    // Spinner OnItemSelectedListener Methods
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedType = parent.getItemAtPosition(position).toString();
+        Log.d("SpinnerSelection", "Selected type: " + selectedType);
+        Toast.makeText(this, "Selected: " + selectedType, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        Toast.makeText(this, "No type selected.", Toast.LENGTH_SHORT).show();
     }
 }

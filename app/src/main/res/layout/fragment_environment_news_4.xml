@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <!-- Subtitle Section -->
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="424dp">
+
+            <!-- Back Button -->
+            <ImageView
+                android:id="@+id/newsImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/solar" />
+
+            <ImageView
+                android:id="@+id/backButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top|start"
+                android:layout_margin="1dp"
+                android:background="@drawable/backbutton"
+                android:contentDescription="Back Button"
+                android:padding="8dp" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/in2023"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/figtree_bold"
+            android:lineSpacingExtra="2dp"
+            android:text="In 2023, renewable energy sources surged to new heights. Renewables’ share of total primary energy consumption reached 14.6%, 0.4% above the previous year."
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/newsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Solar and wind power drove global renewable electricity generation to a record-breaking 4,748 TWh, marking a 13% increase from the previous year. This growth accounted for 74% of all net additional electricity generated worldwid"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/According"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Solar power led the charge, with 346 GW of new capacity, smashing the 2022 record by 67%. China contributed a quarter of this growth. Europe, too, made significant strides, adding over 56 GW of solar capacity, making up 16% of the global total capacity increase."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+
+        <ImageView
+            android:id="@+id/ocean"
+            android:layout_width="388dp"
+            android:layout_height="273dp"
+            android:layout_margin="12dp"
+            android:padding="0dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/graphenergyconsumption" />
+
+        <TextView
+            android:id="@+id/winpower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Wind power also soared to new heights, with over 115 GW of new capacity installed—another record. China again was at the forefront, responsible for nearly 66% of these additions. China’s total installed wind capacity now rivals that of North America and Europe combined. Offshore wind, a growing frontier in renewable energy, saw Europe holding the highest share at 12%, but China wasn't far behind, boasting 37 GW compared to Europe’s 32 GW.”"
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/but"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Meanwhile, the share of biofuels increased in the global energy mix. Production grew by over 17% from 2022, with the United States and Brazil leading the way."
+            android:textColor="#3D3D3D"
+            android:textSize="13sp" />
+
+        <!-- Read More Section -->
+        <TextView
+            android:id="@+id/readMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/figtree_regular"
+            android:text="Read More"
+            android:textColor="#3578FF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</ScrollView>
