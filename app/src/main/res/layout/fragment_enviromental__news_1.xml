@@ -16,8 +16,8 @@
 
             <ImageView
                 android:id="@+id/newsImage"
-                android:layout_width="422dp"
-                android:layout_height="417dp"
+                android:layout_width="match_parent"
+                android:layout_height="412dp"
                 android:layout_margin="0dp"
                 android:padding="0dp"
                 android:scaleType="centerCrop"
@@ -75,7 +75,7 @@
 
 
         <TextView
-            android:id="@+id/typeDatabase"
+            android:id="@+id/despite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -94,7 +94,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginRight="16dp"
-            android:fontFamily="@font/figtree_bold"
+            android:fontFamily="@font/figtree_regular"
             android:lineSpacingExtra="2dp"
             android:text="Global fossil carbon emissions hit a record high in 2024 at 37.4 billion tons, up 0.8% from 2023, with no signs of peaking. Combined emissions, including land-use changes, total 41.6 billion tons, pushing CO2 levels further, as urgent reductions remain unmet to curb global warming."
             android:textAlignment="center"

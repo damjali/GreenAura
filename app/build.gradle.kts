@@ -12,7 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.greenaura"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.core.ktx)
     implementation(libs.play.services.location)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -72,4 +73,6 @@ dependencies {
     implementation("com.squareup.okio:okio:3.4.0")
     implementation("com.google.android.material:material:1.3.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
 }

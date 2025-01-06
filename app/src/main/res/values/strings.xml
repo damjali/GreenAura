@@ -14,6 +14,15 @@
         <item>Deforestation</item>
     </string-array>
 
+    <string-array name="gender_options">
+        <item>Select Gender</item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -68,6 +77,19 @@
         <item>Collect 1 kg of E-Waste for Recycling</item>
         <item>Save 50 Liters of Water Through Conservation</item>
     </string-array>
+
+    <string name="title_activity_maps">MapsActivity</string>
+
+    <string-array name="reminder_options">
+        <item>Right now</item>
+        <item>On the day</item>
+        <item>1 day before</item>
+        <item>2 days before</item>
+        <item>3 days before</item>
+        <item>1 week before</item>
+    </string-array>
+
+    <string name="google_maps_key">AIzaSyBQZKl2IekO9l2ZmuNb-ZzdKwBMX3vI3MQ</string>
 
     <string-array name="goal_icons">
         <item>Recycle 10 Plastic Bottles</item>

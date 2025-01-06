@@ -2,7 +2,6 @@ package com.example.greenaura;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -40,6 +39,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+// NEW IMPORT
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -56,9 +62,9 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
     private static final int STORAGE_PERMISSION_REQUEST_CODE = 3;
-    private static final String IMG_BB_API_KEY = "eef430f29f9d86e8ffcf4c7d88e5ca63";
+    private static final String IMG_BB_API_KEY = "eef430f29f9d86e8ffcf4c7d88e5ca63"; // Replace with your ImgBB API key
 
-    private Button btnSubmit, btnUploadImage;
+    private Button btnSubmit, btnUploadImage, btnGetLocation;
     private EditText etDate, etTime, etDescription, tVWhere;
     private Spinner spinnerType;
     private ImageView ivUpload;
@@ -78,6 +84,7 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         btnSubmit = findViewById(R.id.btnSubmit);
         btnUploadImage = findViewById(R.id.btnUpload);
         tVWhere = findViewById(R.id.TVWhere);
+        btnGetLocation = findViewById(R.id.btnGetLocation);
         etDate = findViewById(R.id.etDate);
         etTime = findViewById(R.id.etTime);
         etDescription = findViewById(R.id.etDescription);
@@ -88,14 +95,14 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
 
         fetchUserEmailAndId();
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.pollution_types, R.layout.spinner_layout);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.pollution_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
         spinnerType.setOnItemSelectedListener(this);
 
         etDate.setOnClickListener(v -> showDatePickerDialog());
         etTime.setOnClickListener(v -> showTimePickerDialog());
-        tVWhere.setOnClickListener(v -> fetchLocation());
+        btnGetLocation.setOnClickListener(v -> fetchLocation());
         btnUploadImage.setOnClickListener(v -> openImagePicker());
         btnSubmit.setOnClickListener(v -> submitReport());
     }
@@ -127,7 +134,7 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         int month = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT,
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 (view, year1, month1, dayOfMonth1) -> etDate.setText(String.format("%d-%02d-%02d", year1, month1 + 1, dayOfMonth1)),
                 year, month, dayOfMonth);
         datePickerDialog.show();
@@ -144,6 +151,22 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         timePickerDialog.show();
     }
 
+    //AKU TRY SMTG KALAU ERROR BACK TO THIS
+
+//    private void fetchLocation() {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+//            return;
+//        }
+//
+//        fusedLocationClient.getLastLocation()
+//                .addOnSuccessListener(this, location -> {
+//                    if (location != null) {
+//                        tVWhere.setText(String.format("Lat: %s, Long: %s", location.getLatitude(), location.getLongitude()));
+//                    }
+//                });
+//    }
+
     private void fetchLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
@@ -153,10 +176,48 @@ public class Report_System extends Activity implements AdapterView.OnItemSelecte
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(this, location -> {
                     if (location != null) {
-                        tVWhere.setText(String.format("Lat: %s, Long: %s", location.getLatitude(), location.getLongitude()));
+                        getLocationName(location.getLatitude(), location.getLongitude());
+                        Toast.makeText(this, "Current Location Fetched", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    private void getLocationName(double latitude, double longitude) {
+        String url = String.format("https://nominatim.openstreetmap.org/reverse?lat=%s&lon=%s&format=json", latitude, longitude);
+
+        // Use an HTTP library like OkHttp, Retrofit, or HttpURLConnection
+        new Thread(() -> {
+            try {
+                URL apiUrl = new URL(url);
+                HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("User-Agent", "YourAppName/1.0"); // Required by Nominatim
+                connection.connect();
+
+                InputStream inputStream = connection.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                reader.close();
+                connection.disconnect();
+
+                // Parse the JSON response
+                JSONObject jsonResponse = new JSONObject(response.toString());
+                String address = jsonResponse.optString("display_name", "No address found");
+
+                runOnUiThread(() -> tVWhere.setText(address));
+            } catch (Exception e) {
+                e.printStackTrace();
+                runOnUiThread(() -> tVWhere.setText("Error fetching location name"));
+            }
+        }).start();
+    }
+
 
     private void openImagePicker() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

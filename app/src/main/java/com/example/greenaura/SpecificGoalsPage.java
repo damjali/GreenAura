@@ -3,16 +3,15 @@ package com.example.greenaura;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import com.bumptech.glide.Glide;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.example.greenaura.databinding.ActivitySpecificGoalsPageBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,11 +33,11 @@ import retrofit2.Response;
 
 public class SpecificGoalsPage extends AppCompatActivity {
 
-    private String uploadedImageLink;
     private static final int PICK_IMAGE_REQUEST = 1; // Request code for image picker
     private Uri selectedImageUri; // URI of the selected image
     private ImageView selectedImageView; // Placeholder for the selected image
-    private final String IMG_BB_API_KEY = "43e4a13533847beee08445656027795f";
+    private String uploadedImageLink;
+    private final String IMG_BB_API_KEY = "22bc247ce34e93c77f0b43db505b0008"; // ImageBB API Key
     private ActivitySpecificGoalsPageBinding binding;
 
     @Override
@@ -56,7 +55,7 @@ public class SpecificGoalsPage extends AppCompatActivity {
         String goalImage = intent.getStringExtra("GoalImage");
         String goalDifficulty = intent.getStringExtra("GoalDifficulty");
 
-        // Populate UI elements
+        // Set UI elements with retrieved data
         TextView title = findViewById(R.id.GoalTitle);
         TextView description = findViewById(R.id.GoalDesc);
         TextView points = findViewById(R.id.GoalPoints);
@@ -67,7 +66,7 @@ public class SpecificGoalsPage extends AppCompatActivity {
         Button btnUploadImage = findViewById(R.id.btnSendImage);
         selectedImageView = findViewById(R.id.SelectedImageView);
 
-        // Set goal information to UI components
+        // Populate UI elements with goal data
         title.setText(goalTitle);
         description.setText(goalDescription);
         points.setText("Aura Points: " + goalAuraPoints);
@@ -80,16 +79,15 @@ public class SpecificGoalsPage extends AppCompatActivity {
 
         // Back arrow navigation
         backArrow.setOnClickListener(v -> {
-            // Navigate back to GoalsHomePage
             Intent backIntent = new Intent(SpecificGoalsPage.this, GoalsHomePage.class);
             startActivity(backIntent);
-            finish(); // Close the current activity
+            finish(); // Close current activity
         });
 
-        // Attach image button click listener
+        // Image picker button listener
         btnAttachImage.setOnClickListener(v -> openImagePicker());
 
-        // Upload image button click listener
+        // Upload image button listener
         btnUploadImage.setOnClickListener(v -> uploadSelectedImage());
     }
 
@@ -100,17 +98,17 @@ public class SpecificGoalsPage extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    // Handle the result from the image picker
+    // Handle image picker result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
-            selectedImageUri = data.getData(); // Get the URI of the selected image
+            selectedImageUri = data.getData(); // Get URI of the selected image
             displaySelectedImage();
         }
     }
 
-    // Display the selected image in the ImageView
+    // Display selected image in ImageView
     private void displaySelectedImage() {
         if (selectedImageUri != null) {
             Glide.with(this)
@@ -119,21 +117,24 @@ public class SpecificGoalsPage extends AppCompatActivity {
         }
     }
 
-    // Dummy method to handle the upload functionality (to be implemented)
-    // Method to upload the selected image and save goal completion
+    // Upload the selected image to ImgBB and save goal completion
     private void uploadSelectedImage() {
         if (selectedImageUri == null) {
             Log.e("ImgBB", "No image selected!");
             return;
         }
 
-        String filePath = PathUtil.getPath(this, selectedImageUri); // Replace this with your PathUtil implementation
+        String filePath = PathUtil.getPath(this, selectedImageUri); // Use your PathUtil method to get file path
+        Log.d("ImgBB", "File path: " + filePath);
+
         if (filePath == null) {
             Log.e("ImgBB", "Failed to get file path from URI");
             return;
         }
 
         File file = new File(filePath);
+        Log.d("ImgBB", "Uploading file: " + file.getAbsolutePath()); // Log the file path
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("image/*"), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
 
@@ -143,101 +144,93 @@ public class SpecificGoalsPage extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d("ImgBB", "Response code: " + response.code()); // Log the response code
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        // Parse the response JSON to extract the image link
                         String responseString = response.body().string();
+                        Log.d("ImgBB", "Response body: " + responseString); // Log the full response body
                         JSONObject jsonResponse = new JSONObject(responseString);
                         JSONObject data = jsonResponse.getJSONObject("data");
-                        uploadedImageLink = data.getString("url"); // Extract the image link
+                        uploadedImageLink = data.getString("url"); // Extract image link
                         Log.d("ImgBB", "Image uploaded successfully: " + uploadedImageLink);
 
-                        // Show Toast message
+                        // Show success message
                         runOnUiThread(() -> {
                             Toast.makeText(SpecificGoalsPage.this,
-                                    "The image has been uploaded! The admins will check the validity of your proof. Your points will be redeemed once approved.",
+                                    "Image uploaded successfully! The admins will verify it, and points will be redeemed once approved.",
                                     Toast.LENGTH_LONG).show();
                         });
 
-                        // Save the goal completion details to Firestore using the current goal's information
-                        String goalTitle = getIntent().getStringExtra("GoalTitle");
-                        String goalDescription = getIntent().getStringExtra("GoalDescription");
-                        int goalAuraPoints = getIntent().getIntExtra("GoalAuraPoints", 0);
-                        String goalDifficulty = getIntent().getStringExtra("GoalDifficulty");
-
-                        saveRedeemGoalToFirestore( goalTitle, goalDescription, goalAuraPoints, goalDifficulty, uploadedImageLink);
+                        // Save goal completion to Firestore
+                        saveRedeemGoalToFirestore(uploadedImageLink);
 
                     } catch (Exception e) {
                         Log.e("ImgBB", "Failed to parse response: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
-                    Log.e("ImgBB", "Upload failed: " + response.message());
+                    Log.e("ImgBB", "Upload failed with response code: " + response.code());
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "No error body";
+                        Log.e("ImgBB", "Error response body: " + errorBody);
+                    } catch (Exception e) {
+                        Log.e("ImgBB", "Error logging error response: " + e.getMessage());
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e("ImgBB", "Error: " + t.getMessage());
+                if (t instanceof java.net.UnknownHostException) {
+                    Log.e("ImgBB", "No internet connection or unable to reach server.");
+                }
+                t.printStackTrace();
             }
         });
     }
 
-    // Method to save goal completion details to Firestore
-    // Method to save goal completion details to Firestore using userEmail
-    private void saveRedeemGoalToFirestore(String goalTitle, String goalDescription, int goalAuraPoints,
-                                           String goalDifficulty, String imageUrl) {
+    // Save goal completion details to Firestore
+    private void saveRedeemGoalToFirestore(String imageUrl) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        // Retrieve the current user's email
-        String userEmail = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getEmail();
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         if (userEmail == null) {
             Log.e("Firestore", "User email is null. Cannot proceed.");
             return;
         }
 
-        // Query Firestore to find the document corresponding to the user's email
         db.collection("users")
                 .whereEqualTo("email", userEmail)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        // Assume the first document is the correct one
                         String userId = queryDocumentSnapshots.getDocuments().get(0).getId();
 
-                        // Prepare the redeem goal data
+                        // Prepare goal data to be stored
                         Map<String, Object> redeemGoalData = new HashMap<>();
-                        redeemGoalData.put("GoalTitle", goalTitle);
-                        redeemGoalData.put("GoalDescription", goalDescription);
+                        redeemGoalData.put("GoalTitle", getIntent().getStringExtra("GoalTitle"));
+                        redeemGoalData.put("GoalDescription", getIntent().getStringExtra("GoalDescription"));
                         redeemGoalData.put("GoalImage", imageUrl);
-                        redeemGoalData.put("GoalAuraPoints", Integer.toString(goalAuraPoints));
-                        redeemGoalData.put("GoalDifficulty", goalDifficulty);
+                        Log.d("ImgBB", "Selected image URI: " + selectedImageUri);
+
+                        redeemGoalData.put("GoalAuraPoints", Integer.toString(getIntent().getIntExtra("GoalAuraPoints", 0)));
+                        redeemGoalData.put("GoalDifficulty", getIntent().getStringExtra("GoalDifficulty"));
                         redeemGoalData.put("GoalAcceptedStatus", "pending");
                         redeemGoalData.put("GoalRewardRedeemStatus", "pending");
                         redeemGoalData.put("CreatedAt", System.currentTimeMillis());
 
-                        // Save the redeem goal data to the "redeemGoals" collection
+                        // Save to Firestore under the "redeemGoals" collection
                         db.collection("users")
                                 .document(userId)
                                 .collection("redeemGoals")
                                 .add(redeemGoalData)
-                                .addOnSuccessListener(documentReference -> {
-                                    Log.d("Firestore", "Redeem goal added successfully to redeemGoals collection!");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e("Firestore", "Error adding redeem goal: " + e.getMessage());
-                                });
+                                .addOnSuccessListener(documentReference -> Log.d("Firestore", "Redeem goal added successfully!"))
+                                .addOnFailureListener(e -> Log.e("Firestore", "Error saving redeem goal: " + e.getMessage()));
                     } else {
-                        Log.e("Firestore", "No user found with the email: " + userEmail);
+                        Log.e("Firestore", "User not found with email: " + userEmail);
                     }
                 })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Error fetching user by email: " + e.getMessage());
-                });
+                .addOnFailureListener(e -> Log.e("Firestore", "Error fetching user: " + e.getMessage()));
     }
-
-
-
-
-
 }
