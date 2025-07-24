@@ -13,7 +13,20 @@
           "package_name": "com.example.greenaura"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "700941476578-j5lfvhmhnnsv5agunuua926a8hr6gpng.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.greenaura",
+            "certificate_hash": "6bfa91fd76763fc49ca5c34401559d10bf6b524f"
+          }
+        },
+        {
+          "client_id": "700941476578-cqanpajabk4k5upuf66uh30kjhoel39t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBG9p0o87Zuvhc11sKdURJkUYzq-Ih_Gcc"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700941476578-cqanpajabk4k5upuf66uh30kjhoel39t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

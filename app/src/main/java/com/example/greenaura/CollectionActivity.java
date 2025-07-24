@@ -53,7 +53,7 @@ public class CollectionActivity extends AppCompatActivity {
     //User current lat & long
     static double currentLat = 0, currentLong = 0;
     //Prepare the place category list
-    String[] placeCategory = {"rubbish", "recycling", "electric_waste"};
+    String[] placeCategory = {"waste", "recycling", "electronic_waste"};
     FusedLocationProviderClient fusedLocationProviderClient;
     static List<HashMap<String, String>> nearestLocationList = new ArrayList<>();
 
@@ -72,6 +72,7 @@ public class CollectionActivity extends AppCompatActivity {
             return insets;
         });
 
+        Log.d("API_KEY_CHECK", getString(R.string.google_maps_key));
 
         //Connect with the widget in the frontend UI file
         GWTitle = findViewById(R.id.TVGWTitle);
@@ -223,10 +224,15 @@ public class CollectionActivity extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
+            Log.e("Location", "Permission not granted when calling getCurrentLocation()");
             ActivityCompat.requestPermissions(CollectionActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
             return;
         }
+
+        Log.d("Location", "Permissions granted, fetching location...");
+
+
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -237,12 +243,11 @@ public class CollectionActivity extends AppCompatActivity {
                     // Logcat
                     Log.d("Current Location", "Latitude: " + currentLat + ", Longitude: " + currentLong);
 
-                    //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=3.0843257,101.6609599&radius=5000&keyword=rubbish&key=AIzaSyBQZKl2IekO9l2ZmuNb-ZzdKwBMX3vI3MQ&sensor=true
                     String url;
                     for (String category : placeCategory) {
                         url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
                                 + "?location=" + currentLat + "," + currentLong
-                                + "&radius=5000" //m
+                                + "&radius=50000" //m
                                 + "&keyword=" + category.toLowerCase()
                                 + "&key=" + getResources().getString(R.string.google_maps_key)
                                 + "&sensor=true";
@@ -286,8 +291,10 @@ public class CollectionActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String data = "";
             try {
+                Log.d("API", "Calling URL: " + strings[0]);
                 data = downloadUrl(strings[0]); //download data from url
             } catch (IOException e) {
+                Log.e("API", "Error downloading URL: " + e.getMessage(), e);
                 e.printStackTrace();
             }
             return data; //Return downloaded data and pass to onPostExecute automatically
@@ -360,12 +367,15 @@ public class CollectionActivity extends AppCompatActivity {
         @Override //build in method in AsyncTask
         protected void onPostExecute(List<HashMap<String, String>> hashMaps) {
             if (hashMaps == null || hashMaps.isEmpty()) {
+                Log.e("Parser", "No locations found in JSON response");
                 Toast.makeText(CollectionActivity.this, "No locations found", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             double nearestDistance = Double.MAX_VALUE;
             HashMap<String, String> nearestLocation = null; //hold details of nearest location
+
+            Log.d("Parser", "Number of locations parsed: " + hashMaps.size());
 
             // Loop all locations to calculate distance
             for (HashMap<String, String> location : hashMaps) {
@@ -388,7 +398,7 @@ public class CollectionActivity extends AppCompatActivity {
                 String namee = nearestLocation.get("name");
                 String openingHours = nearestLocation.get("opening_hours");
 
-                if (category.equals("rubbish")) {
+                if (category.equals("waste")) {
                     GWVenue.setText("Venue: " + namee);
                     GWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                     GWTime.setText(openingHours);
@@ -398,7 +408,7 @@ public class CollectionActivity extends AppCompatActivity {
                     RWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                     RWTime.setText(openingHours);
                     RWTitle.setText("Recyclable Waste");
-                } else if (category.equals("electric_waste")) {
+                } else if (category.equals("electronic_waste")) {
                     EWVenue.setText("Venue: " + namee);
                     EWDate.setText(String.format("%.2f", nearestDistance) + " km away");
                     EWTime.setText(openingHours);

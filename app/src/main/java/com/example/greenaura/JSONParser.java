@@ -20,11 +20,33 @@ public class JSONParser { //to extract key value pairs
 
             //add details
             String name = object.getString("name");
-            String latitude = object.getJSONObject("geometry")
-                    .getJSONObject("location").getString("lat");
-            String longitude = object.getJSONObject("geometry")
-                    .getJSONObject("location").getString("lng");
-            String rating = object.getString("rating");
+
+            Log.d("JSONParser", "Parsing place: " + name);
+
+
+            String latitude = "0";
+            try {
+                latitude = object.getJSONObject("geometry")
+                        .getJSONObject("location").getString("lat");
+            } catch (Exception e) {
+                Log.e("Parser", "Latitude missing for: " + name);
+            }
+
+            String longitude = "0";
+            try {
+                longitude = object.getJSONObject("geometry")
+                        .getJSONObject("location").getString("lng");
+            } catch (Exception e) {
+                Log.e("Parser", "Longitude missing for: " + name);
+            }
+
+
+            String rating = "0";
+            try {
+                rating = object.getString("rating");
+            } catch (Exception e) {
+                Log.e("Parser", "Longitude missing for: " + name);
+            }
 
 
             // Handle opening hours
