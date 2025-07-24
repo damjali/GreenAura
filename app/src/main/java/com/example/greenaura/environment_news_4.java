@@ -15,6 +15,12 @@ public class environment_news_4 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_environment_news_4); // Replace with your layout file name
 
+        // Initialize the back button
+        ImageView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(view -> {
+            // Go back to the previous activity
+            onBackPressed();
+        });
 //        // Initialize the back button
 //        ImageView backButton = findViewById(R.id.backButton);
 //        backButton.setOnClickListener(view -> {
@@ -33,8 +39,8 @@ public class environment_news_4 extends AppCompatActivity {
         });
     }
 
-    private void requireActivity(environment_news_4 newsActivity) {
-        System.out.println("FUCK YOU LIL NIGGA");
-        return;
-    }
+//    private void requireActivity(Environment_News_4 newsActivity) {
+//        System.out.println("FUCK YOU LIL NIGGA");
+//        return;
+//    }
 }

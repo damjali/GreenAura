@@ -1,0 +1,102 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DBECA2"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Back Button ImageView -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_food_waste"
+            android:layout_width="match_parent"
+            android:layout_height="404dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/food_waste_image"
+            android:tintMode="src_in"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="28dp"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:contentDescription="Back button"
+            android:focusable="true"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <!-- Title Text -->
+        <TextView
+            android:id="@+id/title_food_waste"
+            android:layout_width="256dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Reduce Food Waste"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Upvote Icon -->
+        <ImageView
+            android:id="@+id/ic_upvote"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="3dp"
+            android:contentDescription="Upvote icon"
+            android:src="@drawable/ic_upvote_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/date_food_waste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter"
+        android:text="Posted on 18 March 2024"
+        android:textColor="#787777" />
+
+    <TextView
+        android:id="@+id/description_food_waste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/figtree"
+        android:text="Reducing food waste helps conserve resources, minimize environmental impact, and save money. By planning meals, storing food properly, and composting leftovers, you can make a positive impact on the planet."
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/readmore_food_waste"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Read More"
+        android:textColor="#3578FF"
+        android:clickable="true"
+        android:focusable="true"/>
+</LinearLayout>

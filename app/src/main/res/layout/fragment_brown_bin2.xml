@@ -1,0 +1,184 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8EFE8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- Title Section -->
+        <TextView
+            android:id="@+id/brownBinTitle2"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/domine_regular"
+            android:text="The"
+            android:textAlignment="textStart"
+            android:textColor="#3D3D3D"
+            android:textSize="41sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/brownBinTitle21"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:fontFamily="@font/domine_regular"
+            android:text="Brown"
+            android:textColor="#BB5106"
+            android:textSize="41sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brownBinTitle2" />
+
+        <TextView
+            android:id="@+id/brownBinTitle22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:fontFamily="@font/domine_regular"
+            android:text="Bin"
+            android:textColor="#3D3D3D"
+            android:textSize="41sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/brownBinTitle21" />
+
+        <!-- What's it For Section -->
+
+        <!-- Image -->
+
+        <TextView
+            android:id="@+id/whatsItForTitle"
+            android:layout_width="182dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="168dp"
+            android:fontFamily="@font/italianno"
+            android:text="What's it For?"
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/whatsItForDescription"
+            android:layout_width="187dp"
+            android:layout_height="185dp"
+            android:fontFamily="@font/figtree"
+            android:lineSpacingExtra="5sp"
+            android:text="The brown recycling bin is designated for glass recycling, including bottles, jars, and other glass items. Glass placed in the brown bin is cleaned, processed, and turned into new products, saving energy and reducing environmental impact."
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whatsItForTitle" />
+
+        <!-- How to Recycle Correctly Section -->
+
+        <TextView
+            android:id="@+id/howToRecycleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/italianno"
+            android:text="How to Recycle Correctly?"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="554dp"
+            android:layout_height="166dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/glass_recycling_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/howToRecycleTitle" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/glass_bottle_image"
+            app:layout_constraintEnd_toStartOf="@+id/image1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Why Recycle Glass Section -->
+
+        <TextView
+            android:id="@+id/howToRecycleDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/figtree"
+            android:lineSpacingExtra="5sp"
+            android:text="1. Rinse the Glass\n • Remove food or liquid residue.\n 2. Remove Lids or Caps\n • Place them in the appropriate bin (e.g., orange for metal caps).\n3. Avoid Overfilling \n • Glass can be heavy and may break."
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image1" />
+
+        <TextView
+            android:id="@+id/whyRecycleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/italianno"
+            android:text="Why Recycle Glass?"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/howToRecycleDescription" />
+
+        <!-- Bottom Icon -->
+
+        <TextView
+            android:id="@+id/whyRecycleDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:lineSpacingExtra="5sp"
+            android:text="• Environmental Impact:\nGlass can take over 1 million years to decompose in a landfill. Recycling reduces waste and conserves natural resources.\n• Energy Savings:\nRecycling glass uses 30% less energy compared to making new glass."
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whyRecycleTitle" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="195dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            app:layout_constraintEnd_toStartOf="@+id/whatsItForDescription"
+            app:layout_constraintTop_toBottomOf="@+id/brownBinTitle22"
+            app:srcCompat="@drawable/glass_bottle_image" />
+
+        <ImageView
+            android:id="@+id/brownBinPageIndicator2"
+            android:layout_width="113dp"
+            android:layout_height="11dp"
+            android:layout_marginStart="117dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="117dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/whyRecycleDescription"
+            app:srcCompat="@drawable/brownbin2_dotted_pagenavigator" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

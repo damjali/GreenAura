@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="RatingBar" parent="Widget.AppCompat.RatingBar">
+        <item name="colorControlActivated">#DBECA2</item> <!--Green-->
+    </style>
+    <style name="CalendarView" parent="Widget.Material3.MaterialCalendar.Day" tools:ignore="ResourceCycle">
+        <item name="colorAccent">#DBECA2</item> <!--Green-->
+    </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="colorAccent">#DBECA2</item> <!--Green-->
+    </style>
+</resources>

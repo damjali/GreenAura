@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:layout_gravity="start">
+
+    <TextView
+        android:id="@+id/bot_message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3690A8"
+        android:backgroundTint="#58B8AE"
+        android:padding="10dp"
+        android:textColor="@android:color/white" />
+</androidx.cardview.widget.CardView>

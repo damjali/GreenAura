@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.greenaura.databinding.ActivityGoalsHomePageBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,13 +44,13 @@ public class GoalsHomePage extends AppCompatActivity {
         // Find the LinearLayout containers for Basic, Advanced, and Completed goals
         LinearLayout containerBasic = findViewById(R.id.LinearlayoutContainerBasic);
         LinearLayout containerAdvanced = findViewById(R.id.LinearlayoutContainerAdvanced);
-        LinearLayout containerCompleted = findViewById(R.id.LinearlayoutContainerCompleted); // Completed goals container
+        LinearLayout containerCompleted = findViewById(R.id.LinearlayoutContainerCompleted);
 
         // Fetch goals from Firestore
         fetchGoalsFromFirestore(containerBasic, containerAdvanced, containerCompleted);
 
         // Handle back button press to navigate to home page activity
-        ImageView backButton = findViewById(R.id.buttonBackButton); // Assuming this is the ID of the back button
+        ImageView backButton = findViewById(R.id.buttonBackButton);
         backButton.setOnClickListener(v -> navigateToHomePage());
     }
 
@@ -57,7 +58,7 @@ public class GoalsHomePage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume called.");
-        GoalsFirebaseRewardHelper runGiveGoalReward = new GoalsFirebaseRewardHelper(this);
+        new GoalsFirebaseRewardHelper(this);
     }
 
     private void fetchGoalsFromFirestore(LinearLayout containerBasic, LinearLayout containerAdvanced, LinearLayout containerCompleted) {
@@ -70,7 +71,6 @@ public class GoalsHomePage extends AppCompatActivity {
                         if (task.isSuccessful() && task.getResult() != null) {
                             Log.d(TAG, "Successfully fetched goals.");
                             for (DocumentSnapshot document : task.getResult()) {
-                                // Retrieve fields from Firestore
                                 String goalID = document.getId();
                                 String goalTitle = document.getString("GoalTitle");
                                 String goalDescription = document.getString("GoalDescription");
@@ -82,11 +82,9 @@ public class GoalsHomePage extends AppCompatActivity {
 
                                 Log.d(TAG, "Goal fetched: " + goalTitle);
 
-                                // Create a Goals object
                                 Goals goal = new Goals(goalID, goalTitle, goalDescription, goalAuraPoints, image, goalDifficulty);
-                                goals.add(goal); // Add to the goals list
+                                goals.add(goal);
 
-                                // Add goal card to the appropriate container based on difficulty
                                 if ("Basic".equalsIgnoreCase(goal.getGoalDifficulty())) {
                                     addGoalCardToContainer(containerBasic, goal);
                                 } else if ("Advanced".equalsIgnoreCase(goal.getGoalDifficulty())) {
@@ -94,7 +92,6 @@ public class GoalsHomePage extends AppCompatActivity {
                                 }
                             }
 
-                            // Fetch completed goals for progress tracking
                             fetchCompletedGoals(containerCompleted);
                         } else {
                             Log.e(TAG, "Error fetching documents: ", task.getException());
@@ -106,60 +103,45 @@ public class GoalsHomePage extends AppCompatActivity {
     private void fetchCompletedGoals(LinearLayout containerCompleted) {
         Log.d(TAG, "Fetching completed goals from Firestore...");
 
-        // Step 1: Get the current user's email from Firebase Authentication
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Log.d(TAG, "Current user email: " + currentUserEmail);
 
-        // Step 2: Query the users collection to find the specific user document by email
         db.collection("users")
-                .whereEqualTo("email", currentUserEmail)  // Assuming the email is stored in the user document
+                .whereEqualTo("email", currentUserEmail)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            // If the user document is found
-                            DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);  // Assuming only one document is returned
-                            String userId = userDoc.getId();  // Get the user ID (document ID)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                        DocumentSnapshot userDoc = task.getResult().getDocuments().get(0);
+                        String userId = userDoc.getId();
+                        Log.d(TAG, "User found with ID: " + userId);
 
-                            Log.d(TAG, "User found with ID: " + userId);
+                        db.collection("users")
+                                .document(userId)
+                                .collection("redeemGoals")
+                                .whereEqualTo("GoalAcceptedStatus", "accepted")
+                                .whereEqualTo("GoalRewardRedeemStatus", "completed")
+                                .get()
+                                .addOnCompleteListener(innerTask -> {
+                                    if (innerTask.isSuccessful() && innerTask.getResult() != null) {
+                                        int completedGoalsCount = innerTask.getResult().size();
+                                        Log.d(TAG, "Completed goals count: " + completedGoalsCount);
 
-                            // Step 3: Query the redeemGoals subcollection under this user's document
-                            db.collection("users")
-                                    .document(userId)
-                                    .collection("redeemGoals")
-                                    .whereEqualTo("GoalAcceptedStatus", "accepted")
-                                    .whereEqualTo("GoalRewardRedeemStatus", "completed")
-                                    .get()
-                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful() && task.getResult() != null) {
-                                                int completedGoalsCount = task.getResult().size();
-                                                Log.d(TAG, "Completed goals count: " + completedGoalsCount);
+                                        updateGoalProgress(completedGoalsCount);
 
-                                                // Update progress or handle the completed goals data
-                                                updateGoalProgress(completedGoalsCount);
+                                        for (DocumentSnapshot document : innerTask.getResult()) {
+                                            String goalTitle = document.getString("GoalTitle");
+                                            String goalDescription = document.getString("GoalDescription");
+                                            String goalAuraPoints = document.getString("GoalAuraPoints");
+                                            String goalImage = document.getString("GoalImage");
 
-                                                // Dynamically create unclickable goal items for completed goals
-                                                for (DocumentSnapshot document : task.getResult()) {
-                                                    String goalID = document.getString("GoalID");
-                                                    String goalTitle = document.getString("GoalTitle");
-                                                    String goalDescription = document.getString("GoalDescription");
-                                                    String goalAuraPoints = document.getString("GoalAuraPoints");
-                                                    String goalImage = document.getString("GoalImage");
-
-                                                    // Create an unclickable goal item view
-                                                    addCompletedGoalCardToContainer(containerCompleted, goalTitle, goalDescription, goalAuraPoints, goalImage);
-                                                }
-                                            } else {
-                                                Log.e(TAG, "Error fetching completed goals: ", task.getException());
-                                            }
+                                            addCompletedGoalCardToContainer(containerCompleted, goalTitle, goalDescription, goalAuraPoints, goalImage);
                                         }
-                                    });
-                        } else {
-                            Log.e(TAG, "Error finding user: ", task.getException());
-                        }
+                                    } else {
+                                        Log.e(TAG, "Error fetching completed goals: ", innerTask.getException());
+                                    }
+                                });
+                    } else {
+                        Log.e(TAG, "Error finding user: ", task.getException());
                     }
                 });
     }
@@ -169,7 +151,6 @@ public class GoalsHomePage extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View card = inflater.inflate(R.layout.goal_item, container, false);
 
-        // Populate the card with goal data
         TextView goalTitle = card.findViewById(R.id.GoalTitle);
         TextView goalDesc = card.findViewById(R.id.GoalDesc);
         ImageView goalImage = card.findViewById(R.id.GoalImage);
@@ -181,28 +162,26 @@ public class GoalsHomePage extends AppCompatActivity {
 
         Glide.with(this)
                 .load(image)
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.baseline_default_image) // Add your placeholder image
+                        .error(R.drawable.baseline_default_image)) // Add your error image
                 .into(goalImage);
 
-        // Set the card to be unclickable (no onClick listener)
         card.setClickable(false);
         card.setFocusable(false);
 
-        // Add the card to the container
         container.addView(card);
     }
 
     private void updateGoalProgress(int completedGoalsCount) {
         Log.d(TAG, "Updating goal progress...");
 
-        // Calculate progress based on the completed goals
-        int totalGoals = goals.size(); // Total goals count
+        int totalGoals = goals.size();
         int progressPercentage = (int) ((completedGoalsCount / (float) totalGoals) * 100);
 
-        // Update the progress bar
         ProgressBar progressBar = findViewById(R.id.progressbar);
         progressBar.setProgress(progressPercentage);
 
-        // Update the text below the progress bar
         TextView progressText = findViewById(R.id.progressText);
         progressText.setText(completedGoalsCount + "/" + totalGoals + " goals completed (" + progressPercentage + "%)");
     }
@@ -212,7 +191,6 @@ public class GoalsHomePage extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View card = inflater.inflate(R.layout.goal_item, container, false);
 
-        // Populate the card with goal data
         TextView title = card.findViewById(R.id.GoalTitle);
         TextView description = card.findViewById(R.id.GoalDesc);
         ImageView imageView = card.findViewById(R.id.GoalImage);
@@ -224,9 +202,11 @@ public class GoalsHomePage extends AppCompatActivity {
 
         Glide.with(this)
                 .load(goal.getImage())
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.baseline_default_image) // Add your placeholder image
+                        .error(R.drawable.baseline_default_image)) // Add your error image
                 .into(imageView);
 
-        // Set click listener to open SpecificGoalsPage
         card.setOnClickListener(v -> {
             Intent intent = new Intent(GoalsHomePage.this, SpecificGoalsPage.class);
             intent.putExtra("GoalID", goal.getGoalID());
@@ -238,7 +218,6 @@ public class GoalsHomePage extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Add the card to the container
         container.addView(card);
     }
 

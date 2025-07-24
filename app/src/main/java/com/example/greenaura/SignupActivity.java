@@ -51,14 +51,19 @@ public class SignupActivity extends AppCompatActivity {
         loginRedirectText = findViewById(R.id.loginRedirectText);
 
         // handle signup button click
+        // handle signup button click
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = signupEmail.getText().toString().trim();
                 String password = signupPassword.getText().toString().trim();
 
+                // Check if the email contains any uppercase letters
                 if (email.isEmpty()) {
                     signupEmail.setError("Email is required");
+                    signupEmail.requestFocus();
+                } else if (!email.equals(email.toLowerCase())) { // Check if email contains uppercase letters
+                    Toast.makeText(SignupActivity.this, "Email must consist of only lowercase letters", Toast.LENGTH_LONG).show();
                     signupEmail.requestFocus();
                 } else if (password.isEmpty()) {
                     signupPassword.setError("Password is required");
@@ -78,6 +83,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         // handle login redirect click
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
